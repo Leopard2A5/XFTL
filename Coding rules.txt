@@ -1,0 +1,23 @@
+XFTL Coding Rules
+=================
+
+This document describes the general rules of formatting code in XFTL as well as some coding guidelines.
+
+
+Code formatting:
+================
+The XFTL project utilizes eclipse' built-in code formatting rules (Window->Preferences->Java->Code Style->Formatter).
+
+The most important points:
+* curly braces in type and method declarations start on the same line as the declaration
+
+
+Coding guidelines
+=================
+* fields start with an underscore (e.g. _name)
+* constants are all upper case, underscores replace camel casing (e.g. SHIP_NAME)
+* always include an else branch in switch bodies for easier debugging
+* install eclipse' findbugs plugin!
+* read Clean Code by Robert C. Martin!
+* use unix line endings (\n)
+* use UTF-8 encoding

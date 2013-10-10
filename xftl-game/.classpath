@@ -5,5 +5,8 @@
 	<classpathentry combineaccessrules="false" kind="src" path="/xftl-gui"/>
 	<classpathentry combineaccessrules="false" kind="src" path="/xftl-interfaces"/>
 	<classpathentry combineaccessrules="false" kind="src" path="/xftl-model"/>
+	<classpathentry kind="lib" path="libs/gdx-backend-lwjgl-natives.jar"/>
+	<classpathentry kind="lib" path="libs/gdx-backend-lwjgl.jar"/>
+	<classpathentry kind="lib" path="libs/gdx-natives.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>

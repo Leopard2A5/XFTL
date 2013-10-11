@@ -1,3 +1,4 @@
+package de.xftl.game.framework;
 
 import java.util.HashMap;
 
@@ -5,7 +6,9 @@ import com.badlogic.gdx.ApplicationListener;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 
-public class Game implements ApplicationListener {
+import de.xftl.game.states.TestGameState;
+
+public class XftlGame implements ApplicationListener {
 	
 		private SpriteBatch _spriteBatch;
 		private HashMap<GameStateName, GameState> _gameStatesByGameStateName;

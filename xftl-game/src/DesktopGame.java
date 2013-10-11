@@ -1,6 +1,8 @@
 import com.badlogic.gdx.backends.lwjgl.LwjglApplication;
 import com.badlogic.gdx.backends.lwjgl.LwjglApplicationConfiguration;
 
+import de.xftl.game.framework.XftlGame;
+
 public class DesktopGame {
 	
 	private static LwjglApplicationConfiguration createConfiguration(){
@@ -17,6 +19,6 @@ public class DesktopGame {
 	}
 	
 	public static void main (String[] args) {
-		new LwjglApplication(new Game(), createConfiguration());
+		new LwjglApplication(new XftlGame(), createConfiguration());
 	}
 }

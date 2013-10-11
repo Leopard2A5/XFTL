@@ -1,3 +1,4 @@
+package de.xftl.game.framework;
 
 public interface GameState {
 	void onEnter();

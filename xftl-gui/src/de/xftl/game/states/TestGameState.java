@@ -1,9 +1,14 @@
+package de.xftl.game.states;
+
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.GL10;
 
+import de.xftl.game.framework.GameStateBase;
+import de.xftl.game.framework.XftlGame;
+
 public class TestGameState extends GameStateBase {
 
-	protected TestGameState(Game game) {
+	public TestGameState(XftlGame game) {
 		super(game);
 	}
 

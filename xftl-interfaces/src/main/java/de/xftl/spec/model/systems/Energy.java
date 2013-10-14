@@ -3,7 +3,7 @@ package de.xftl.spec.model.systems;
 import java.util.HashMap;
 import java.util.Map;
 
-
+/** Immutable! */
 public final class Energy implements Comparable<Energy> {
 
 	private static final int ZERO = 0;

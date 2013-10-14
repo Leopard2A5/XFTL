@@ -12,7 +12,7 @@ public class EnergyTest {
 		Energy a = Energy.valueOf(2);
 		Energy b = Energy.valueOf(3);
 		
-		assertEquals(Integer.valueOf(5), Integer.valueOf(a.plus(b).intValue()));
+		assertEquals(5, a.plus(b).intValue());
 	}
 	
 	@Test
@@ -20,7 +20,7 @@ public class EnergyTest {
 		Energy a = Energy.valueOf(2);
 		Energy b = Energy.valueOf(3);
 		
-		assertEquals(Integer.valueOf(1), Integer.valueOf(b.minus(a).intValue()));
+		assertEquals(1, b.minus(a).intValue());
 	}
 	
 	@Test
@@ -28,7 +28,7 @@ public class EnergyTest {
 		Energy a = Energy.valueOf(2);
 		Energy b = Energy.valueOf(3);
 		
-		assertEquals(Integer.valueOf(0), Integer.valueOf(a.minus(b).intValue()));
+		assertEquals(0, a.minus(b).intValue());
 	}
 	
 	@Test
@@ -43,8 +43,8 @@ public class EnergyTest {
 	
 	@Test
 	public void valueOfReturnsTheCorrectEnergyLevel() {
-		assertEquals(Integer.valueOf(1), Integer.valueOf(Energy.valueOf(1).intValue()));
-		assertEquals(Integer.valueOf(5), Integer.valueOf(Energy.valueOf(5).intValue()));
+		assertEquals(1, Energy.valueOf(1).intValue());
+		assertEquals(5, Energy.valueOf(5).intValue());
 	}
 
 }

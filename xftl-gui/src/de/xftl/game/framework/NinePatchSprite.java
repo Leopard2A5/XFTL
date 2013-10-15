@@ -1,8 +1,8 @@
 package de.xftl.game.framework;
 
+import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
-import com.badlogic.gdx.graphics.g2d.TextureRegion;
 
 public class NinePatchSprite {
 	
@@ -22,34 +22,35 @@ public class NinePatchSprite {
 	private float _width;
 	private float _height;
 	private Sprite[] _sprites;
-	
-	public NinePatchSprite(TextureRegion textureRegion, int leftBorder, int topBorder, int rightBorder, int bottomBorder) {
+		
+	public NinePatchSprite(Texture texture, int leftBorder, int topBorder, int rightBorder, int bottomBorder) {
 		_sprites = new Sprite[9];
 		
-		_width = textureRegion.getRegionWidth();
-		_height = textureRegion.getRegionHeight();
+		_width = texture.getWidth();
+		_height = texture.getHeight();
 		int scaleWidth = (int)_width - leftBorder - rightBorder;
 		int scaleHeight = (int)_height - topBorder - bottomBorder;
 		
-		int startY = 0;
-		int endY = topBorder;
-		for(int i = 0; i < 3; i++)
-		{
-			_sprites[i*3+0] = new Sprite(textureRegion, 0, startY, leftBorder, endY);
-			_sprites[i*3+1] = new Sprite(textureRegion, leftBorder, startY, scaleWidth, endY);
-			_sprites[i*3+2] = new Sprite(textureRegion, (int) (_width-rightBorder), startY, rightBorder, endY);
-			
-			if (startY == 0)
-			{
-				startY += topBorder;
-				endY += topBorder + scaleHeight; 
-			}
-			else if (startY == 1)
-			{
-				startY += scaleHeight;
-				endY += bottomBorder;
-			}
-		}
+		_sprites[0] = createSprite(texture, 0, 0, leftBorder, topBorder, 0, 0);
+		_sprites[1] = createSprite(texture, leftBorder, 0, scaleWidth, topBorder, leftBorder, 0);
+		_sprites[2] = createSprite(texture, leftBorder+scaleWidth, 0, rightBorder, topBorder, leftBorder+scaleWidth, 0);
+		
+		_sprites[3] = createSprite(texture, 0, topBorder, leftBorder, scaleHeight, 0, topBorder);
+		_sprites[4] = createSprite(texture, leftBorder, topBorder, scaleWidth, scaleHeight, leftBorder, topBorder);
+		_sprites[5] = createSprite(texture, leftBorder+scaleWidth, topBorder, rightBorder, scaleHeight, leftBorder+scaleWidth, topBorder);
+		
+		_sprites[6] = createSprite(texture, 0, topBorder+scaleHeight, leftBorder, bottomBorder, 0, topBorder+scaleHeight);
+		_sprites[7] = createSprite(texture, leftBorder, topBorder+scaleHeight, scaleWidth, bottomBorder, leftBorder, topBorder+scaleHeight);
+		_sprites[8] = createSprite(texture, leftBorder+scaleWidth, topBorder+scaleHeight, rightBorder, bottomBorder, leftBorder+scaleWidth, topBorder+scaleHeight);
+	}
+	
+	private Sprite createSprite(Texture texture, int sx, int sy, int sw, int sh, float x, float y) {
+		
+		Sprite sprite = new Sprite(texture, sx, sy, sw, sh);
+		sprite.flip(false, true);
+		sprite.setPosition(x, y);
+		
+		return sprite;
 	}
 	
 	public float getX() {

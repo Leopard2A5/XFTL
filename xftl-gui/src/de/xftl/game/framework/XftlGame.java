@@ -4,6 +4,7 @@ import java.util.HashMap;
 
 import com.badlogic.gdx.ApplicationListener;
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 
@@ -11,6 +12,7 @@ import de.xftl.game.states.TestGameState;
 
 public class XftlGame implements ApplicationListener {
 	
+		private OrthographicCamera _camera;
 		private SpriteBatch _spriteBatch;
 		private HashMap<GameStateName, GameState> _gameStatesByGameStateName;
 		private HashMap<String, Texture> _texturesByPath;
@@ -20,7 +22,8 @@ public class XftlGame implements ApplicationListener {
 			Texture texture = _texturesByPath.get(path);
 			
 			if (texture == null) {
-				texture = _texturesByPath.put(path, new Texture(path));
+				texture = new Texture(Gdx.files.internal(path));
+				_texturesByPath.put(path, texture);
 			}
 			
 			return texture;
@@ -47,7 +50,7 @@ public class XftlGame implements ApplicationListener {
 		}
 	
 		public void create () {
-        	Gdx.gl.glClearColor(1.0f, 1.0f, 1.0f, 1.0f);
+        	Gdx.gl.glClearColor(0.0f, 0.0f, 0.0f, 1.0f);
         	
         	_spriteBatch = new SpriteBatch();
         	_gameStatesByGameStateName = new HashMap<GameStateName, GameState>();
@@ -55,6 +58,10 @@ public class XftlGame implements ApplicationListener {
         	
         	addGameState(GameStateName.TestState, new TestGameState(this));
         	setCurrentGameState(GameStateName.TestState);
+        	
+        	_camera = new OrthographicCamera();
+        	_camera.setToOrtho(true, 1024, 768);
+        	_spriteBatch.setProjectionMatrix(_camera.combined);
         }
 
         public void render () {

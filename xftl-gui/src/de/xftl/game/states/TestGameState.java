@@ -7,7 +7,7 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 
 import de.xftl.game.framework.GameStateBase;
 import de.xftl.game.framework.NinePatchSprite;
-import de.xftl.game.framework.XftlGame;
+import de.xftl.game.framework.XftlGameRenderer;
 
 public class TestGameState extends GameStateBase {
 
@@ -15,7 +15,7 @@ public class TestGameState extends GameStateBase {
 	private NinePatchSprite _frameSprite2;
 	private NinePatchSprite _frameSprite3;
 	
-	public TestGameState(XftlGame game) {
+	public TestGameState(XftlGameRenderer game) {
 		super(game);
 		
 		Texture texture = getGame().getTexture("res/tex/testframe.png");

@@ -2,13 +2,13 @@ package de.xftl.game.framework;
 
 public class GameObject {
 	
-	private XftlGame _game;
+	private XftlGameRenderer _game;
 	
-	protected GameObject(XftlGame game){
+	protected GameObject(XftlGameRenderer game){
 		_game = game;
 	}
 	
-	public XftlGame getGame() {
+	public XftlGameRenderer getGame() {
 		return _game;
 	}
 }

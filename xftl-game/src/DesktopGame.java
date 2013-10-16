@@ -1,7 +1,8 @@
 import com.badlogic.gdx.backends.lwjgl.LwjglApplication;
 import com.badlogic.gdx.backends.lwjgl.LwjglApplicationConfiguration;
 
-import de.xftl.game.framework.XftlGame;
+import de.xftl.game.framework.XftlGameRenderer;
+import de.xftl.spec.game.Game;
 
 public class DesktopGame {
 	
@@ -19,6 +20,10 @@ public class DesktopGame {
 	}
 	
 	public static void main (String[] args) {
-		new LwjglApplication(new XftlGame(), createConfiguration());
+		
+		//todo: instanciate real game instance from xftl-model.
+		Game gameModel = null;
+		XftlGameRenderer gameRenderer = new XftlGameRenderer(gameModel);
+		new LwjglApplication(gameRenderer, createConfiguration());
 	}
 }

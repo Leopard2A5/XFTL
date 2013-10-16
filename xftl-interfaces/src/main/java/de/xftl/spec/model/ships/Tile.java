@@ -1,7 +1,13 @@
 package de.xftl.spec.model.ships;
 
-import de.xftl.spec.model.XFTLModelObject;
+import java.util.Map;
 
-public interface Tile extends XFTLModelObject {
-	// TODO implement me
+import de.xftl.spec.model.Direction;
+import de.xftl.spec.model.XFTLModelObject;
+import de.xftl.spec.model.crew.CrewMember;
+
+public interface Tile extends XFTLModelObject, TileUnitPositioned, TileOrRoomConnector {
+	public CrewMember getCrewMember();
+	public CrewMember getEnemyCrewMember();
+	public Map<Direction, TileOrRoomConnector> getNeighbors();
 }

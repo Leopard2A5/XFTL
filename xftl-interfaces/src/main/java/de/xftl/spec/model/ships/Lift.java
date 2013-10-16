@@ -1,5 +1,6 @@
 package de.xftl.spec.model.ships;
 
 public interface Lift extends RoomConnector {
-	// TODO implement me
+	public boolean isInTransit();
+	public Deck getDeck();
 }

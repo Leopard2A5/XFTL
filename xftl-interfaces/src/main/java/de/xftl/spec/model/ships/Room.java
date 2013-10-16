@@ -5,7 +5,7 @@ import java.util.List;
 import de.xftl.spec.model.XFTLModelObject;
 import de.xftl.spec.model.crew.CrewMember;
 
-public interface Room extends XFTLModelObject {
+public interface Room extends XFTLModelObject, TileUnitPositioned {
 	public System getSystem();
 	public List<Tile> getTiles();
 	public List<CrewMember> getCrewMembers();

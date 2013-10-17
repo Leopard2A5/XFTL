@@ -8,5 +8,6 @@
 	<classpathentry kind="lib" path="libs/gdx-backend-lwjgl-natives.jar"/>
 	<classpathentry kind="lib" path="libs/gdx-backend-lwjgl.jar"/>
 	<classpathentry kind="lib" path="libs/gdx-natives.jar"/>
+	<classpathentry combineaccessrules="false" kind="src" path="/xftl-fixtures"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>

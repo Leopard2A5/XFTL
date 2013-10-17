@@ -10,4 +10,5 @@ public interface Tile extends XFTLModelObject, TileUnitPositioned, TileOrRoomCon
 	public CrewMember getCrewMember();
 	public CrewMember getEnemyCrewMember();
 	public Map<Direction, TileOrRoomConnector> getNeighbors();
+	public void addNeighbor(Direction dir, TileOrRoomConnector neighbor);
 }

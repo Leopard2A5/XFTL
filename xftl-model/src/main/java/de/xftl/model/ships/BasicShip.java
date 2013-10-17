@@ -28,5 +28,9 @@ public class BasicShip implements Ship {
 	public Hitpoints getHitpoints() {
 		return _hitpoints;
 	}
+	
+	public void addDeck(Deck deck) {
+		_decks.add(deck);
+	}
 
 }

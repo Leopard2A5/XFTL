@@ -56,7 +56,6 @@ public class BasicTile implements Tile {
 	    return _leftUpperCornerPos.compareTo(o.getLeftUpperCornerPos());
 	}
 	
-	@Override
 	public void addNeighbor(Direction dir, TileOrRoomConnector neighbor) {
 		_neighbors.put(dir, neighbor);
 	}

@@ -2,6 +2,7 @@ package de.xftl.model.util;
 
 import java.util.Collection;
 
+import de.xftl.model.ships.BasicTile;
 import de.xftl.spec.model.Direction;
 import de.xftl.spec.model.Point;
 import de.xftl.spec.model.ships.Tile;
@@ -9,9 +10,9 @@ import de.xftl.spec.model.ships.TileUnit;
 
 public class TileConnector {
 	
-	private Collection<Tile> _tiles;
+	private Collection<BasicTile> _tiles;
 	
-	public TileConnector(Collection<Tile> tiles) {
+	public TileConnector(Collection<BasicTile> tiles) {
 		super();
 		
 		_tiles = tiles;
@@ -20,41 +21,41 @@ public class TileConnector {
 	public void connectTiles() {
 		Point<TileUnit> maxDimensions = getMaxDimensions();
 		
-		Tile[][] matrix = new Tile[maxDimensions.getY().getValue()][maxDimensions.getX().getValue()];
-		for (Tile tile : _tiles) {
+		BasicTile[][] matrix = new BasicTile[maxDimensions.getY().getValue()][maxDimensions.getX().getValue()];
+		for (BasicTile tile : _tiles) {
 			Point<TileUnit> pos = tile.getLeftUpperCornerPos();
 			matrix[pos.getY().getValue()][pos.getX().getValue()] = tile;
 		}
 		
 		for (int y = 0; y < maxDimensions.getY().getValue(); y++) {
 			for (int x = 0; x < maxDimensions.getX().getValue(); x++) {
-				Tile t = matrix[y][x];
+				BasicTile t = matrix[y][x];
 				
 				if (t == null) continue;
 				
 				if (x > 0) {
-					Tile left = matrix[y][x - 1];
+					BasicTile left = matrix[y][x - 1];
 					if (left != null) {
 						t.addNeighbor(Direction.WEST, left);
 						left.addNeighbor(Direction.EAST, t);
 					}
 				}
 				if (x < maxDimensions.getX().getValue() - 1) {
-					Tile right = matrix[y][x + 1];
+					BasicTile right = matrix[y][x + 1];
 					if (right != null) {
 						t.addNeighbor(Direction.EAST, right);
 						right.addNeighbor(Direction.WEST, t);
 					}
 				}
 				if (y > 0) {
-					Tile up = matrix[y - 1][x];
+					BasicTile up = matrix[y - 1][x];
 					if (up != null) {
 						t.addNeighbor(Direction.NORTH, up);
 						up.addNeighbor(Direction.SOUTH, t);
 					}
 				}
 				if (y < maxDimensions.getY().getValue() - 1) {
-					Tile down = matrix[y + 1][x];
+					BasicTile down = matrix[y + 1][x];
 					t.addNeighbor(Direction.SOUTH, down);
 					down.addNeighbor(Direction.NORTH, t);
 				}

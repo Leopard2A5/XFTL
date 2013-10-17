@@ -1,26 +1,44 @@
 package de.xftl.spec.model;
 
-public class Point<T> {
-	private T x;
-	private T y;
+public class Point<T extends Comparable<T>> implements Comparable<Point<T>> {
+	private T _x;
+	private T _y;
 	
 	public Point(T x, T y) {
 		super();
 		
-		this.x = x;
-		this.y = y;
+		this._x = x;
+		this._y = y;
 	}
 	
 	public T getX() {
-		return x;
+		return _x;
 	}
 	public void setX(T x) {
-		this.x = x;
+		this._x = x;
 	}
 	public T getY() {
-		return y;
+		return _y;
 	}
 	public void setY(T y) {
-		this.y = y;
+		this._y = y;
 	}
+
+    @Override
+    public int compareTo(Point<T> o) {
+        int diffX = _x.compareTo(o._x);
+        int diffY = _y.compareTo(o._y);
+        
+        // 0/0, 1/-1, -1/1
+        if (diffX + diffY == 0)
+            return 0;
+        
+        if (diffX == 0)
+            return diffY;
+        if (diffY == 0)
+            return diffX;
+        
+        // both are equal
+        return diffX;
+    }
 }

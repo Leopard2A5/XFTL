@@ -1,6 +1,6 @@
 package de.xftl.spec.model.ships;
 
-public class TileUnit {
+public class TileUnit implements Comparable<TileUnit> {
 	
 	private int _value;
 
@@ -12,7 +12,7 @@ public class TileUnit {
 	
 	@Override
 	public String toString() {
-		return String.format("%dtu", _value);
+		return String.format("%dtu", Integer.valueOf(_value));
 	}
 	
 	@Override
@@ -38,4 +38,9 @@ public class TileUnit {
 	public void setValue(int value) {
 		this._value = value;
 	}
+
+    @Override
+    public int compareTo(TileUnit other) {
+        return Integer.compare(_value, other._value);
+    }
 }

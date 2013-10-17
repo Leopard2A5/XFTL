@@ -10,6 +10,7 @@ import de.xftl.spec.model.crew.CrewMember;
 import de.xftl.spec.model.ships.Tile;
 import de.xftl.spec.model.ships.TileOrRoomConnector;
 import de.xftl.spec.model.ships.TileUnit;
+import de.xftl.spec.model.ships.TileUnitPositioned;
 
 public class BasicTile implements Tile {
 
@@ -43,5 +44,9 @@ public class BasicTile implements Tile {
 	public Map<Direction, TileOrRoomConnector> getNeighbors() {
 		return Collections.unmodifiableMap(_neighbors);
 	}
-
+	
+	@Override
+	public int compareTo(TileUnitPositioned o) {
+	    return _leftUpperCornerPos.compareTo(o.getLeftUpperCornerPos());
+	}
 }

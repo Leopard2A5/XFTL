@@ -6,6 +6,9 @@ import de.xftl.spec.model.XFTLModelObject;
 import de.xftl.spec.model.hardpoints.Hardpoint;
 
 public interface Deck extends XFTLModelObject {
+	public DeckNumber getDeckNumber();
 	public List<Room> getRooms();
 	public List<Hardpoint> getHardpoints();
+	public Deck getDeckAbove();
+	public Deck getDeckBelow();
 }

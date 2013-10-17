@@ -38,9 +38,15 @@ public class ResourceManager implements Disposable {
 		
 		return font;
 	}
-
+	
 	@Override
 	public void dispose() {
+		for(Disposable object : _texturesByPath.values()) {
+			object.dispose();
+		}
 		
+		for(Disposable object : _bitmapFontsByPath.values()) {
+			object.dispose();
+		}
 	}
 }

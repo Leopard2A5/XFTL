@@ -1,9 +1,6 @@
 package de.xftl.game.states;
 
-import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.graphics.GL10;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
-import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 
 import de.xftl.game.framework.GameStateName;
 import de.xftl.game.framework.XftlGameRenderer;

@@ -6,8 +6,6 @@ import com.badlogic.gdx.ApplicationListener;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.GL10;
 import com.badlogic.gdx.graphics.OrthographicCamera;
-import com.badlogic.gdx.graphics.Texture;
-import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 
 import de.xftl.game.states.MainMenuState;
@@ -20,7 +18,6 @@ public class XftlGameRenderer implements ApplicationListener {
 		private SpriteBatch _spriteBatch;
 		private HashMap<GameStateName, GameState> _gameStatesByGameStateName;
 		private GameState _currentState;
-		@SuppressWarnings("unused")
 		private Game _gameModel;
 		private Mouse _mouse;
 		private ResourceManager _resourceManager;

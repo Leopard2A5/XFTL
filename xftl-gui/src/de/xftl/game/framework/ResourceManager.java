@@ -44,7 +44,6 @@ public class ResourceManager implements Disposable {
 		for(Disposable object : _texturesByPath.values()) {
 			object.dispose();
 		}
-		
 		for(Disposable object : _bitmapFontsByPath.values()) {
 			object.dispose();
 		}

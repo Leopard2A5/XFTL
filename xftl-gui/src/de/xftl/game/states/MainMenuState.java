@@ -21,7 +21,7 @@ public class MainMenuState extends UiGameStateBase {
 	public MainMenuState(XftlGameRenderer game) {
 		super(game); 
 		
-		_mainFont = getGame().getBitmapFont("res/fnt/main.fnt");
+		_mainFont = getResources().getBitmapFont("res/fnt/main.fnt");
 		_headingWidth = _mainFont.getBounds(GAME_HEADING).width;
 		
 		MenuItem newGameMenuItem = new MenuItem(game, "New Game", 50, 350);
@@ -48,16 +48,10 @@ public class MainMenuState extends UiGameStateBase {
 
 	@Override
 	public void onRender() {
-		SpriteBatch spriteBatch = getGame().getSpriteBatch();
-		
-		Gdx.gl.glClear(GL10.GL_COLOR_BUFFER_BIT);
-		
 		float headingPositionX = (float)Math.floor(getGame().getScreenWidth() * 0.5f - _headingWidth * 0.5f);
+		_mainFont.draw(getSpriteBatch(), GAME_HEADING, headingPositionX , 10);
 		
-		spriteBatch.begin();
-		_mainFont.draw(spriteBatch, GAME_HEADING, headingPositionX , 10);
 		super.onRender();
-		spriteBatch.end();		
 	}
 
 	@Override

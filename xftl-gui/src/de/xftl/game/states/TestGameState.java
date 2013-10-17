@@ -18,7 +18,7 @@ public class TestGameState extends GameStateBase {
 	public TestGameState(XftlGameRenderer game) {
 		super(game);
 		
-		Texture texture = getGame().getTexture("res/tex/testframe.png");
+		Texture texture = getResources().getTexture("res/tex/testframe.png");
 		_frameSprite1 = new NinePatchSprite(texture, 4, 32, 4, 4);
 		_frameSprite2 = new NinePatchSprite(texture, 4, 32, 4, 4);
 		_frameSprite3 = new NinePatchSprite(texture, 4, 32, 4, 4);
@@ -45,15 +45,11 @@ public class TestGameState extends GameStateBase {
 
 	@Override
 	public void onRender() {
-		Gdx.gl.glClear(GL10.GL_COLOR_BUFFER_BIT);
-		
+				
 		SpriteBatch spriteBatch = getGame().getSpriteBatch();
-		
-		spriteBatch.begin();
 		_frameSprite1.draw(spriteBatch);
 		_frameSprite2.draw(spriteBatch);
 		_frameSprite3.draw(spriteBatch);
-		spriteBatch.end();
 	}
 
 	@Override

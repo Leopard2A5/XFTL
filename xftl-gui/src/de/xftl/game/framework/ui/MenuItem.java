@@ -1,9 +1,6 @@
 package de.xftl.game.framework.ui;
 
-import org.omg.CORBA.Bounds;
-
 import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.Input.Buttons;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.BitmapFont.TextBounds;
@@ -27,7 +24,7 @@ public class MenuItem extends UiElement {
 	
 	public MenuItem(XftlGameRenderer game, String text, float x, float y) {
 		super(game);
-		_font = getGame().getBitmapFont("res/fnt/main.fnt");
+		_font = getResources().getBitmapFont("res/fnt/main.fnt");
 		_text = text;
 		_x = x;
 		_y = y;
@@ -58,6 +55,6 @@ public class MenuItem extends UiElement {
 	
 	public void draw() {
 		_font.setColor(_color);
-		_font.draw(getGame().getSpriteBatch(), _text, _x, _y);
+		_font.draw(getSpriteBatch(), _text, _x, _y);
 	}
 }

@@ -2,20 +2,20 @@ package de.xftl.game.states;
 
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 
-import de.xftl.game.framework.GameStateName;
+import de.xftl.game.framework.GameScreenName;
 import de.xftl.game.framework.XftlGameRenderer;
 import de.xftl.game.framework.ui.MenuItem;
 import de.xftl.game.framework.ui.MenuItem.MenuItemClickListener;
-import de.xftl.game.framework.ui.UiGameStateBase;
+import de.xftl.game.framework.ui.UiGameScreenBase;
 
-public class MainMenuState extends UiGameStateBase {
+public class MainMenuScreen extends UiGameScreenBase {
 	
 	private static final String GAME_HEADING = "XFTL";
 	
 	private BitmapFont _mainFont;
 	private float _headingWidth;
 		
-	public MainMenuState(XftlGameRenderer game) {
+	public MainMenuScreen(XftlGameRenderer game) {
 		super(game); 
 		
 		_mainFont = getResources().getBitmapFont("res/fnt/main.fnt");
@@ -26,7 +26,7 @@ public class MainMenuState extends UiGameStateBase {
 			
 			@Override
 			public void onClick() {
-				getGame().setCurrentGameState(GameStateName.TestState);
+				getGame().setCurrentGameState(GameScreenName.TestState);
 			}
 		});
 		

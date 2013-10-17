@@ -40,15 +40,15 @@ public class MenuItem extends UiElement {
 	public void update(float elapsedTime) {
 		int mouseX = Gdx.input.getX();
 		int mouseY = Gdx.input.getY();
-		
-		if (_rect.contains(mouseX, mouseY)) {
+		boolean isMouseOver = _rect.contains(mouseX, mouseY);
+		if (isMouseOver) {
 			_color.set(1.0f, 1.0f, 0.0f, 1.0f);
 		}
 		else {
 			_color.set(1.0f, 1.0f, 1.0f, 1.0f);
 		}
 		
-		if (getGame().getMouse().isLeftButtonDownOnce() && _listener != null) {
+		if (getGame().getMouse().isLeftButtonDownOnce() && isMouseOver && _listener != null) {
 			_listener.onClick();
 		}
 	}

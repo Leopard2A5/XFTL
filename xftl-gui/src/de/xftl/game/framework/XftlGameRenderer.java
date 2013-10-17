@@ -8,16 +8,16 @@ import com.badlogic.gdx.graphics.GL10;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 
-import de.xftl.game.states.MainMenuState;
-import de.xftl.game.states.TestGameState;
+import de.xftl.game.states.MainMenuScreen;
+import de.xftl.game.states.TestGameScreen;
 import de.xftl.spec.game.Game;
 
 public class XftlGameRenderer implements ApplicationListener {
 	
 		private OrthographicCamera _camera;
 		private SpriteBatch _spriteBatch;
-		private HashMap<GameStateName, GameState> _gameStatesByGameStateName;
-		private GameState _currentState;
+		private HashMap<GameScreenName, GameScreen> _gameScreensByGameScreenName;
+		private GameScreen _currentGameScreen;
 		private Game _gameModel;
 		private Mouse _mouse;
 		private ResourceManager _resourceManager;
@@ -50,18 +50,18 @@ public class XftlGameRenderer implements ApplicationListener {
 			return _resourceManager;
 		}
 		
-		private void addGameState(GameStateName gameStateName, GameState gameState){
-			_gameStatesByGameStateName.put(gameStateName, gameState);
+		private void addGameScreen(GameScreenName gameScreenName, GameScreen gameScreen){
+			_gameScreensByGameScreenName.put(gameScreenName, gameScreen);
 		}
 		
-		public void setCurrentGameState(GameStateName gameStateName) {
-			_currentState = _gameStatesByGameStateName.get(gameStateName);
+		public void setCurrentGameState(GameScreenName gameScreenName) {
+			_currentGameScreen = _gameScreensByGameScreenName.get(gameScreenName);
 		}
 	
 		public void create () {
         	_spriteBatch = new SpriteBatch();
         	_mouse = new Mouse();
-        	_gameStatesByGameStateName = new HashMap<GameStateName, GameState>();
+        	_gameScreensByGameScreenName = new HashMap<GameScreenName, GameScreen>();
         	_camera = new OrthographicCamera();
         	_resourceManager = new ResourceManager();
         	
@@ -70,20 +70,20 @@ public class XftlGameRenderer implements ApplicationListener {
         	
         	Gdx.gl.glClearColor(0.0f, 0.0f, 0.0f, 1.0f);
         	
-        	addGameState(GameStateName.TestState, new TestGameState(this));
-        	addGameState(GameStateName.MainMenuState, new MainMenuState(this));
-        	setCurrentGameState(GameStateName.MainMenuState);
+        	addGameScreen(GameScreenName.TestState, new TestGameScreen(this));
+        	addGameScreen(GameScreenName.MainMenuState, new MainMenuScreen(this));
+        	setCurrentGameState(GameScreenName.MainMenuState);
         }
 
         public void render () {
         	_mouse.update();
         	float elapsedTime = Gdx.graphics.getDeltaTime();
-        	_currentState.onUpdate(elapsedTime);
+        	_currentGameScreen.onUpdate(elapsedTime);
         	
         	Gdx.gl.glClear(GL10.GL_COLOR_BUFFER_BIT);
         	
         	_spriteBatch.begin();
-        	_currentState.onRender();
+        	_currentGameScreen.onRender();
         	_spriteBatch.end();
         }
 

@@ -2,14 +2,14 @@ package de.xftl.game.framework.ui;
 
 import java.util.ArrayList;
 
-import de.xftl.game.framework.GameStateBase;
+import de.xftl.game.framework.GameScreenBase;
 import de.xftl.game.framework.XftlGameRenderer;
 
-public class UiGameStateBase extends GameStateBase {
+public class UiGameScreenBase extends GameScreenBase {
 
 	private ArrayList<UiElement> _uiElements;
 	
-	protected UiGameStateBase(XftlGameRenderer game) {
+	protected UiGameScreenBase(XftlGameRenderer game) {
 		super(game);
 		_uiElements = new ArrayList<UiElement>();
 	}

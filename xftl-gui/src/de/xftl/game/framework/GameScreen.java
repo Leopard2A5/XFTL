@@ -1,6 +1,6 @@
 package de.xftl.game.framework;
 
-public interface GameState {
+public interface GameScreen {
 	void onEnter();
 	void onUpdate(float elapsedTime);
 	void onRender();

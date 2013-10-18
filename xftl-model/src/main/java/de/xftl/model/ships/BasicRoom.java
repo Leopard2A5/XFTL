@@ -52,7 +52,7 @@ public class BasicRoom implements Room {
 
 	@Override
 	public List<Tile> getTiles() {
-		return _tiles;
+		return Collections.unmodifiableList(_tiles);
 	}
 
 	@Override

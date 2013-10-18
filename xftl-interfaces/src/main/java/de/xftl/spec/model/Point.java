@@ -41,4 +41,20 @@ public class Point<T extends Comparable<T>> implements Comparable<Point<T>> {
         // both are equal
         return diffX;
     }
+    
+    @Override
+    public boolean equals(Object obj) {
+        if (obj instanceof Point<?>) {
+            Point<?> other = (Point<?>) obj;
+            
+            return _x.equals(other._x) && _y.equals(other._y);
+        }
+        
+        return false;
+    }
+    
+    @Override
+    public int hashCode() {
+        return String.format("%s/%s", _x.toString(), _y.toString()).hashCode();
+    }
 }

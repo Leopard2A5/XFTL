@@ -3,6 +3,12 @@ package de.xftl.spec.model.ships;
 public class DeckNumber implements Comparable<DeckNumber> {
 	private int _value;
 	
+	public DeckNumber(int number) {
+		super();
+		
+		_value = number;
+	}
+	
 	@Override
 	public String toString() {
 		return String.format("deck %d", _value);

@@ -19,6 +19,12 @@ public class BasicTile implements Tile {
 	private CrewMember _enemyCrewMember;
 	private Map<Direction, TileOrRoomConnector> _neighbors = new HashMap<>();
 	
+	public BasicTile(Point<TileUnit> leftUpperCornerPos) {
+		super();
+		
+		_leftUpperCornerPos = leftUpperCornerPos;
+	}
+	
 	@Override
 	public void update(float elapsedTime) {
 		// TODO Auto-generated method stub
@@ -48,5 +54,9 @@ public class BasicTile implements Tile {
 	@Override
 	public int compareTo(TileUnitPositioned o) {
 	    return _leftUpperCornerPos.compareTo(o.getLeftUpperCornerPos());
+	}
+	
+	public void addNeighbor(Direction dir, TileOrRoomConnector neighbor) {
+		_neighbors.put(dir, neighbor);
 	}
 }

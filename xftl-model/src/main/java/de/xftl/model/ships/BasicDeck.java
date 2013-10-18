@@ -16,6 +16,12 @@ public class BasicDeck implements Deck {
 	private Deck _deckAbove;
 	private Deck _deckBelow;
 	
+	public BasicDeck(DeckNumber deckNumber) {
+		super();
+		
+		_deckNumber = deckNumber;
+	}
+	
 	@Override
 	public void update(float elapsedTime) {
 		// TODO Auto-generated method stub
@@ -65,5 +71,9 @@ public class BasicDeck implements Deck {
 	@Override
 	public String toString() {
 		return _deckNumber.toString();
+	}
+	
+	public void addRoom(Room room) {
+		_rooms.add(room);
 	}
 }

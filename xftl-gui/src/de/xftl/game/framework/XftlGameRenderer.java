@@ -2,8 +2,6 @@ package de.xftl.game.framework;
 
 import java.util.HashMap;
 
-import javax.jws.Oneway;
-
 import com.badlogic.gdx.ApplicationListener;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.GL10;
@@ -55,10 +53,10 @@ public class XftlGameRenderer implements ApplicationListener {
 			_gameScreensByGameScreenName.put(gameScreenName, gameScreen);
 		}
 		
-		public void setCurrentGameState(GameScreenName gameScreenName) {
+		private void setCurrentGameState(GameScreenName gameScreenName, Object enterInformation) {
 			if (_currentGameScreen != null) _currentGameScreen.onLeave();
 			_currentGameScreen = _gameScreensByGameScreenName.get(gameScreenName);
-			_currentGameScreen.onEnter();
+			_currentGameScreen.onEnter(enterInformation);
 		}
 	
 		public void create () {
@@ -75,16 +73,26 @@ public class XftlGameRenderer implements ApplicationListener {
         	
         	addGameScreen(GameScreenName.CombatScreen, new CombatScreen(this));
         	addGameScreen(GameScreenName.MainMenuState, new MainMenuScreen(this));
-        	setCurrentGameState(GameScreenName.MainMenuState);
+        	setCurrentGameState(GameScreenName.MainMenuState, null);
         }
 
         public void render () {
-        	_mouse.update();
         	float elapsedTime = Gdx.graphics.getDeltaTime();
-        	_currentGameScreen.onUpdate(elapsedTime);
+        	updateCurrentState(elapsedTime);
+        	renderCurrentState();
+        }
+        
+        private void updateCurrentState(float elapsedTime) {
+        	_mouse.update();
+        	ScreenChangeInformation changeInformation = _currentGameScreen.onUpdate(elapsedTime);
         	
-        	Gdx.gl.glClear(GL10.GL_COLOR_BUFFER_BIT);
-        	
+        	if (changeInformation != ScreenChangeInformation.emtpy) {
+        		setCurrentGameState(changeInformation.getGameScreenName(), changeInformation.getEnterInformation());
+        	}
+        }
+        
+        private void renderCurrentState() {
+    		Gdx.gl.glClear(GL10.GL_COLOR_BUFFER_BIT);
         	_spriteBatch.begin();
         	_currentGameScreen.onRender();
         	_spriteBatch.end();

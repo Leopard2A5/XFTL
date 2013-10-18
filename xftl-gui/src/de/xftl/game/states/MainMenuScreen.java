@@ -3,6 +3,7 @@ package de.xftl.game.states;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 
 import de.xftl.game.framework.GameScreenName;
+import de.xftl.game.framework.ScreenChangeInformation;
 import de.xftl.game.framework.XftlGameRenderer;
 import de.xftl.game.framework.ui.MenuItem;
 import de.xftl.game.framework.ui.MenuItem.MenuItemClickListener;
@@ -12,6 +13,7 @@ public class MainMenuScreen extends UiGameScreenBase {
 	
 	private static final String GAME_HEADING = "XFTL";
 	
+	private ScreenChangeInformation _changeInformation;
 	private BitmapFont _mainFont;
 	private float _headingWidth;
 		
@@ -28,7 +30,7 @@ public class MainMenuScreen extends UiGameScreenBase {
 			
 			@Override
 			public void onClick() {
-				getGame().setCurrentGameState(GameScreenName.CombatScreen);
+				_changeInformation = new ScreenChangeInformation(GameScreenName.CombatScreen, null);
 			}
 		});
 				
@@ -40,7 +42,14 @@ public class MainMenuScreen extends UiGameScreenBase {
 	}
 
 	@Override
-	public void onEnter() {
+	public void onEnter(Object enterInformation) {
+	}
+	
+	@Override
+	public ScreenChangeInformation onUpdate(float elapsedTime) {
+		_changeInformation = ScreenChangeInformation.emtpy;
+		super.onUpdate(elapsedTime);
+		return _changeInformation;
 	}
 
 	@Override

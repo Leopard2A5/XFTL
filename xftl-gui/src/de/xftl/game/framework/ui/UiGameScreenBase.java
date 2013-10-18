@@ -3,9 +3,10 @@ package de.xftl.game.framework.ui;
 import java.util.ArrayList;
 
 import de.xftl.game.framework.GameScreenBase;
+import de.xftl.game.framework.ScreenChangeInformation;
 import de.xftl.game.framework.XftlGameRenderer;
 
-public class UiGameScreenBase extends GameScreenBase {
+public abstract class UiGameScreenBase extends GameScreenBase {
 
 	private ArrayList<UiElement> _uiElements;
 	private Cursor _cursor;
@@ -22,17 +23,13 @@ public class UiGameScreenBase extends GameScreenBase {
 	}
 	
 	@Override
-	public void onEnter() {
-		// TODO Auto-generated method stub
-		
-	}
-
-	@Override
-	public void onUpdate(float elapsedTime) {
+	public ScreenChangeInformation onUpdate(float elapsedTime) {
 		_cursor.update();
 		for(UiElement element : _uiElements) {
 			element.update(elapsedTime);
 		}
+		
+		return ScreenChangeInformation.emtpy;
 	}
 	
 	protected void redrawCursor() {
@@ -46,11 +43,4 @@ public class UiGameScreenBase extends GameScreenBase {
 		}		
 		_cursor.draw();
 	}
-
-	@Override
-	public void onLeave() {
-		// TODO Auto-generated method stub
-		
-	}
-
 }

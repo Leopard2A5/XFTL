@@ -7,6 +7,7 @@ import de.xftl.model.ships.BasicDeck;
 import de.xftl.model.ships.BasicRoom;
 import de.xftl.model.ships.BasicShip;
 import de.xftl.model.ships.BasicTile;
+import de.xftl.model.util.TileConnector;
 import de.xftl.spec.game.Game;
 import de.xftl.spec.model.Point;
 import de.xftl.spec.model.ships.Deck;
@@ -46,13 +47,15 @@ public class Fixture {
 	}
 
 	private static Room buildRoom(int width, int height, int x, int y) {
-		BasicRoom room = new BasicRoom(buildTiles(width, height, x, y));
+	    List<BasicTile> tiles = buildTiles(width, height, x, y);
+	    new TileConnector(tiles).connectTiles();
+		BasicRoom room = new BasicRoom(new ArrayList<Tile>(tiles));
 		
 		return room;
 	}
 
-	private static List<Tile> buildTiles(int width, int height, int pX, int pY) {
-		List<Tile> tiles = new ArrayList<>(width * height);
+	private static List<BasicTile> buildTiles(int width, int height, int pX, int pY) {
+		List<BasicTile> tiles = new ArrayList<>(width * height);
 		
 		for (int y = 0; y < height; y++) {
 			for (int x = 0; x < width; x++) {

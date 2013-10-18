@@ -4,7 +4,6 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
-import de.xftl.model.util.TileConnector;
 import de.xftl.spec.model.Point;
 import de.xftl.spec.model.crew.CrewMember;
 import de.xftl.spec.model.ships.OxygenLevel;
@@ -25,7 +24,6 @@ public class BasicRoom implements Room {
 	    super();
 	    
 	    _tiles = tiles;
-	    new TileConnector(_tiles).connectTiles();
 	    determineLeftUpperCornerPos();
 	}
 

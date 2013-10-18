@@ -57,4 +57,9 @@ public class Point<T extends Comparable<T>> implements Comparable<Point<T>> {
     public int hashCode() {
         return String.format("%s/%s", _x.toString(), _y.toString()).hashCode();
     }
+    
+    @Override
+    public String toString() {
+        return String.format("(%s/%s)", _x, _y);
+    }
 }

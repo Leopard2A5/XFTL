@@ -10,7 +10,7 @@ import de.xftl.spec.model.crew.CrewMember;
 import de.xftl.spec.model.ships.Tile;
 import de.xftl.spec.model.ships.TileOrRoomConnector;
 import de.xftl.spec.model.ships.TileUnit;
-import de.xftl.spec.model.ships.TileUnitPositioned;
+import de.xftl.spec.model.ships.Positioned;
 
 public class BasicTile implements Tile {
 
@@ -52,11 +52,16 @@ public class BasicTile implements Tile {
 	}
 	
 	@Override
-	public int compareTo(TileUnitPositioned o) {
+	public int compareTo(Positioned<TileUnit> o) {
 	    return _leftUpperCornerPos.compareTo(o.getLeftUpperCornerPos());
 	}
 	
 	public void addNeighbor(Direction dir, TileOrRoomConnector neighbor) {
 		_neighbors.put(dir, neighbor);
+	}
+	
+	@Override
+	public String toString() {
+	    return String.format("BasicTile %s", _leftUpperCornerPos);
 	}
 }

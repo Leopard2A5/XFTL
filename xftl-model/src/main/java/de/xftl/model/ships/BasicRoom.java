@@ -11,7 +11,7 @@ import de.xftl.spec.model.ships.Room;
 import de.xftl.spec.model.ships.RoomConnector;
 import de.xftl.spec.model.ships.Tile;
 import de.xftl.spec.model.ships.TileUnit;
-import de.xftl.spec.model.ships.TileUnitPositioned;
+import de.xftl.spec.model.ships.Positioned;
 
 public class BasicRoom implements Room {
 
@@ -85,7 +85,7 @@ public class BasicRoom implements Room {
 	}
 
 	@Override
-    public int compareTo(TileUnitPositioned o) {
+    public int compareTo(Positioned<TileUnit> o) {
         return _leftUpperCornerPos.compareTo(o.getLeftUpperCornerPos());
     }
 }

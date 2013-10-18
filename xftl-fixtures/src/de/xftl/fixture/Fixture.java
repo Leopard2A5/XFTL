@@ -1,14 +1,17 @@
 package de.xftl.fixture;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
 
 import de.xftl.model.ships.BasicDeck;
 import de.xftl.model.ships.BasicRoom;
 import de.xftl.model.ships.BasicShip;
 import de.xftl.model.ships.BasicTile;
-import de.xftl.model.util.TileConnector;
+import de.xftl.model.util.TileUnitMatrix;
+import de.xftl.model.util.TileUnitMatrixIterator;
 import de.xftl.spec.game.Game;
+import de.xftl.spec.model.Direction;
 import de.xftl.spec.model.Point;
 import de.xftl.spec.model.ships.Deck;
 import de.xftl.spec.model.ships.DeckNumber;
@@ -48,10 +51,26 @@ public class Fixture {
 
 	private static Room buildRoom(int width, int height, int x, int y) {
 	    List<BasicTile> tiles = buildTiles(width, height, x, y);
-	    new TileConnector(tiles).connectTiles();
+	    connectTiles(tiles);
 		BasicRoom room = new BasicRoom(new ArrayList<Tile>(tiles));
 		
 		return room;
+	}
+	
+	private static void connectTiles(Collection<BasicTile> tiles) {
+	    TileUnitMatrix<BasicTile> matrix = new TileUnitMatrix<>(tiles);
+        
+        for (TileUnitMatrixIterator<BasicTile> it = matrix.matrixIterator(); it.hasNext();) {
+            BasicTile t = it.next();
+            
+            for (Direction dir : Direction.values()) {
+                BasicTile other = it.getNeighbor(dir);
+                if (other != null) {
+                    t.addNeighbor(dir, other);
+                    other.addNeighbor(dir.getOpposite(), t);
+                }
+            }
+        }
 	}
 
 	private static List<BasicTile> buildTiles(int width, int height, int pX, int pY) {

@@ -21,17 +21,17 @@ public class MainMenuScreen extends UiGameScreenBase {
 		_mainFont = getResources().getBitmapFont("res/fnt/main.fnt");
 		_headingWidth = _mainFont.getBounds(GAME_HEADING).width;
 		
-		MenuItem newGameMenuItem = new MenuItem(game, "New Game", 50, 350);
+		addUiElement(new MenuItem(game, "Continue", 50, 300));
+				
+		MenuItem newGameMenuItem = addUiElement(new MenuItem(game, "New Game", 50, 350));
 		newGameMenuItem.setMenuItemClickListener(new MenuItemClickListener() {
 			
 			@Override
 			public void onClick() {
-				getGame().setCurrentGameState(GameScreenName.TestState);
+				getGame().setCurrentGameState(GameScreenName.CombatScreen);
 			}
 		});
-		
-		addUiElement(new MenuItem(game, "Continue", 50, 300));
-		addUiElement(newGameMenuItem);
+				
 		addUiElement(new MenuItem(game, "Load Game", 50, 400));
 		addUiElement(new MenuItem(game, "Credits", 50, 450));
 		addUiElement(new MenuItem(game, "Create Campaign", 50, 500));

@@ -2,14 +2,15 @@ package de.xftl.game.framework;
 
 import java.util.HashMap;
 
+import javax.jws.Oneway;
+
 import com.badlogic.gdx.ApplicationListener;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.GL10;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 
-import de.xftl.game.states.MainMenuScreen;
-import de.xftl.game.states.TestGameScreen;
+import de.xftl.game.states.*;
 import de.xftl.spec.game.Game;
 
 public class XftlGameRenderer implements ApplicationListener {
@@ -55,7 +56,9 @@ public class XftlGameRenderer implements ApplicationListener {
 		}
 		
 		public void setCurrentGameState(GameScreenName gameScreenName) {
+			if (_currentGameScreen != null) _currentGameScreen.onLeave();
 			_currentGameScreen = _gameScreensByGameScreenName.get(gameScreenName);
+			_currentGameScreen.onEnter();
 		}
 	
 		public void create () {
@@ -70,7 +73,7 @@ public class XftlGameRenderer implements ApplicationListener {
         	
         	Gdx.gl.glClearColor(0.0f, 0.0f, 0.0f, 1.0f);
         	
-        	addGameScreen(GameScreenName.TestState, new TestGameScreen(this));
+        	addGameScreen(GameScreenName.CombatScreen, new CombatScreen(this));
         	addGameScreen(GameScreenName.MainMenuState, new MainMenuScreen(this));
         	setCurrentGameState(GameScreenName.MainMenuState);
         }

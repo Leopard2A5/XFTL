@@ -61,6 +61,11 @@ public class TileUnitMatrix<T extends Positioned<TileUnit>> implements Iterable<
     public TileUnitMatrixIterator<T> matrixIterator() {
         return new TileUnitMatrixIterator<T>(this);
     }
+    
+    @SuppressWarnings("unchecked")
+	public T get(int x, int y) {
+    	return (T) _matrix[y][x];
+    }
 
     @Override
     public Iterator<T> iterator() {

@@ -92,9 +92,9 @@ public class Fixture {
 		Ship ship = buildShip();
 		
 		final int MATRIX_X = 10;
-		final int MATRIX_Y = 10;
+		final int MATRIX_Y = 6;
 		
-		Tile[][] matrix = new Tile[MATRIX_X][MATRIX_Y];
+		Tile[][] matrix = new Tile[MATRIX_Y + 1][MATRIX_X + 1];
 		
 		for (Room room : ship.getDecks().get(0).getRooms()) {
 			for (Tile tile : room.getTiles()) {
@@ -106,7 +106,17 @@ public class Fixture {
 			}
 		}
 		
+		System.out.print("  |");
+		for (int x = 0; x < MATRIX_X; x++)
+			System.out.print(String.format("%d", x));
+		System.out.println();
+		System.out.print("--|");
+		for (int x = 0; x < MATRIX_X; x++)
+			System.out.print("-");
+		System.out.println();
+		
 		for (int y = 0; y < MATRIX_Y; y++) {
+			System.out.print(String.format("%d |", y));
 			for (int x = 0; x < MATRIX_X; x++) {
 				System.out.print(matrix[y][x] == null ? ' ' : 'X');
 			}

@@ -83,6 +83,10 @@ public class ShipBuilder {
 		return this;
 	}
 	
+	public ShipBuilder addAirlock(Point<Integer> src, Point<Integer> dest) {
+		return addDoor(src, dest);
+	}
+	
 	private boolean adjacent(Tile tile1, Tile tile2) {
 		Point<TileUnit> pos1 = tile1.getLeftUpperCornerPos();
 		Point<TileUnit> pos2 = tile2.getLeftUpperCornerPos();

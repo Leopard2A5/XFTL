@@ -32,6 +32,10 @@ public class Fixture {
 			.addDoor(new Point<Integer>(3, 1), new Point<Integer>(4, 1))
 			.addDoor(new Point<Integer>(3, 2), new Point<Integer>(4, 2))
 			.addDoor(new Point<Integer>(5, 2), new Point<Integer>(6, 2))
+			.addAirlock(new Point<Integer>(0, 1), new Point<Integer>(-1, 1))
+			.addAirlock(new Point<Integer>(0, 2), new Point<Integer>(-1, 2))
+			.addAirlock(new Point<Integer>(3, 1), new Point<Integer>(3, 0))
+			.addAirlock(new Point<Integer>(3, 2), new Point<Integer>(3, 3))
 			.buildShip();
 		
 		return ship;

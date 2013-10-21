@@ -11,6 +11,9 @@ public class BasicDoor extends AbstractRoomConnector implements Door {
 	
 	public BasicDoor(List<Room> rooms) {
 		super(rooms);
+		
+		if (rooms.size() > 2)
+			throw new RuntimeException("A Door can only connect 2 rooms!");
 	}
 	
 	@Override

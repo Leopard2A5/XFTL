@@ -9,6 +9,7 @@ import java.util.Set;
 
 import de.xftl.model.ships.BasicDeck;
 import de.xftl.model.ships.BasicDoor;
+import de.xftl.model.ships.BasicLift;
 import de.xftl.model.ships.BasicRoom;
 import de.xftl.model.ships.BasicShip;
 import de.xftl.model.ships.BasicTile;
@@ -27,6 +28,7 @@ public class ShipBuilder {
 	private BasicDeck _currentDeck;
 	
 	private Map<Deck, TileUnitMatrix<BasicTile>> _matrices = new HashMap<>();
+	private Map<String, List<DeckLiftDescription>> _deckLiftDescriptions = new HashMap<>();
 	
 	
 	public BasicShip buildShip() {
@@ -35,7 +37,44 @@ public class ShipBuilder {
 		for (BasicDeck deck : _decks)
 			ship.addDeck(deck);
 		
+		createLifts();
+		
 		return ship;
+	}
+	
+	private void createLifts() {
+		Map<Deck, Set<Point<Integer>>> liftPositions = new HashMap<>();
+		Map<String, List<Room>> roomsPerLift = new HashMap<>();
+		
+		for (String liftId : _deckLiftDescriptions.keySet()) {
+			for (DeckLiftDescription dld : _deckLiftDescriptions.get(liftId)) {
+				Set<Point<Integer>> usedPositions = liftPositions.get(dld._deck);
+				if (usedPositions == null) {
+					usedPositions = new HashSet<>();
+					liftPositions.put(dld._deck, usedPositions);
+				}
+				else {
+					if (usedPositions.contains(dld._liftPos))
+						throw new RuntimeException(String.format("Position %s is occupied by two lifts!", dld._liftPos));
+				}
+				usedPositions.add(dld._liftPos);
+				
+				List<Room> rooms = roomsPerLift.get(liftId);
+				if (rooms == null) {
+					rooms = new ArrayList<>();
+					roomsPerLift.put(liftId, rooms);
+				}
+				rooms.add(dld._tile.getRoom());
+			}
+		}
+		
+		for (String liftId : _deckLiftDescriptions.keySet()) {
+			BasicLift lift = new BasicLift(roomsPerLift.get(liftId));
+			
+			for (DeckLiftDescription dld : _deckLiftDescriptions.get(liftId)) {
+				dld._tile.addNeighbor(dld._tileToLiftDirection, lift);
+			}
+		}
 	}
 	
 	public ShipBuilder addDeck() {
@@ -54,8 +93,7 @@ public class ShipBuilder {
 	}
 	
 	public ShipBuilder addDoor(Point<Integer> src, Point<Integer> dest) {
-		if (!_matrices.containsKey(_currentDeck))
-			_matrices.put(_currentDeck, createDeckMatrix(_currentDeck));
+		ensureDeckMatrixPresent();
 		
 		TileUnitMatrix<BasicTile> matrix = _matrices.get(_currentDeck);
 		BasicTile srcTile = matrix.get(src.getX(), src.getY());
@@ -82,9 +120,32 @@ public class ShipBuilder {
 		
 		return this;
 	}
-	
+
 	public ShipBuilder addAirlock(Point<Integer> src, Point<Integer> dest) {
 		return addDoor(src, dest);
+	}
+	
+	public ShipBuilder addLift(Point<Integer> tilePos, Point<Integer> liftPos, String liftId) {
+		ensureDeckMatrixPresent();
+		TileUnitMatrix<BasicTile> matrix = _matrices.get(_currentDeck);
+		
+		BasicTile roomTile = matrix.get(tilePos.getX(), tilePos.getY());
+		BasicTile liftTile = matrix.get(liftPos.getX(), liftPos.getY());
+		
+		if (roomTile == null)
+			throw new RuntimeException(String.format("There is no tile to connect to the lift at %s", tilePos));
+		if (liftTile != null)
+			throw new RuntimeException(String.format("The position %s is occupied by a room tile", liftPos));
+		
+		List<DeckLiftDescription> liftDesc = _deckLiftDescriptions.get(liftId);
+		if (liftDesc == null) {
+			liftDesc = new ArrayList<DeckLiftDescription>();
+			_deckLiftDescriptions.put(liftId, liftDesc);
+		}
+		
+		liftDesc.add(new DeckLiftDescription(_currentDeck, roomTile, Direction.getDirection(tilePos, liftPos), liftPos));
+		
+		return this;
 	}
 	
 	private boolean adjacent(Tile tile1, Tile tile2) {
@@ -99,6 +160,11 @@ public class ShipBuilder {
 		}
 		
 		return false;
+	}
+	
+	private void ensureDeckMatrixPresent() {
+		if (!_matrices.containsKey(_currentDeck))
+			_matrices.put(_currentDeck, createDeckMatrix(_currentDeck));
 	}
 
 	private TileUnitMatrix<BasicTile> createDeckMatrix(BasicDeck deck) {
@@ -116,5 +182,21 @@ public class ShipBuilder {
 		}
 		
 		return new TileUnitMatrix<>(tiles);
+	}
+	
+	private class DeckLiftDescription {
+		public BasicDeck _deck;
+		public BasicTile _tile;
+		public Direction _tileToLiftDirection;
+		public Point<Integer> _liftPos;
+		
+		public DeckLiftDescription(BasicDeck deck, BasicTile tile, Direction tileToLiftDirection, Point<Integer> liftPos) {
+			super();
+			
+			_deck = deck;
+			_tile = tile;
+			_tileToLiftDirection = tileToLiftDirection;
+			_liftPos = liftPos;
+		}
 	}
 }

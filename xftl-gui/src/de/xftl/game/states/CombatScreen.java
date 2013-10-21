@@ -1,16 +1,14 @@
 package de.xftl.game.states;
 
-import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.graphics.GL10;
-
 import de.xftl.game.framework.ScreenChangeInformation;
 import de.xftl.game.framework.XftlGameRenderer;
 import de.xftl.game.framework.ui.UiGameScreenBase;
-import de.xftl.game.states.combat.RoomRenderer;
+import de.xftl.game.states.combat.DeckRenderer;
+import de.xftl.spec.game.Game;
 
 public class CombatScreen extends UiGameScreenBase {
 
-	private RoomRenderer _roomRenderer;
+	private DeckRenderer _deckRenderer;
 	
 	public CombatScreen(XftlGameRenderer game) {
 		super(game);
@@ -19,23 +17,22 @@ public class CombatScreen extends UiGameScreenBase {
 	@Override
 	public ScreenChangeInformation onUpdate(float elapsedTime) {
 		super.onUpdate(elapsedTime);
-		_roomRenderer.update(elapsedTime);
 		
 		return ScreenChangeInformation.emtpy;
 	}
 
 	@Override
 	public void onRender() {
-		
-		Gdx.gl.glClearColor(1.0f, 1.0f, 1.0f, 1.0f);
-		Gdx.gl.glClear(GL10.GL_COLOR_BUFFER_BIT);
-		_roomRenderer.draw();
+		_deckRenderer.draw();
 		super.onRender();
 	}
 
 	@Override
 	public void onEnter(Object enterInformation) {
-		_roomRenderer = new RoomRenderer(getGame(), null);
+		Game model = getGame().getGameModel();
+		model.startNewGame(null);
+		_deckRenderer = new DeckRenderer(getGame(), model.getShip().getDecks().get(0));
+		_deckRenderer.setPosition(30, 60);
 	}
 
 	@Override

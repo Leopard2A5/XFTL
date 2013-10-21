@@ -23,6 +23,7 @@ public class BasicRoom implements Room {
 	private System _system;
 	private List<Tile> _tiles;
 	private OxygenLevel _oxygenLevel;
+	private List<RoomConnector> _roomConnectors = new ArrayList<>();
 	
 	public BasicRoom(int width, int height, int x, int y) {
 	    super();
@@ -41,6 +42,7 @@ public class BasicRoom implements Room {
 				TileUnit tuy = new TileUnit(y + pY);
 				BasicTile tile = new BasicTile(this, new Point<TileUnit>(tux, tuy));
 				tiles.add(tile);
+				basicTiles.add(tile);
 			}
 		}
 		
@@ -93,8 +95,7 @@ public class BasicRoom implements Room {
 
 	@Override
 	public List<RoomConnector> getRoomConnectors() {
-		// TODO Auto-generated method stub
-		return null;
+		return Collections.unmodifiableList(_roomConnectors);
 	}
 
 	@Override
@@ -118,4 +119,9 @@ public class BasicRoom implements Room {
     public int compareTo(Positioned<TileUnit> o) {
         return _leftUpperCornerPos.compareTo(o.getLeftUpperCornerPos());
     }
+	
+	@Override
+	public void addRoomConnector(RoomConnector rc) {
+		_roomConnectors.add(rc);
+	}
 }

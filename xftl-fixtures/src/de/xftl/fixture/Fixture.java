@@ -24,7 +24,14 @@ public class Fixture {
 			.addRoom(2, 1, 1, 0)
 			.addRoom(2, 1, 1, 3)
 			.addRoom(2, 2, 4, 1)
-			.addRoom(1, 2, 5, 1)
+			.addRoom(1, 2, 6, 1)
+			.addDoor(new Point<Integer>(1, 0), new Point<Integer>(1, 1))
+			.addDoor(new Point<Integer>(1, 2), new Point<Integer>(1, 3))
+			.addDoor(new Point<Integer>(2, 0), new Point<Integer>(2, 1))
+			.addDoor(new Point<Integer>(2, 2), new Point<Integer>(2, 3))
+			.addDoor(new Point<Integer>(3, 1), new Point<Integer>(4, 1))
+			.addDoor(new Point<Integer>(3, 2), new Point<Integer>(4, 2))
+			.addDoor(new Point<Integer>(5, 2), new Point<Integer>(6, 2))
 			.buildShip();
 		
 		return ship;

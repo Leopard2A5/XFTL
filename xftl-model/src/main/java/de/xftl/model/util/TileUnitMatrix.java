@@ -61,11 +61,6 @@ public class TileUnitMatrix<T extends Positioned<TileUnit>> implements Iterable<
     public TileUnitMatrixIterator<T> matrixIterator() {
         return new TileUnitMatrixIterator<T>(this);
     }
-    
-    @SuppressWarnings("unchecked")
-	public T get(int x, int y) {
-    	return (T) _matrix[y][x];
-    }
 
     @Override
     public Iterator<T> iterator() {
@@ -78,5 +73,15 @@ public class TileUnitMatrix<T extends Positioned<TileUnit>> implements Iterable<
 
     public int getMaxY() {
         return _maxY;
+    }
+    
+    @SuppressWarnings("unchecked")
+	public T get(int x, int y) {
+    	if (x < 0 || x > _maxX)
+    		return null;
+    	if (y < 0 || y > _maxY)
+    		return null;
+    	
+    	return (T) _matrix[y][x];
     }
 }

@@ -7,6 +7,7 @@ import java.util.Map;
 import de.xftl.spec.model.Direction;
 import de.xftl.spec.model.Point;
 import de.xftl.spec.model.crew.CrewMember;
+import de.xftl.spec.model.ships.Room;
 import de.xftl.spec.model.ships.Tile;
 import de.xftl.spec.model.ships.TileOrRoomConnector;
 import de.xftl.spec.model.ships.TileUnit;
@@ -14,14 +15,16 @@ import de.xftl.spec.model.ships.Positioned;
 
 public class BasicTile implements Tile {
 
+	private Room _room;
 	private Point<TileUnit> _leftUpperCornerPos;
 	private CrewMember _crewMember;
 	private CrewMember _enemyCrewMember;
 	private Map<Direction, TileOrRoomConnector> _neighbors = new HashMap<>();
 	
-	public BasicTile(Point<TileUnit> leftUpperCornerPos) {
+	public BasicTile(Room room, Point<TileUnit> leftUpperCornerPos) {
 		super();
 		
+		_room = room;
 		_leftUpperCornerPos = leftUpperCornerPos;
 	}
 	
@@ -63,5 +66,9 @@ public class BasicTile implements Tile {
 	@Override
 	public String toString() {
 	    return String.format("BasicTile %s", _leftUpperCornerPos);
+	}
+
+	public Room getRoom() {
+		return _room;
 	}
 }

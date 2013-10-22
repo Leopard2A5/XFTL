@@ -10,24 +10,28 @@ import de.xftl.model.util.TileUnitMatrixIterator;
 import de.xftl.spec.model.Direction;
 import de.xftl.spec.model.Point;
 import de.xftl.spec.model.crew.CrewMember;
+import de.xftl.spec.model.ships.Deck;
 import de.xftl.spec.model.ships.OxygenLevel;
 import de.xftl.spec.model.ships.Room;
 import de.xftl.spec.model.ships.RoomConnector;
 import de.xftl.spec.model.ships.Tile;
 import de.xftl.spec.model.ships.TileUnit;
 import de.xftl.spec.model.ships.Positioned;
+import de.xftl.spec.model.systems.ShipSystem;
 
 public class BasicRoom implements Room {
 
+    private Deck _deck;
 	private Point<TileUnit> _leftUpperCornerPos;
-	private System _system;
+	private ShipSystem _system;
 	private List<Tile> _tiles;
 	private OxygenLevel _oxygenLevel;
 	private List<RoomConnector> _roomConnectors = new ArrayList<>();
 	
-	public BasicRoom(int width, int height, int x, int y) {
+	public BasicRoom(Deck deck, int width, int height, int x, int y) {
 	    super();
 
+	    _deck = deck;
 	    _leftUpperCornerPos = new Point<TileUnit>(new TileUnit(x), new TileUnit(y));
 	    _tiles = buildTiles(width, height, x, y);
 	}
@@ -80,9 +84,15 @@ public class BasicRoom implements Room {
 	}
 
 	@Override
-	public System getSystem() {
+	public ShipSystem getSystem() {
 		return _system;
 	}
+
+    public void setSystem(ShipSystem system) {
+        _system = system;
+        
+        _deck.onSystemAdded(system);
+    }
 
 	@Override
 	public List<Tile> getTiles() {

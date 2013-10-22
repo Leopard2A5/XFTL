@@ -8,17 +8,21 @@ import de.xftl.spec.model.hardpoints.Hardpoint;
 import de.xftl.spec.model.ships.Deck;
 import de.xftl.spec.model.ships.DeckNumber;
 import de.xftl.spec.model.ships.Room;
+import de.xftl.spec.model.ships.Ship;
+import de.xftl.spec.model.systems.ShipSystem;
 
 public class BasicDeck implements Deck {
+    private Ship _ship;
 	private DeckNumber _deckNumber;
 	private List<Room> _rooms = new ArrayList<>();
 	private List<Hardpoint> _hardpoints = new ArrayList<>();
 	private Deck _deckAbove;
 	private Deck _deckBelow;
 	
-	public BasicDeck(DeckNumber deckNumber) {
+	public BasicDeck(Ship ship, DeckNumber deckNumber) {
 		super();
 		
+		_ship = ship;
 		_deckNumber = deckNumber;
 	}
 	
@@ -78,4 +82,9 @@ public class BasicDeck implements Deck {
 	public void addRoom(Room room) {
 		_rooms.add(room);
 	}
+
+    @Override
+    public void onSystemAdded(ShipSystem system) {
+        _ship.addSystem(system);
+    }
 }

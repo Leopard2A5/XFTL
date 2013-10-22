@@ -4,6 +4,7 @@ import java.util.List;
 
 import de.xftl.spec.model.XFTLModelObject;
 import de.xftl.spec.model.hardpoints.Hardpoint;
+import de.xftl.spec.model.systems.ShipSystem;
 
 public interface Deck extends XFTLModelObject {
 	public DeckNumber getDeckNumber();
@@ -11,4 +12,5 @@ public interface Deck extends XFTLModelObject {
 	public List<Hardpoint> getHardpoints();
 	public Deck getDeckAbove();
 	public Deck getDeckBelow();
+	public void onSystemAdded(ShipSystem system);
 }

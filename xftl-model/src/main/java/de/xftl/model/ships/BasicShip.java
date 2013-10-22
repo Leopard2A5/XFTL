@@ -7,12 +7,13 @@ import java.util.List;
 import de.xftl.spec.model.ships.Deck;
 import de.xftl.spec.model.ships.Hitpoints;
 import de.xftl.spec.model.ships.Ship;
+import de.xftl.spec.model.systems.ShipSystem;
 
 public class BasicShip implements Ship {
 
 	private List<Deck> _decks = new ArrayList<>();
 	private Hitpoints _hitpoints;
-	private List<System> _systems;
+	private List<ShipSystem> _systems = new ArrayList<>();
 	
 	@Override
 	public void update(float elapsedTime) {
@@ -35,8 +36,13 @@ public class BasicShip implements Ship {
 	}
 
     @Override
-    public List<System> getSystems() {
+    public List<ShipSystem> getSystems() {
         return Collections.unmodifiableList(_systems);
+    }
+
+    @Override
+    public void addSystem(ShipSystem system) {
+        _systems.add(system);
     }
 
 }

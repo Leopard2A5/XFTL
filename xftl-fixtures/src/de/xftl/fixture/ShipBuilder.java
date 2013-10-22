@@ -21,25 +21,27 @@ import de.xftl.spec.model.ships.DeckNumber;
 import de.xftl.spec.model.ships.Room;
 import de.xftl.spec.model.ships.Tile;
 import de.xftl.spec.model.ships.TileUnit;
+import de.xftl.spec.model.systems.ShipSystem;
 
 public class ShipBuilder {
 	
+    private BasicShip _ship = new BasicShip();
+    
 	private List<BasicDeck> _decks = new ArrayList<>();
 	private BasicDeck _currentDeck;
+	private BasicRoom _currentRoom;
 	
 	private Map<Deck, TileUnitMatrix<BasicTile>> _matrices = new HashMap<>();
 	private Map<String, List<DeckLiftDescription>> _deckLiftDescriptions = new HashMap<>();
 	
 	
 	public BasicShip buildShip() {
-		BasicShip ship = new BasicShip();
-		
 		for (BasicDeck deck : _decks)
-			ship.addDeck(deck);
+			_ship.addDeck(deck);
 		
 		createLifts();
 		
-		return ship;
+		return _ship;
 	}
 	
 	private void createLifts() {
@@ -78,8 +80,9 @@ public class ShipBuilder {
 	}
 	
 	public ShipBuilder addDeck() {
-		_currentDeck = new BasicDeck(new DeckNumber(_decks.size() + 1));
+		_currentDeck = new BasicDeck(_ship, new DeckNumber(_decks.size() + 1));
 		_decks.add(_currentDeck);
+		_currentRoom = null;
 		return this;
 	}
 	
@@ -87,9 +90,19 @@ public class ShipBuilder {
 		if (_matrices.containsKey(_currentDeck))
 			throw new RuntimeException("You should first create all the rooms before adding doors or lifts!");
 		
-		_currentDeck.addRoom(new BasicRoom(width, height, x, y));
+		_currentRoom = new BasicRoom(_currentDeck, width, height, x, y);
+		_currentDeck.addRoom(_currentRoom);
 		
 		return this;
+	}
+	
+	public ShipBuilder addSystem(ShipSystem system) {
+	    if (_currentRoom == null)
+	        throw new RuntimeException("You have to add a room before adding a system!");
+	    
+	    _currentRoom.setSystem(system);
+	    
+	    return this;
 	}
 	
 	public ShipBuilder addDoor(Point<Integer> src, Point<Integer> dest) {

@@ -4,9 +4,10 @@ import java.util.List;
 
 import de.xftl.spec.model.XFTLModelObject;
 import de.xftl.spec.model.crew.CrewMember;
+import de.xftl.spec.model.systems.ShipSystem;
 
 public interface Room extends XFTLModelObject, Positioned<TileUnit> {
-	public System getSystem();
+	public ShipSystem getSystem();
 	public List<Tile> getTiles();
 	public List<CrewMember> getCrewMembers();
 	public List<RoomConnector> getRoomConnectors();

@@ -1,12 +1,14 @@
 package de.xftl.fixture;
 
 import de.xftl.model.ships.BasicShip;
+import de.xftl.model.systems.BasicGenerator;
 import de.xftl.spec.game.Game;
 import de.xftl.spec.model.Point;
 import de.xftl.spec.model.ships.Room;
 import de.xftl.spec.model.ships.Ship;
 import de.xftl.spec.model.ships.Tile;
 import de.xftl.spec.model.ships.TileUnit;
+import de.xftl.spec.model.systems.Energy;
 
 public class Fixture {
 	
@@ -41,6 +43,7 @@ public class Fixture {
 			.addDeck()
 			.addRoom(2, 2, 0, 1)
 			.addRoom(2, 2, 2, 1)
+			.addSystem(new BasicGenerator(Energy.valueOf(20)))
 			.addRoom(2, 1, 1, 0)
 			.addRoom(2, 1, 1, 3)
 			.addRoom(2, 2, 4, 1)

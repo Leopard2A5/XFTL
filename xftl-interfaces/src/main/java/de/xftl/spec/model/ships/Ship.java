@@ -7,4 +7,5 @@ import de.xftl.spec.model.XFTLModelObject;
 public interface Ship extends XFTLModelObject {
 	public List<Deck> getDecks();
 	public Hitpoints getHitpoints();
+	public List<System> getSystems();
 }

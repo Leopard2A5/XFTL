@@ -12,6 +12,7 @@ public class BasicShip implements Ship {
 
 	private List<Deck> _decks = new ArrayList<>();
 	private Hitpoints _hitpoints;
+	private List<System> _systems;
 	
 	@Override
 	public void update(float elapsedTime) {
@@ -32,5 +33,10 @@ public class BasicShip implements Ship {
 	public void addDeck(Deck deck) {
 		_decks.add(deck);
 	}
+
+    @Override
+    public List<System> getSystems() {
+        return Collections.unmodifiableList(_systems);
+    }
 
 }

@@ -14,8 +14,8 @@ public class FixtureGame implements Game {
 	
 	@Override
 	public void update(float elapsedTime) {
-		// TODO Auto-generated method stub
-
+		if (_ship != null)
+		    _ship.update(elapsedTime);
 	}
 
 	@Override

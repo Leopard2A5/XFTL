@@ -15,8 +15,8 @@ public class BasicShip implements Ship {
 	
 	@Override
 	public void update(float elapsedTime) {
-		// TODO Auto-generated method stub
-		
+		for (Deck deck : _decks)
+		    deck.update(elapsedTime);
 	}
 
 	@Override

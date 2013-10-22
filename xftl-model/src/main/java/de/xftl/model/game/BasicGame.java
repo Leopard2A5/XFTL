@@ -33,7 +33,11 @@ public class BasicGame implements Game {
     
     @Override
     public void update(float elapsedTime) {
-        // TODO Auto-generated method stub
+        if (_ship != null)
+            _ship.update(elapsedTime);
+        
+        for (Ship ship : _enemyShips)
+            ship.update(elapsedTime);
     }
 
     @Override

@@ -24,8 +24,10 @@ public class BasicDeck implements Deck {
 	
 	@Override
 	public void update(float elapsedTime) {
-		// TODO Auto-generated method stub
-		
+		for (Room room : _rooms)
+		    room.update(elapsedTime);
+		for (Hardpoint hardpoint : _hardpoints)
+		    hardpoint.update(elapsedTime);
 	}
 
 	@Override

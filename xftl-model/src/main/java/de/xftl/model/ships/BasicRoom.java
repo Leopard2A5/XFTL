@@ -68,8 +68,10 @@ public class BasicRoom implements Room {
 	
     @Override
 	public void update(float elapsedTime) {
-		// TODO Auto-generated method stub
-		
+		for (Tile tile : _tiles)
+		    tile.update(elapsedTime);
+		for (RoomConnector connector : _roomConnectors)
+		    connector.update(elapsedTime);
 	}
 
 	@Override

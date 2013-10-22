@@ -9,6 +9,8 @@ public class BasicDoor extends AbstractRoomConnector implements Door {
 
 	private boolean _open;
 	
+	private float _elapsedTime;
+	
 	public BasicDoor(List<Room> rooms) {
 		super(rooms);
 		
@@ -18,8 +20,14 @@ public class BasicDoor extends AbstractRoomConnector implements Door {
 	
 	@Override
 	public void update(float elapsedTime) {
-		// TODO Auto-generated method stub
-
+		_elapsedTime += elapsedTime;
+		
+		if (_elapsedTime > 1) {
+		    if (Math.random() > 0.5)
+		        _open = !_open;
+		    
+		    _elapsedTime = 0;
+		}
 	}
 	
 	@Override

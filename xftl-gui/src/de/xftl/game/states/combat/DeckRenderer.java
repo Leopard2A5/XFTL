@@ -23,6 +23,7 @@ public class DeckRenderer extends GameObject {
 	private float _y;
 	
 	private final int WALLTHICKNESS = 3;
+	private final int OFFSET = 1;
 	
 	public DeckRenderer(XftlGameRenderer game, Deck deck) {
 		super(game);
@@ -36,40 +37,36 @@ public class DeckRenderer extends GameObject {
 		float tileSize = getGame().TileSize;
 		
 		for(Room room : deck.getRooms()) {
-			Point<TileUnit> upperLeftCorner = room.getLeftUpperCornerPos();
-			float baseX = upperLeftCorner.getX().getValue() * tileSize;
-			float baseY = upperLeftCorner.getY().getValue() * tileSize;
 			
 			for(Tile tile : room.getTiles()) {
 				
 				Sprite sprite = new Sprite(_floorTexture);
 				Point<TileUnit> pos = tile.getLeftUpperCornerPos();
-				sprite.setPosition(baseX + pos.getX().getValue() * tileSize, baseY + pos.getY().getValue() * tileSize);
+				sprite.setPosition(pos.getX().getValue() * tileSize, pos.getY().getValue() * tileSize);
 				_roomTiles.add(sprite);
 				
-				int wallOffset = WALLTHICKNESS / 2;
-				int wallLength = (int) (tileSize + WALLTHICKNESS - wallOffset);
+				int wallLength = (int) (tileSize + OFFSET * 2);
 				
 				if (tile.getNorthNeighbor() == null) {
-					addWallSprite(sprite.getX()-wallOffset, sprite.getY(), 0, wallOffset, wallLength, WALLTHICKNESS);
+					addWallSprite(sprite.getX()-OFFSET, sprite.getY()-OFFSET, wallLength, WALLTHICKNESS);
 				}
 				if (tile.getSouthNeighbor() == null) {
-					addWallSprite(sprite.getX()-wallOffset, sprite.getY()+tileSize-wallOffset, 0, wallOffset, wallLength, WALLTHICKNESS);
+					addWallSprite(sprite.getX()-OFFSET, sprite.getY()+tileSize-OFFSET*2, wallLength, WALLTHICKNESS);
 				}
 				if (tile.getEastNeighbor() == null) {
-					addWallSprite(sprite.getX()+tileSize-wallOffset, sprite.getY()-wallOffset, wallOffset, 0, WALLTHICKNESS, wallLength);
+					addWallSprite(sprite.getX()+tileSize-OFFSET, sprite.getY()-OFFSET, WALLTHICKNESS, wallLength);
 				}
 				if (tile.getWestNeighbor() == null) {
-					addWallSprite(sprite.getX(), sprite.getY()-wallOffset, wallOffset, 0, WALLTHICKNESS, wallLength);
+					addWallSprite(sprite.getX()-OFFSET, sprite.getY()-OFFSET, WALLTHICKNESS, wallLength);
 				}
 			}
 		}
 	}
-	
-	private void addWallSprite(float x, float y, float offsetX, float offsetY, float width, float height) {
+		
+	private void addWallSprite(float x, float y, float width, float height) {
 		Sprite wall = new Sprite(getGame().getBlankTexture());
 		wall.setSize(width, height);
-		wall.setPosition(x-offsetX, y-offsetY);
+		wall.setPosition(x, y);
 		wall.setColor(0.0f, 0.0f, 0.0f, 1.0f);
 		_wallTiles.add(wall);
 	}

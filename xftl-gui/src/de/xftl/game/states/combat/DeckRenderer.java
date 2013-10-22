@@ -7,7 +7,6 @@ import com.badlogic.gdx.graphics.g2d.Sprite;
 
 import de.xftl.game.framework.GameObject;
 import de.xftl.game.framework.XftlGameRenderer;
-import de.xftl.spec.model.Direction;
 import de.xftl.spec.model.Point;
 import de.xftl.spec.model.ships.Deck;
 import de.xftl.spec.model.ships.Room;
@@ -51,16 +50,16 @@ public class DeckRenderer extends GameObject {
 				int wallOffset = WALLTHICKNESS / 2;
 				int wallLength = (int) (tileSize + WALLTHICKNESS - wallOffset);
 				
-				if (tile.getNeighbors().get(Direction.NORTH) == null) {
+				if (tile.getNorthNeighbor() == null) {
 					addWallSprite(sprite.getX()-wallOffset, sprite.getY(), 0, wallOffset, wallLength, WALLTHICKNESS);
 				}
-				if (tile.getNeighbors().get(Direction.SOUTH) == null) {
+				if (tile.getSouthNeighbor() == null) {
 					addWallSprite(sprite.getX()-wallOffset, sprite.getY()+tileSize-wallOffset, 0, wallOffset, wallLength, WALLTHICKNESS);
 				}
-				if (tile.getNeighbors().get(Direction.EAST) == null) {
+				if (tile.getEastNeighbor() == null) {
 					addWallSprite(sprite.getX()+tileSize-wallOffset, sprite.getY()-wallOffset, wallOffset, 0, WALLTHICKNESS, wallLength);
 				}
-				if (tile.getNeighbors().get(Direction.WEST) == null) {
+				if (tile.getWestNeighbor() == null) {
 					addWallSprite(sprite.getX(), sprite.getY()-wallOffset, wallOffset, 0, WALLTHICKNESS, wallLength);
 				}
 			}

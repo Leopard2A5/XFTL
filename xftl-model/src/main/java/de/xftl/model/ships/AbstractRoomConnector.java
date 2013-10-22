@@ -9,8 +9,17 @@ import de.xftl.spec.model.ships.RoomConnector;
 
 public abstract class AbstractRoomConnector implements RoomConnector {
 
-	private List<Room> _connectedRooms = new ArrayList<>();
+	private List<Room> _connectedRooms;
 
+	public AbstractRoomConnector(List<Room> rooms) {
+		super();
+		
+		_connectedRooms = rooms;
+		for (Room room : rooms) {
+			room.addRoomConnector(this);
+		}
+	}
+	
 	@Override
 	public List<Room> getConnectedRooms() {
 		return Collections.unmodifiableList(_connectedRooms);
@@ -26,5 +35,4 @@ public abstract class AbstractRoomConnector implements RoomConnector {
 
 		return Collections.unmodifiableList(ret);
 	}
-
 }

@@ -1,9 +1,13 @@
 package de.xftl.model.ships;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
 
+import de.xftl.model.util.TileUnitMatrix;
+import de.xftl.model.util.TileUnitMatrixIterator;
+import de.xftl.spec.model.Direction;
 import de.xftl.spec.model.Point;
 import de.xftl.spec.model.crew.CrewMember;
 import de.xftl.spec.model.ships.OxygenLevel;
@@ -19,21 +23,49 @@ public class BasicRoom implements Room {
 	private System _system;
 	private List<Tile> _tiles;
 	private OxygenLevel _oxygenLevel;
+	private List<RoomConnector> _roomConnectors = new ArrayList<>();
 	
-	public BasicRoom(List<Tile> tiles) {
+	public BasicRoom(int width, int height, int x, int y) {
 	    super();
-	    
-	    _tiles = tiles;
-	    determineLeftUpperCornerPos();
+
+	    _leftUpperCornerPos = new Point<TileUnit>(new TileUnit(x), new TileUnit(y));
+	    _tiles = buildTiles(width, height, x, y);
 	}
 
-	private void determineLeftUpperCornerPos() {
-        List<Tile> tiles = new ArrayList<>(_tiles);
-        Collections.sort(tiles);
+	private List<Tile> buildTiles(int width, int height, int pX, int pY) {
+		List<Tile> tiles = new ArrayList<>(width * height);
+		List<BasicTile> basicTiles = new ArrayList<>(width * height);
+		
+		for (int y = 0; y < height; y++) {
+			for (int x = 0; x < width; x++) {
+				TileUnit tux = new TileUnit(x + pX);
+				TileUnit tuy = new TileUnit(y + pY);
+				BasicTile tile = new BasicTile(this, new Point<TileUnit>(tux, tuy));
+				tiles.add(tile);
+				basicTiles.add(tile);
+			}
+		}
+		
+		connectTiles(basicTiles);
+		return tiles;
+	}
+	
+	private void connectTiles(Collection<BasicTile> tiles) {
+	    TileUnitMatrix<BasicTile> matrix = new TileUnitMatrix<>(tiles);
         
-        _leftUpperCornerPos = tiles.get(0).getLeftUpperCornerPos();
-    }
-
+        for (TileUnitMatrixIterator<BasicTile> it = matrix.matrixIterator(); it.hasNext();) {
+            BasicTile t = it.next();
+            
+            for (Direction dir : Direction.values()) {
+                BasicTile other = it.getNeighbor(dir);
+                if (other != null) {
+                    t.addNeighbor(dir, other);
+                    other.addNeighbor(dir.getOpposite(), t);
+                }
+            }
+        }
+	}
+	
     @Override
 	public void update(float elapsedTime) {
 		// TODO Auto-generated method stub
@@ -63,8 +95,7 @@ public class BasicRoom implements Room {
 
 	@Override
 	public List<RoomConnector> getRoomConnectors() {
-		// TODO Auto-generated method stub
-		return null;
+		return Collections.unmodifiableList(_roomConnectors);
 	}
 
 	@Override
@@ -88,4 +119,9 @@ public class BasicRoom implements Room {
     public int compareTo(Positioned<TileUnit> o) {
         return _leftUpperCornerPos.compareTo(o.getLeftUpperCornerPos());
     }
+	
+	@Override
+	public void addRoomConnector(RoomConnector rc) {
+		_roomConnectors.add(rc);
+	}
 }

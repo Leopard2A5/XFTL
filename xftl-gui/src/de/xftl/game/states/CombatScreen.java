@@ -3,12 +3,12 @@ package de.xftl.game.states;
 import de.xftl.game.framework.ScreenChangeInformation;
 import de.xftl.game.framework.XftlGameRenderer;
 import de.xftl.game.framework.ui.UiGameScreenBase;
-import de.xftl.game.states.combat.DeckRenderer;
+import de.xftl.game.states.combat.ShipRenderer;
 import de.xftl.spec.game.Game;
 
 public class CombatScreen extends UiGameScreenBase {
 
-	private DeckRenderer _deckRenderer;
+	private ShipRenderer _shipRenderer;
 	
 	public CombatScreen(XftlGameRenderer game) {
 		super(game);
@@ -24,7 +24,7 @@ public class CombatScreen extends UiGameScreenBase {
 	@Override
 	public void onRender() {
 		getGame().clearScreen(1.0f, 1.0f, 1.0f);
-		_deckRenderer.draw();
+		_shipRenderer.draw();
 		super.onRender();
 	}
 
@@ -33,14 +33,12 @@ public class CombatScreen extends UiGameScreenBase {
 		Game model = getGame().getGameModel();
 		model.startNewGame(null);
 		
-		_deckRenderer = new DeckRenderer(getGame(), model.getShip().getDecks().get(0));
-		_deckRenderer.setPosition(30, 60);
+		_shipRenderer = new ShipRenderer(getGame(), model.getShip());
+		_shipRenderer.setPosition(30, 60);
 	}
 
 	@Override
 	public void onLeave() {
-		// TODO Auto-generated method stub
-		
 	}
 
 }

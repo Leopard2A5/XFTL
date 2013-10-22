@@ -25,6 +25,8 @@ public class DeckRenderer extends RenderedGameObject {
 	private ArrayList<LiftRenderer> _lifts;
 	private float _x;
 	private float _y;
+	private float _sizeX;
+	private float _sizeY;
 
 	public DeckRenderer(XftlGameRenderer game, Deck deck) {
 		super(game);
@@ -36,6 +38,9 @@ public class DeckRenderer extends RenderedGameObject {
 		_lifts = new ArrayList<LiftRenderer>();
 		
 		float tileSize = getGame().TileSize;
+		
+		_sizeX = 0;
+		_sizeY = 0;
 		
 		for(Room room : deck.getRooms()) {
 			
@@ -50,8 +55,20 @@ public class DeckRenderer extends RenderedGameObject {
 				handleNeighbour(tile.getSouthNeighbor(), sprite.getX(), sprite.getY(), Direction.SOUTH);
 				handleNeighbour(tile.getEastNeighbor(), sprite.getX(), sprite.getY(), Direction.EAST);
 				handleNeighbour(tile.getWestNeighbor(), sprite.getX(), sprite.getY(), Direction.WEST);
+				
+				Point<TileUnit> tilePosition = tile.getLeftUpperCornerPos();
+				_sizeX = Math.max(_sizeX, tilePosition.getX().getValue() * getGame().TileSize + getGame().TileSize);
+				_sizeY = Math.max(_sizeY, tilePosition.getY().getValue() * getGame().TileSize + getGame().TileSize);
 			}
 		}
+	}
+	
+	public float getSizeX() {
+		return _sizeX;
+	}
+	
+	public float getSizeY() {
+		return _sizeY;
 	}
 	
 	private boolean doorExists(Door door) {

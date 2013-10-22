@@ -54,6 +54,10 @@ public class XftlGameRenderer implements ApplicationListener {
 		public ResourceManager getResources() {
 			return _resourceManager;
 		}
+		
+		public Texture getBlankTexture() {
+			return _blank;
+		}
 				
 		private void addGameScreen(GameScreenName gameScreenName, GameScreen gameScreen){
 			_gameScreensByGameScreenName.put(gameScreenName, gameScreen);

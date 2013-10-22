@@ -1,3 +1,4 @@
+import com.badlogic.gdx.ApplicationListener;
 import com.badlogic.gdx.backends.lwjgl.LwjglApplication;
 import com.badlogic.gdx.backends.lwjgl.LwjglApplicationConfiguration;
 
@@ -22,7 +23,7 @@ public class DesktopGame {
 	
 	public static void main (String[] args) {
 		Game gameModel = Fixture.buildGame();
-		XftlGameRenderer gameRenderer = new XftlGameRenderer(gameModel);
-		new LwjglApplication(gameRenderer, createConfiguration());
+		ApplicationListener listener = new ApplicationAdapter(new XftlGameRenderer(gameModel));
+		new LwjglApplication(listener, createConfiguration());
 	}
 }

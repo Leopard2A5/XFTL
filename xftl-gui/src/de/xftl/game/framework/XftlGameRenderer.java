@@ -6,6 +6,9 @@ import com.badlogic.gdx.ApplicationListener;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.GL10;
 import com.badlogic.gdx.graphics.OrthographicCamera;
+import com.badlogic.gdx.graphics.Pixmap;
+import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.Pixmap.Format;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 
 import de.xftl.game.states.*;
@@ -13,6 +16,7 @@ import de.xftl.spec.game.Game;
 
 public class XftlGameRenderer implements ApplicationListener {
 	
+		private Texture _blank;
 		private OrthographicCamera _camera;
 		private SpriteBatch _spriteBatch;
 		private HashMap<GameScreenName, GameScreen> _gameScreensByGameScreenName;
@@ -50,7 +54,7 @@ public class XftlGameRenderer implements ApplicationListener {
 		public ResourceManager getResources() {
 			return _resourceManager;
 		}
-		
+				
 		private void addGameScreen(GameScreenName gameScreenName, GameScreen gameScreen){
 			_gameScreensByGameScreenName.put(gameScreenName, gameScreen);
 		}
@@ -59,6 +63,11 @@ public class XftlGameRenderer implements ApplicationListener {
 			if (_currentGameScreen != null) _currentGameScreen.onLeave();
 			_currentGameScreen = _gameScreensByGameScreenName.get(gameScreenName);
 			_currentGameScreen.onEnter(enterInformation);
+		}
+		
+		public void clearScreen(float r, float g, float b) {
+			Gdx.gl.glClearColor(r, g, b, 1.0f);
+			Gdx.gl.glClear(GL10.GL_COLOR_BUFFER_BIT);
 		}
 	
 		public void create () {
@@ -72,6 +81,10 @@ public class XftlGameRenderer implements ApplicationListener {
         	_spriteBatch.setProjectionMatrix(_camera.combined);
         	
         	Gdx.gl.glClearColor(0.0f, 0.0f, 0.0f, 1.0f);
+        	
+        	Pixmap map = new Pixmap(1, 1, Format.RGBA8888);
+        	map.drawPixel(0, 0, 0xffffffff);
+        	_blank = new Texture(map);
         	
         	addGameScreen(GameScreenName.CombatScreen, new CombatScreen(this));
         	addGameScreen(GameScreenName.MainMenuState, new MainMenuScreen(this));
@@ -110,6 +123,7 @@ public class XftlGameRenderer implements ApplicationListener {
         }
 
         public void dispose () {
+        	_blank.dispose();
         	_resourceManager.dispose();
         	_spriteBatch.dispose();
         }

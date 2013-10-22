@@ -23,6 +23,7 @@ public class CombatScreen extends UiGameScreenBase {
 
 	@Override
 	public void onRender() {
+		getGame().clearScreen(1.0f, 1.0f, 1.0f);
 		_deckRenderer.draw();
 		super.onRender();
 	}
@@ -31,6 +32,7 @@ public class CombatScreen extends UiGameScreenBase {
 	public void onEnter(Object enterInformation) {
 		Game model = getGame().getGameModel();
 		model.startNewGame(null);
+		
 		_deckRenderer = new DeckRenderer(getGame(), model.getShip().getDecks().get(0));
 		_deckRenderer.setPosition(30, 60);
 	}

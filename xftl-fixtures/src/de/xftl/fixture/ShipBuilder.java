@@ -13,6 +13,7 @@ import de.xftl.model.ships.BasicLift;
 import de.xftl.model.ships.BasicRoom;
 import de.xftl.model.ships.BasicShip;
 import de.xftl.model.ships.BasicTile;
+import de.xftl.model.systems.BasicDoorSystem;
 import de.xftl.model.util.TileUnitMatrix;
 import de.xftl.spec.model.Direction;
 import de.xftl.spec.model.Point;
@@ -21,11 +22,13 @@ import de.xftl.spec.model.ships.DeckNumber;
 import de.xftl.spec.model.ships.Room;
 import de.xftl.spec.model.ships.Tile;
 import de.xftl.spec.model.ships.TileUnit;
+import de.xftl.spec.model.systems.DoorSystem;
 import de.xftl.spec.model.systems.ShipSystem;
 
 public class ShipBuilder {
 	
     private BasicShip _ship = new BasicShip();
+    private DoorSystem _doorSystem = new BasicDoorSystem();
     
 	private List<BasicDeck> _decks = new ArrayList<>();
 	private BasicDeck _currentDeck;
@@ -40,6 +43,9 @@ public class ShipBuilder {
 			_ship.addDeck(deck);
 		
 		createLifts();
+		
+		if (!_ship.getAllSystems().contains(_doorSystem))
+		    throw new RuntimeException("You need to add a door system!");
 		
 		return _ship;
 	}
@@ -72,6 +78,7 @@ public class ShipBuilder {
 		
 		for (String liftId : _deckLiftDescriptions.keySet()) {
 			BasicLift lift = new BasicLift(roomsPerLift.get(liftId));
+			_doorSystem.addRoomConnector(lift);
 			
 			for (DeckLiftDescription dld : _deckLiftDescriptions.get(liftId)) {
 				dld._tile.addNeighbor(dld._tileToLiftDirection, lift);
@@ -105,6 +112,12 @@ public class ShipBuilder {
 	    return this;
 	}
 	
+	public ShipBuilder addDoorSystem() {
+	    _currentRoom.setSystem(_doorSystem);
+	    
+	    return this;
+	}
+	
 	public ShipBuilder addDoor(Point<Integer> src, Point<Integer> dest) {
 		ensureDeckMatrixPresent();
 		
@@ -127,6 +140,8 @@ public class ShipBuilder {
 		}
 		
 		BasicDoor door = new BasicDoor(rooms);
+		_doorSystem.addRoomConnector(door);
+		
 		srcTile.addNeighbor(dir, door);
 		if (destTile != null)
 			destTile.addNeighbor(dir.getOpposite(), door);

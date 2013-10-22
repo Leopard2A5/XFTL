@@ -7,6 +7,9 @@ import java.util.List;
 import de.xftl.spec.model.ships.Deck;
 import de.xftl.spec.model.ships.Hitpoints;
 import de.xftl.spec.model.ships.Ship;
+import de.xftl.spec.model.systems.DoorSystem;
+import de.xftl.spec.model.systems.EnergyConsumingSystem;
+import de.xftl.spec.model.systems.EnergyProducingSystem;
 import de.xftl.spec.model.systems.ShipSystem;
 
 public class BasicShip implements Ship {
@@ -14,6 +17,9 @@ public class BasicShip implements Ship {
 	private List<Deck> _decks = new ArrayList<>();
 	private Hitpoints _hitpoints;
 	private List<ShipSystem> _systems = new ArrayList<>();
+	private List<EnergyProducingSystem> _energyProducingSystems = new ArrayList<>();
+	private List<EnergyConsumingSystem> _energyConsumingSystems = new ArrayList<>();
+	private DoorSystem _doorSystem;
 	
 	@Override
 	public void update(float elapsedTime) {
@@ -36,13 +42,31 @@ public class BasicShip implements Ship {
 	}
 
     @Override
-    public List<ShipSystem> getSystems() {
+    public List<ShipSystem> getAllSystems() {
         return Collections.unmodifiableList(_systems);
     }
 
     @Override
     public void addSystem(ShipSystem system) {
         _systems.add(system);
+        
+        if (system instanceof EnergyProducingSystem)
+            _energyProducingSystems.add((EnergyProducingSystem) system);
+        if (system instanceof EnergyConsumingSystem)
+            _energyConsumingSystems.add((EnergyConsumingSystem) system);
+        
+        if (system instanceof DoorSystem)
+            _doorSystem = (DoorSystem) system;
+    }
+
+    @Override
+    public List<EnergyProducingSystem> getEnergyProducingSystems() {
+        return _energyProducingSystems;
+    }
+
+    @Override
+    public DoorSystem getDoorSystem() {
+        return _doorSystem;
     }
 
 }

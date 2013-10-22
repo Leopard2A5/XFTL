@@ -35,4 +35,14 @@ public class BasicDoor extends AbstractRoomConnector implements Door {
 		return _open;
 	}
 
+    @Override
+    public void close() {
+        _open = false;
+    }
+
+    @Override
+    public void open() {
+        _open = true;
+    }
+
 }

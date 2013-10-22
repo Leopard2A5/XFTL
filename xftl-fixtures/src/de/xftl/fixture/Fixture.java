@@ -24,6 +24,7 @@ public class Fixture {
 			.addRoom(2, 2, 0, 1)
 			.addRoom(2, 2, 2, 1)
 			.addRoom(2, 1, 1, 0)
+			.addDoorSystem()
 			.addRoom(2, 1, 1, 3)
 			.addRoom(2, 2, 4, 1)
 			.addRoom(1, 2, 6, 1)

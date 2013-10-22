@@ -89,6 +89,9 @@ public class BasicRoom implements Room {
 	}
 
     public void setSystem(ShipSystem system) {
+        if (_system != null)
+            throw new RuntimeException("This room already has a system assigned!");
+        
         _system = system;
         
         _deck.onSystemAdded(system);

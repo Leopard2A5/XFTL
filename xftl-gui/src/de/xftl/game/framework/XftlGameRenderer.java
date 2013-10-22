@@ -103,6 +103,7 @@ public class XftlGameRenderer implements ApplicationListener {
         
         private void updateCurrentState(float elapsedTime) {
         	_mouse.update();
+        	_gameModel.update(elapsedTime);
         	ScreenChangeInformation changeInformation = _currentGameScreen.onUpdate(elapsedTime);
         	
         	if (changeInformation != ScreenChangeInformation.emtpy) {

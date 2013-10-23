@@ -1,7 +1,9 @@
 package de.xftl.game.states.combat;
 
+import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Sprite;
+import com.badlogic.gdx.math.Rectangle;
 
 import de.xftl.game.framework.XftlGameRenderer;
 import de.xftl.game.framework.ui.TileRenderedGameObject;
@@ -16,6 +18,7 @@ public class DoorRenderer extends TileRenderedGameObject {
 	private Sprite _doorOpenedSprite;
 	private float _offsetX;
 	private float _offsetY;
+	private boolean _isVertical;
 	
 	public Door getDoor() {
 		return _door;
@@ -37,8 +40,8 @@ public class DoorRenderer extends TileRenderedGameObject {
 		_doorClosedSprite.setPosition(x+_offsetX, y+_offsetY);
 		_doorOpenedSprite.setPosition(x+_offsetX, y+_offsetY);
 		
-		boolean vertical = direction == Direction.WEST || direction == Direction.EAST;
-		if (vertical) {
+		_isVertical = isVertical(direction);
+		if (_isVertical) {
 			_doorOpenedSprite.setRotation(90);
 			_doorClosedSprite.setRotation(90);
 		}
@@ -57,6 +60,25 @@ public class DoorRenderer extends TileRenderedGameObject {
 	
 	public float getY() {
 		return _doorOpenedSprite.getY();
+	}
+	
+	@Override
+	public void update(float elapsedTime) {
+		boolean mouseButtonPressed = getGame().getMouse().isLeftButtonDownOnce();
+				
+		Rectangle bounds = _doorOpenedSprite.getBoundingRectangle();
+		if (_isVertical) {
+			bounds.x += 12;
+			bounds.width = 8;
+		}else {
+			bounds.y += 12;
+			bounds.height = 8;
+		}
+		boolean mouseIntersects = bounds.contains(Gdx.input.getX(), Gdx.input.getY());
+		
+		if (mouseButtonPressed && mouseIntersects) {
+			if (_door.isOpen()) _door.close(); else _door.open();
+		}
 	}
 	
 	public void draw() {

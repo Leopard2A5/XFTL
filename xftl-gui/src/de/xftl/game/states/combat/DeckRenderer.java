@@ -81,15 +81,15 @@ public class DeckRenderer extends RenderedGameObject {
 	
 	public void handleNeighbour(TileOrRoomConnector tile, float x, float y, Direction direction) {
 		
-		if (tile instanceof Lift) {
+		if (tile == null) {
+			addChild(new WallRenderer(getGame(), x, y, direction));
+		}
+		else if (tile instanceof Lift) {
 			if (!liftExists((Lift)tile)) {
 				LiftRenderer liftRenderer = new LiftRenderer(getGame(), (Lift)tile,x,y, direction);
 				_lifts.add(liftRenderer);
 				addChild(liftRenderer);
 			}
-		}
-		else if (tile == null) {
-			addChild(new WallRenderer(getGame(), x, y, direction));
 		}
 		else if (tile instanceof Door) {
 			if (!doorExists((Door)tile)) {

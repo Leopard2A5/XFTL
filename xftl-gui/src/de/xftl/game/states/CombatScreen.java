@@ -17,7 +17,7 @@ public class CombatScreen extends UiGameScreenBase {
 	@Override
 	public ScreenChangeInformation onUpdate(float elapsedTime) {
 		super.onUpdate(elapsedTime);
-		
+		_shipRenderer.update(elapsedTime);
 		return ScreenChangeInformation.emtpy;
 	}
 

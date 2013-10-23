@@ -26,6 +26,13 @@ public abstract class RenderedGameObject extends GameObject {
 		}
 	}
 	
+	@Override
+	public void update(float elapsedTime) {
+		for(RenderedGameObject gameObject : _children) {
+			gameObject.update(elapsedTime);
+		}
+	}
+	
 	public abstract float getX();
 	public abstract float getY();
 	

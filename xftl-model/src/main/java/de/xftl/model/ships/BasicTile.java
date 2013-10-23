@@ -127,18 +127,18 @@ public class BasicTile implements Tile {
 
 	@Override
 	public boolean hasHullBreach() {
-		return _hullBreachLevel > 0;
+		return _hullBreachLevel > MIN_HULL_BREACH;
 	}
 
 	@Override
 	public void createHullBreach(float initialBreachValue) {
-		_hullBreachLevel = Math.max(1, initialBreachValue);
-		_fireLevel = 0;
+		_hullBreachLevel = Math.min(MAX_HULL_BREACH, initialBreachValue);
+		_fireLevel = MIN_FIRE;
 	}
 
 	@Override
 	public void repairHullBreach(float repairValue) {
-		_hullBreachLevel = Math.min(0, _hullBreachLevel - repairValue);
+		_hullBreachLevel = Math.min(MIN_HULL_BREACH, _hullBreachLevel - repairValue);
 	}
 
 	@Override
@@ -148,19 +148,19 @@ public class BasicTile implements Tile {
 
 	@Override
 	public boolean isOnFire() {
-		return _fireLevel > 0;
+		return _fireLevel > MIN_FIRE;
 	}
 
 	@Override
 	public void ignite(float initialFireLevel) {
 		if (!hasHullBreach()) {
-			_fireLevel = initialFireLevel;
+			_fireLevel = Math.min(MAX_FIRE, initialFireLevel);
 		}
 	}
 
 	@Override
 	public void extinguishFire(float extinguishingLevel) {
-		_fireLevel = Math.min(0, _fireLevel - extinguishingLevel); 
+		_fireLevel = Math.min(MIN_FIRE, _fireLevel - extinguishingLevel); 
 	}
 	
 	private void updateHullBreach() {

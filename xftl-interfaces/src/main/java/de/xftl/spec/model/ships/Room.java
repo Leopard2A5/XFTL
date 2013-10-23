@@ -14,6 +14,8 @@ public interface Room extends XFTLModelObject, Positioned<TileUnit> {
 	public List<Room> getAdjacentRooms();
 	public List<Room> getAdjacentRooms(Room origin);
 	public OxygenLevel getOxygenLevel();
+	public TileUnit getWidth();
+	public TileUnit getHeigth();
 	
 	public void addRoomConnector(RoomConnector rc);
 }

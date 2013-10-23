@@ -23,6 +23,8 @@ public class BasicRoom implements Room {
 
     private Deck _deck;
 	private Point<TileUnit> _leftUpperCornerPos;
+	private TileUnit _width;
+	private TileUnit _height;
 	private ShipSystem _system;
 	private List<Tile> _tiles;
 	private OxygenLevel _oxygenLevel;
@@ -33,6 +35,8 @@ public class BasicRoom implements Room {
 
 	    _deck = deck;
 	    _leftUpperCornerPos = new Point<TileUnit>(new TileUnit(x), new TileUnit(y));
+	    _width = new TileUnit(width);
+	    _height = new TileUnit(height);
 	    _tiles = buildTiles(width, height, x, y);
 	}
 
@@ -82,6 +86,16 @@ public class BasicRoom implements Room {
 	public Point<TileUnit> getLeftUpperCornerPos() {
 		return _leftUpperCornerPos;
 	}
+	
+	@Override
+    public TileUnit getWidth() {
+        return _width;
+    }
+
+    @Override
+    public TileUnit getHeigth() {
+        return _height;
+    }
 
 	@Override
 	public ShipSystem getSystem() {

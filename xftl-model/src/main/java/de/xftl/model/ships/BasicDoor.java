@@ -7,8 +7,6 @@ public class BasicDoor extends AbstractRoomConnector implements Door {
 
 	private boolean _open;
 	
-	private float _elapsedTime;
-	
 	public BasicDoor() {
 		super();
 	}
@@ -23,14 +21,6 @@ public class BasicDoor extends AbstractRoomConnector implements Door {
 	
 	@Override
 	public void update(float elapsedTime) {
-		_elapsedTime += elapsedTime;
-		
-		if (_elapsedTime > 1) {
-		    if (Math.random() > 0.5)
-		        _open = !_open;
-		    
-		    _elapsedTime = 0;
-		}
 	}
 	
 	@Override

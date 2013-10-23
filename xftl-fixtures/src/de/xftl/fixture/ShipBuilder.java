@@ -52,7 +52,6 @@ public class ShipBuilder {
 	
 	private void createLifts() {
 		Map<Deck, Set<Point<Integer>>> liftPositions = new HashMap<>();
-		Map<String, List<Room>> roomsPerLift = new HashMap<>();
 		
 		for (String liftId : _deckLiftDescriptions.keySet()) {
 			for (DeckLiftDescription dld : _deckLiftDescriptions.get(liftId)) {
@@ -66,19 +65,11 @@ public class ShipBuilder {
 						throw new RuntimeException(String.format("Position %s is occupied by two lifts!", dld._liftPos));
 				}
 				usedPositions.add(dld._liftPos);
-				
-				List<Room> rooms = roomsPerLift.get(liftId);
-				if (rooms == null) {
-					rooms = new ArrayList<>();
-					roomsPerLift.put(liftId, rooms);
-				}
-				rooms.add(dld._tile.getRoom());
 			}
 		}
 		
 		for (String liftId : _deckLiftDescriptions.keySet()) {
-			BasicLift lift = new BasicLift(roomsPerLift.get(liftId));
-			_doorSystem.addRoomConnector(lift);
+			BasicLift lift = new BasicLift();
 			
 			for (DeckLiftDescription dld : _deckLiftDescriptions.get(liftId)) {
 				dld._tile.addNeighbor(dld._tileToLiftDirection, lift);
@@ -96,6 +87,8 @@ public class ShipBuilder {
 	public ShipBuilder addRoom(int width, int height, int x, int y) {
 		if (_matrices.containsKey(_currentDeck))
 			throw new RuntimeException("You should first create all the rooms before adding doors or lifts!");
+		
+		_matrices.remove(_currentDeck);
 		
 		_currentRoom = new BasicRoom(_currentDeck, width, height, x, y);
 		_currentDeck.addRoom(_currentRoom);
@@ -131,17 +124,10 @@ public class ShipBuilder {
 
 		Direction dir = Direction.getDirection(src, dest);
 		
-		List<Room> rooms = new ArrayList<>(2);
-		rooms.add(srcTile.getRoom());
+		if (destTile != null && !adjacent(srcTile, destTile))
+			throw new RuntimeException(String.format("Cannot add door because %s and %s are not adjacent!", src, dest));
 		
-		if (destTile != null) {
-			if (!adjacent(srcTile, destTile))
-				throw new RuntimeException(String.format("Cannot add door because %s and %s are not adjacent!", src, dest));
-			rooms.add(destTile.getRoom());
-		}
-		
-		BasicDoor door = new BasicDoor(rooms);
-		_doorSystem.addRoomConnector(door);
+		BasicDoor door = new BasicDoor();
 		
 		srcTile.addNeighbor(dir, door);
 		if (destTile != null)

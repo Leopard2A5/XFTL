@@ -1,14 +1,13 @@
 package de.xftl.model.ships;
 
-import java.util.List;
-
 import de.xftl.spec.model.ships.Lift;
-import de.xftl.spec.model.ships.Room;
 
 public class BasicLift extends AbstractRoomConnector implements Lift {
 
-	public BasicLift(List<Room> rooms) {
-		super(rooms);
+    private boolean _open;
+    
+	public BasicLift() {
+		super();
 	}
 	
 	@Override
@@ -16,5 +15,20 @@ public class BasicLift extends AbstractRoomConnector implements Lift {
 		// TODO Auto-generated method stub
 
 	}
+	
+	@Override
+    public boolean isOpen() {
+        return _open;
+    }
+
+    @Override
+    public void close() {
+        _open = false;
+    }
+
+    @Override
+    public void open() {
+        _open = true;
+    }
 	
 }

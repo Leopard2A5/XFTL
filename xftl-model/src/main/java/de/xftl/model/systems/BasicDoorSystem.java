@@ -26,8 +26,11 @@ import de.xftl.spec.model.systems.Energy;
 import de.xftl.spec.model.systems.EnergyPriority;
 
 public class BasicDoorSystem implements DoorSystem {
+    
+    private static final Energy MIN_ENERGY_LEVEL_FOR_REMOTE_DOOR_OP = Energy.valueOf(1);
 
     private List<RoomConnector> _roomConnectors = new ArrayList<>();
+    private Energy _energyConsumption = Energy.valueOf(1);
     
     @Override
     public void update(float elapsedTime) {
@@ -36,8 +39,7 @@ public class BasicDoorSystem implements DoorSystem {
 
     @Override
     public Energy getEnergyConsumption() {
-        // TODO implement me
-        return null;
+        return _energyConsumption;
     }
 
     @Override
@@ -48,22 +50,50 @@ public class BasicDoorSystem implements DoorSystem {
 
     @Override
     public void addRoomConnector(RoomConnector roomConnector) {
-        _roomConnectors.add(roomConnector);
+        if (!_roomConnectors.contains(roomConnector))
+            _roomConnectors.add(roomConnector);
     }
     
     @Override
-    public void openDoor(Door door) {
-        // TODO implement me
+    public void openRoomConnector(RoomConnector rc) {
+        if (!canOperateRoomConnectorsRemotely())
+            return;
+        
+        rc.open();
+    }
+    
+    @Override
+    public void closeRoomConnector(RoomConnector rc) {
+        if (!canOperateRoomConnectorsRemotely())
+            return;
+        
+        rc.close();
     }
 
     @Override
-    public void openAllInternalDoors() {
-        // TODO implement me
+    public void openAllInternalRoomConnectors() {
+        if (!canOperateRoomConnectorsRemotely())
+            return;
+        
+        for (RoomConnector rc : _roomConnectors) {
+            if (rc instanceof Door && ((Door) rc).isAirlock())
+                continue;
+            
+            rc.open();
+        }
     }
 
     @Override
-    public void closeAllDoors() {
-        // TODO implement me
+    public void closeAllRoomConnectors() {
+        if (!canOperateRoomConnectorsRemotely())
+            return;
+        
+        for (RoomConnector rc : _roomConnectors)
+            rc.close();
     }
 
+    @Override
+    public boolean canOperateRoomConnectorsRemotely() {
+        return _energyConsumption.compareTo(MIN_ENERGY_LEVEL_FOR_REMOTE_DOOR_OP) >= 0;
+    }
 }

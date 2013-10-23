@@ -151,6 +151,9 @@ public class BasicRoom implements Room {
 	
 	@Override
 	public void addRoomConnector(RoomConnector rc) {
-		_roomConnectors.add(rc);
+	    if (!_roomConnectors.contains(rc)) {
+	        _roomConnectors.add(rc);
+	        _deck.onRoomConnectorAdded(rc);
+	    }
 	}
 }

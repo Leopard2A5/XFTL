@@ -8,6 +8,7 @@ import de.xftl.spec.model.hardpoints.Hardpoint;
 import de.xftl.spec.model.ships.Deck;
 import de.xftl.spec.model.ships.DeckNumber;
 import de.xftl.spec.model.ships.Room;
+import de.xftl.spec.model.ships.RoomConnector;
 import de.xftl.spec.model.ships.Ship;
 import de.xftl.spec.model.systems.ShipSystem;
 
@@ -86,5 +87,10 @@ public class BasicDeck implements Deck {
     @Override
     public void onSystemAdded(ShipSystem system) {
         _ship.addSystem(system);
+    }
+
+    @Override
+    public void onRoomConnectorAdded(RoomConnector roomConnector) {
+        _ship.onRoomConnectorAdded(roomConnector);
     }
 }

@@ -5,6 +5,7 @@ import de.xftl.spec.model.Point;
 import de.xftl.spec.model.crew.CrewMember;
 import de.xftl.spec.model.ships.Positioned;
 import de.xftl.spec.model.ships.Room;
+import de.xftl.spec.model.ships.RoomConnector;
 import de.xftl.spec.model.ships.Tile;
 import de.xftl.spec.model.ships.TileOrRoomConnector;
 import de.xftl.spec.model.ships.TileUnit;
@@ -71,6 +72,9 @@ public class BasicTile implements Tile {
 		    default:
 		        throw new IllegalArgumentException("Unknown enum value " + dir);
 		}
+		
+		if (neighbor instanceof RoomConnector)
+		    _room.addRoomConnector((RoomConnector) neighbor);
 	}
 	
 	@Override

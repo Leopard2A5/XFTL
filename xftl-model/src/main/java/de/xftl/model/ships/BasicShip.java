@@ -7,6 +7,7 @@ import java.util.List;
 import de.xftl.model.systems.BasicDoorSystem;
 import de.xftl.spec.model.ships.Deck;
 import de.xftl.spec.model.ships.Hitpoints;
+import de.xftl.spec.model.ships.RoomConnector;
 import de.xftl.spec.model.ships.Ship;
 import de.xftl.spec.model.systems.DoorSystem;
 import de.xftl.spec.model.systems.EnergyConsumingSystem;
@@ -74,6 +75,11 @@ public class BasicShip implements Ship {
     @Override
     public DoorSystem getDoorSystem() {
         return _doorSystem;
+    }
+
+    @Override
+    public void onRoomConnectorAdded(RoomConnector roomConnector) {
+        _doorSystem.addRoomConnector(roomConnector);
     }
 
 }

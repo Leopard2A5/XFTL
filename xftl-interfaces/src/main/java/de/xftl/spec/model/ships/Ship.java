@@ -14,4 +14,5 @@ public interface Ship extends XFTLModelObject {
 	public List<ShipSystem> getAllSystems();
 	public List<EnergyProducingSystem> getEnergyProducingSystems();
 	public DoorSystem getDoorSystem();
+	public void onRoomConnectorAdded(RoomConnector roomConnector);
 }

@@ -67,7 +67,7 @@ public class MenuItem extends UiElement {
 			_currentColor = _normalColor;
 		}
 		
-		if (getGame().getMouse().isLeftButtonDownOnce() && isMouseOver && _listener != null) {
+		if (_isEnabled && getGame().getMouse().isLeftButtonDownOnce() && isMouseOver && _listener != null) {
 			_listener.onClick();
 		}
 	}

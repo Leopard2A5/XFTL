@@ -23,7 +23,7 @@ public class CombatScreen extends UiGameScreenBase {
 
 	@Override
 	public void onRender() {
-		getGame().clearScreen(1.0f, 1.0f, 1.0f);
+		//getGame().clearScreen(1.0f, 1.0f, 1.0f);
 		_shipRenderer.draw();
 		super.onRender();
 	}

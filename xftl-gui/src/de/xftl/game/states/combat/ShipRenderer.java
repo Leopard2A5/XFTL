@@ -9,10 +9,13 @@ import de.xftl.spec.model.ships.Ship;
 
 public class ShipRenderer extends RenderedGameObject {
 
+	private Ship _ship;
 	private ArrayList<DeckRenderer> _decks;
+	private EnergyRenderer _energyRenderer;
 	
 	public ShipRenderer(XftlGameRenderer game, Ship ship) {
 		super(game);
+		_ship = ship;
 		_decks = new ArrayList<DeckRenderer>();
 		
 		for(Deck deck : ship.getDecks()) {
@@ -20,6 +23,10 @@ public class ShipRenderer extends RenderedGameObject {
 			addChild(deckRenderer);
 			_decks.add(deckRenderer);
 		}
+		
+		_energyRenderer = new EnergyRenderer(game);
+		_energyRenderer.setPosition(0, 400);
+		addChild(_energyRenderer);
 	}
 	
 	@Override

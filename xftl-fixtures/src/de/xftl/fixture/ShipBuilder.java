@@ -13,7 +13,6 @@ import de.xftl.model.ships.BasicLift;
 import de.xftl.model.ships.BasicRoom;
 import de.xftl.model.ships.BasicShip;
 import de.xftl.model.ships.BasicTile;
-import de.xftl.model.systems.BasicDoorSystem;
 import de.xftl.model.util.TileUnitMatrix;
 import de.xftl.spec.model.Direction;
 import de.xftl.spec.model.Point;
@@ -28,7 +27,8 @@ import de.xftl.spec.model.systems.ShipSystem;
 public class ShipBuilder {
 	
     private BasicShip _ship = new BasicShip();
-    private DoorSystem _doorSystem = new BasicDoorSystem();
+    private DoorSystem _doorSystem = _ship.getDoorSystem();
+    private boolean _doorSystemAdded;
     
 	private List<BasicDeck> _decks = new ArrayList<>();
 	private BasicDeck _currentDeck;
@@ -44,8 +44,8 @@ public class ShipBuilder {
 		
 		createLifts();
 		
-		if (!_ship.getAllSystems().contains(_doorSystem))
-		    throw new RuntimeException("You need to add a door system!");
+		if (!_doorSystemAdded)
+		    throw new RuntimeException("You need to position a door system!");
 		
 		return _ship;
 	}
@@ -114,6 +114,7 @@ public class ShipBuilder {
 	
 	public ShipBuilder addDoorSystem() {
 	    _currentRoom.setSystem(_doorSystem);
+	    _doorSystemAdded = true;
 	    
 	    return this;
 	}

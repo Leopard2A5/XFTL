@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
+import de.xftl.model.systems.BasicDoorSystem;
 import de.xftl.spec.model.ships.Deck;
 import de.xftl.spec.model.ships.Hitpoints;
 import de.xftl.spec.model.ships.Ship;
@@ -20,6 +21,12 @@ public class BasicShip implements Ship {
 	private List<EnergyProducingSystem> _energyProducingSystems = new ArrayList<>();
 	private List<EnergyConsumingSystem> _energyConsumingSystems = new ArrayList<>();
 	private DoorSystem _doorSystem;
+	
+	public BasicShip() {
+	    super();
+	    
+	    addSystem(new BasicDoorSystem());
+	}
 	
 	@Override
 	public void update(float elapsedTime) {

@@ -12,6 +12,11 @@ import de.xftl.spec.model.ships.TileUnit;
 
 public class BasicTile implements Tile {
 
+	private static final float HULL_BREACH_AIR_VENT_FACTOR = 0.1f;
+	private static final float FIRE_AIR_CONSUMPTION_FACTOR = 0.1f;
+	
+	private float _elapsedTime;
+	
 	private Room _room;
 	private Point<TileUnit> _leftUpperCornerPos;
 	private CrewMember _crewMember;
@@ -22,6 +27,9 @@ public class BasicTile implements Tile {
 	private TileOrRoomConnector _south;
 	private TileOrRoomConnector _west;
 	
+	private float _hullBreachLevel;
+	private float _fireLevel;
+	
 	public BasicTile(Room room, Point<TileUnit> leftUpperCornerPos) {
 		super();
 		
@@ -31,8 +39,14 @@ public class BasicTile implements Tile {
 	
 	@Override
 	public void update(float elapsedTime) {
-		// TODO Auto-generated method stub
-
+		_elapsedTime += elapsedTime;
+		
+		if (_elapsedTime >= 1) {
+			updateHullBreach();
+			updateFire();
+			
+			_elapsedTime = 0;
+		}
 	}
 
 	@Override
@@ -105,4 +119,55 @@ public class BasicTile implements Tile {
     public TileOrRoomConnector getWestNeighbor() {
         return _west;
     }
+
+	@Override
+	public float getHullBreachLevel() {
+		return _hullBreachLevel;
+	}
+
+	@Override
+	public boolean hasHullBreach() {
+		return _hullBreachLevel > 0;
+	}
+
+	@Override
+	public void createHullBreach(float initialBreachValue) {
+		_hullBreachLevel = Math.max(1, initialBreachValue);
+		_fireLevel = 0;
+	}
+
+	@Override
+	public void repairHullBreach(float repairValue) {
+		_hullBreachLevel = Math.min(0, _hullBreachLevel - repairValue);
+	}
+
+	@Override
+	public float getFireLevel() {
+		return _fireLevel;
+	}
+
+	@Override
+	public boolean isOnFire() {
+		return _fireLevel > 0;
+	}
+
+	@Override
+	public void ignite(float initialFireLevel) {
+		if (!hasHullBreach()) {
+			_fireLevel = initialFireLevel;
+		}
+	}
+
+	@Override
+	public void extinguishFire(float extinguishingLevel) {
+		_fireLevel = Math.min(0, _fireLevel - extinguishingLevel); 
+	}
+	
+	private void updateHullBreach() {
+		_room.consumeOxygen(_hullBreachLevel * HULL_BREACH_AIR_VENT_FACTOR);
+	}
+	
+	private void updateFire() {
+		_room.consumeOxygen(_fireLevel * FIRE_AIR_CONSUMPTION_FACTOR);
+	}
 }

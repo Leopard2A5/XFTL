@@ -11,12 +11,11 @@ import de.xftl.spec.model.Direction;
 import de.xftl.spec.model.Point;
 import de.xftl.spec.model.crew.CrewMember;
 import de.xftl.spec.model.ships.Deck;
-import de.xftl.spec.model.ships.OxygenLevel;
+import de.xftl.spec.model.ships.Positioned;
 import de.xftl.spec.model.ships.Room;
 import de.xftl.spec.model.ships.RoomConnector;
 import de.xftl.spec.model.ships.Tile;
 import de.xftl.spec.model.ships.TileUnit;
-import de.xftl.spec.model.ships.Positioned;
 import de.xftl.spec.model.systems.ShipSystem;
 
 public class BasicRoom implements Room {
@@ -27,7 +26,7 @@ public class BasicRoom implements Room {
 	private TileUnit _height;
 	private ShipSystem _system;
 	private List<Tile> _tiles;
-	private OxygenLevel _oxygenLevel;
+	private float _oxygenLevel;
 	private List<RoomConnector> _roomConnectors = new ArrayList<>();
 	
 	public BasicRoom(Deck deck, int width, int height, int x, int y) {
@@ -140,8 +139,18 @@ public class BasicRoom implements Room {
 	}
 
 	@Override
-	public OxygenLevel getOxygenLevel() {
+	public float getOxygenLevel() {
 		return _oxygenLevel;
+	}
+	
+	@Override
+	public void consumeOxygen(float oxygen) {
+		_oxygenLevel = Math.min(0, _oxygenLevel - oxygen);
+	}
+
+	@Override
+	public void replenishOxygen(float oxygen) {
+		_oxygenLevel = Math.max(1, _oxygenLevel + oxygen);
 	}
 
 	@Override
@@ -156,4 +165,5 @@ public class BasicRoom implements Room {
 	        _deck.onRoomConnectorAdded(rc);
 	    }
 	}
+	
 }

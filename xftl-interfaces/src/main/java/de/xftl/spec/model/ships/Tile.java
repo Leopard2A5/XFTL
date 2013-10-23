@@ -10,4 +10,14 @@ public interface Tile extends XFTLModelObject, Positioned<TileUnit>, TileOrRoomC
 	public TileOrRoomConnector getEastNeighbor();
 	public TileOrRoomConnector getSouthNeighbor();
 	public TileOrRoomConnector getWestNeighbor();
+	
+	public float getHullBreachLevel();
+	public boolean hasHullBreach();
+	public void createHullBreach(float initialBreachValue);
+	public void repairHullBreach(float repairValue);
+	
+	public float getFireLevel();
+	public boolean isOnFire();
+	public void ignite(float initialFireLevel);
+	public void extinguishFire(float extinguishingLevel);
 }

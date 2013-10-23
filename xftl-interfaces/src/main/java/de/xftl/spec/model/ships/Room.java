@@ -13,7 +13,11 @@ public interface Room extends XFTLModelObject, Positioned<TileUnit> {
 	public List<RoomConnector> getRoomConnectors();
 	public List<Room> getAdjacentRooms();
 	public List<Room> getAdjacentRooms(Room origin);
-	public OxygenLevel getOxygenLevel();
+	
+	public float getOxygenLevel();
+	public void consumeOxygen(float oxygen);
+	public void replenishOxygen(float oxygen);
+	
 	public TileUnit getWidth();
 	public TileUnit getHeigth();
 	

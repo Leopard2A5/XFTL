@@ -107,7 +107,13 @@ public class XftlGameRenderer implements ApplicationListener {
         	ScreenChangeInformation changeInformation = _currentGameScreen.onUpdate(elapsedTime);
         	
         	if (changeInformation != ScreenChangeInformation.emtpy) {
-        		setCurrentGameState(changeInformation.getGameScreenName(), changeInformation.getEnterInformation());
+        		
+        		if (changeInformation.getQuitGame()) {
+        			Gdx.app.exit();
+        		} 
+        		else {
+        			setCurrentGameState(changeInformation.getGameScreenName(), changeInformation.getEnterInformation());	
+        		}
         	}
         }
         

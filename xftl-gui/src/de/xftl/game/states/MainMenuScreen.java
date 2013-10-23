@@ -23,7 +23,7 @@ public class MainMenuScreen extends UiGameScreenBase {
 		_mainFont = getResources().getBitmapFont("res/fnt/main.fnt");
 		_headingWidth = _mainFont.getBounds(GAME_HEADING).width;
 		
-		addUiElement(new MenuItem(game, "Continue", 50, 300));
+		addUiElement(new MenuItem(game, "Continue", 50, 300, false));
 				
 		MenuItem newGameMenuItem = addUiElement(new MenuItem(game, "New Game", 50, 350));
 		newGameMenuItem.setMenuItemClickListener(new MenuItemClickListener() {
@@ -34,11 +34,19 @@ public class MainMenuScreen extends UiGameScreenBase {
 			}
 		});
 				
-		addUiElement(new MenuItem(game, "Load Game", 50, 400));
-		addUiElement(new MenuItem(game, "Credits", 50, 450));
-		addUiElement(new MenuItem(game, "Create Campaign", 50, 500));
-		addUiElement(new MenuItem(game, "Options", 50, 550));
-		addUiElement(new MenuItem(game, "Exit", 50, 600));
+		addUiElement(new MenuItem(game, "Load Game", 50, 400, false));
+		addUiElement(new MenuItem(game, "Credits", 50, 450, false));
+		addUiElement(new MenuItem(game, "Create Campaign", 50, 500, false));
+		addUiElement(new MenuItem(game, "Options", 50, 550, false));
+		
+		MenuItem exitGameMenuItem = addUiElement(new MenuItem(game, "Exit", 50, 600));
+		exitGameMenuItem.setMenuItemClickListener(new MenuItemClickListener() {
+			
+			@Override
+			public void onClick() {
+				_changeInformation = ScreenChangeInformation.quitGame;
+			}
+		});
 	}
 
 	@Override

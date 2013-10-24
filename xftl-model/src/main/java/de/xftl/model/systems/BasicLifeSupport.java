@@ -51,4 +51,14 @@ public class BasicLifeSupport implements LifeSupport {
             _rooms.add(room);
     }
 
+    @Override
+    public float getAverageOxygenLevel() {
+        float ret = 0;
+        
+        for (Room room : _rooms)
+            ret += room.getOxygenLevel();
+        
+        return ret / _rooms.size();
+    }
+
 }

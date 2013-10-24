@@ -1,5 +1,8 @@
 package de.xftl.model.ships;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import de.xftl.spec.model.Direction;
 import de.xftl.spec.model.Point;
 import de.xftl.spec.model.crew.CrewMember;
@@ -13,6 +16,7 @@ import de.xftl.spec.model.ships.TileUnit;
 public class BasicTile implements Tile {
 
 	private static final float HULL_BREACH_AIR_VENT_FACTOR = 0.1f;
+	private static final float FIRE_SPREAD_PROBABILITY = 0.2f;
 	
 	private Room _room;
 	private Point<TileUnit> _leftUpperCornerPos;
@@ -23,6 +27,7 @@ public class BasicTile implements Tile {
 	private TileOrRoomConnector _east;
 	private TileOrRoomConnector _south;
 	private TileOrRoomConnector _west;
+	private List<Tile> _neightboringTiles = new ArrayList<>(4);
 	
 	private float _hullBreachLevel;
 	private Fire _fire = new Fire();
@@ -80,6 +85,8 @@ public class BasicTile implements Tile {
 		
 		if (neighbor instanceof RoomConnector)
 		    _room.addRoomConnector((RoomConnector) neighbor);
+		else if (neighbor instanceof Tile)
+		    _neightboringTiles.add((Tile) neighbor);
 	}
 	
 	@Override
@@ -162,5 +169,19 @@ public class BasicTile implements Tile {
 	    float consumedOxygen = _fire.updateFireAndReturnConsumedOxygen(elapsedTime, _room.getOxygenLevel());
 	    
 	    _room.consumeOxygen(consumedOxygen / _room.getTiles().size());
+	    
+	    float spreadProbability = FIRE_SPREAD_PROBABILITY * elapsedTime * _fire.getFireLevel();
+	    if (spreadProbability >= Math.random()) {
+	        Tile tile = getNeighboringTileNotOnFire();
+	        if (tile != null)
+	            tile.ignite(_fire.getFireLevel() / 2);
+	    }
+	}
+	
+	private Tile getNeighboringTileNotOnFire() {
+	    for (Tile tile : _neightboringTiles)
+	        if (!tile.isOnFire())
+	            return tile;
+	    return null;
 	}
 }

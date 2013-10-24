@@ -32,9 +32,10 @@ public class FireTest {
 
     Ship ship = new BasicShip();
     Deck deck = new BasicDeck(ship, new DeckNumber(1));
-    Room room = new BasicRoom(1, 1, 0, 0);
+    Room room = new BasicRoom(2, 1, 0, 0);
     LifeSupport lifeSupport = ship.getLifeSupport();
     Tile tile = room.getTiles().get(0);
+    Tile tile2 = room.getTiles().get(1);
     
     @Before
     public void setUp() throws Exception {
@@ -65,5 +66,18 @@ public class FireTest {
         }
         
         assertEquals(Tile.NO_FIRE, tile.getFireLevel(), 0.05f);
+    }
+    
+    @Test
+    public void shouldSpreadToOtherTiles() {
+        float elapsedTime = 0;
+        
+        while (elapsedTime < 10 && !tile2.isOnFire()) {
+            room.replenishOxygen(Room.MAX_OXYGEN);
+            tile.update(0.1f);
+            elapsedTime += 0.1f;
+        }
+        
+        assertTrue(tile2.isOnFire());
     }
 }

@@ -17,7 +17,7 @@
 package de.xftl.model.ships;
 
 import static de.xftl.spec.model.ships.Tile.MAX_FIRE;
-import static de.xftl.spec.model.ships.Tile.MIN_FIRE;
+import static de.xftl.spec.model.ships.Tile.NO_FIRE;
 import de.xftl.spec.model.ships.Room;
 
 public class Fire {
@@ -31,7 +31,7 @@ public class Fire {
     }
 
     public void extinguish() {
-        _fireLevel = MIN_FIRE;
+        _fireLevel = NO_FIRE;
     }
     
     public void ignite(float initialFireLevel) {
@@ -47,13 +47,13 @@ public class Fire {
         
         if (_fireLevel > MAX_FIRE)
             _fireLevel = MAX_FIRE;
-        else if (_fireLevel < MIN_FIRE)
-            _fireLevel = MIN_FIRE;
+        else if (_fireLevel < NO_FIRE)
+            _fireLevel = NO_FIRE;
     }
     
     public float updateFireAndReturnConsumedOxygen(float currentOxygen) {
-        if (currentOxygen == Room.MIN_OXYGEN) {
-            _fireLevel = MIN_FIRE;
+        if (currentOxygen == Room.NO_OXYGEN) {
+            _fireLevel = NO_FIRE;
         }
         else if (currentOxygen > _fireLevel) {
             setFireLevel(_fireLevel + Math.min(FIRE_GROWTH_FACTOR, currentOxygen - _fireLevel));

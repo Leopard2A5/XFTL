@@ -27,7 +27,7 @@ public class BasicTile implements Tile {
 	private TileOrRoomConnector _west;
 	
 	private float _hullBreachLevel;
-	private Fire _fire;
+	private Fire _fire = new Fire();
 	
 	public BasicTile(Room room, Point<TileUnit> leftUpperCornerPos) {
 		super();

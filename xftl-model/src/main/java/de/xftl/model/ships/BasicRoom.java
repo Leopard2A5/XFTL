@@ -26,7 +26,7 @@ public class BasicRoom implements Room {
 	private TileUnit _height;
 	private ShipSystem _system;
 	private List<Tile> _tiles;
-	private float _oxygenLevel;
+	private float _oxygenLevel = MAX_OXYGEN;
 	private List<RoomConnector> _roomConnectors = new ArrayList<>();
 	
 	public BasicRoom(Deck deck, int width, int height, int x, int y) {

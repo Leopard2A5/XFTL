@@ -82,6 +82,7 @@ public class BasicDeck implements Deck {
 	
 	public void addRoom(Room room) {
 		_rooms.add(room);
+		_ship.onRoomAdded(room);
 	}
 
     @Override
@@ -93,4 +94,5 @@ public class BasicDeck implements Deck {
     public void onRoomConnectorAdded(RoomConnector roomConnector) {
         _ship.onRoomConnectorAdded(roomConnector);
     }
+
 }

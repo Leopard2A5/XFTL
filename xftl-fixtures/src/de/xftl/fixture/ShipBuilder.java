@@ -22,6 +22,7 @@ import de.xftl.spec.model.ships.Room;
 import de.xftl.spec.model.ships.Tile;
 import de.xftl.spec.model.ships.TileUnit;
 import de.xftl.spec.model.systems.DoorSystem;
+import de.xftl.spec.model.systems.LifeSupport;
 import de.xftl.spec.model.systems.ShipSystem;
 
 public class ShipBuilder {
@@ -29,6 +30,8 @@ public class ShipBuilder {
     private BasicShip _ship = new BasicShip();
     private DoorSystem _doorSystem = _ship.getDoorSystem();
     private boolean _doorSystemAdded;
+    private LifeSupport _lifeSupport = _ship.getLifeSupport();
+    private boolean _lifeSupportAdded;
     
 	private List<BasicDeck> _decks = new ArrayList<>();
 	private BasicDeck _currentDeck;
@@ -45,7 +48,9 @@ public class ShipBuilder {
 		createLifts();
 		
 		if (!_doorSystemAdded)
-		    throw new RuntimeException("You need to position a door system!");
+		    throw new RuntimeException("You need to position the door system!");
+		if (!_lifeSupportAdded)
+		    throw new RuntimeException("You need to position the life support system!");
 		
 		return _ship;
 	}
@@ -106,8 +111,21 @@ public class ShipBuilder {
 	}
 	
 	public ShipBuilder addDoorSystem() {
+	    if (_doorSystemAdded)
+	        throw new RuntimeException("Already added the door system!");
+	    
 	    _currentRoom.setSystem(_doorSystem);
 	    _doorSystemAdded = true;
+	    
+	    return this;
+	}
+	
+	public ShipBuilder addLifeSupport() {
+	    if (_lifeSupportAdded)
+	        throw new RuntimeException("Already added the life support system!");
+	    
+	    _currentRoom.setSystem(_lifeSupport);
+	    _lifeSupportAdded = true;
 	    
 	    return this;
 	}

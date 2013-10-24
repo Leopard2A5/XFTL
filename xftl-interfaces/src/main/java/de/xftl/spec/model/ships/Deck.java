@@ -13,5 +13,6 @@ public interface Deck extends XFTLModelObject {
 	public Deck getDeckAbove();
 	public Deck getDeckBelow();
 	public void onSystemAdded(ShipSystem system);
+	
 	public void onRoomConnectorAdded(RoomConnector roomConnector);
 }

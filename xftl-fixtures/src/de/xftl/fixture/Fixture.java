@@ -26,6 +26,7 @@ public class Fixture {
 			.addRoom(2, 1, 1, 0)
 			.addDoorSystem()
 			.addRoom(2, 1, 1, 3)
+			.addLifeSupport()
 			.addRoom(2, 2, 4, 1)
 			.addRoom(1, 2, 6, 1)
 			.addDoor(new Point<Integer>(1, 0), new Point<Integer>(1, 1))

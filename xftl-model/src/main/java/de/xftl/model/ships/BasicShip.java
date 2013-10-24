@@ -6,15 +6,18 @@ import java.util.List;
 
 import de.xftl.model.systems.BasicDoorSystem;
 import de.xftl.model.systems.BasicEnergyManager;
+import de.xftl.model.systems.BasicLifeSupport;
 import de.xftl.spec.model.EnergyConsumer;
 import de.xftl.spec.model.ships.Deck;
 import de.xftl.spec.model.ships.Hitpoints;
+import de.xftl.spec.model.ships.Room;
 import de.xftl.spec.model.ships.RoomConnector;
 import de.xftl.spec.model.ships.Ship;
 import de.xftl.spec.model.systems.DoorSystem;
 import de.xftl.spec.model.systems.EnergyConsumingSystem;
 import de.xftl.spec.model.systems.EnergyManager;
 import de.xftl.spec.model.systems.EnergyProducingSystem;
+import de.xftl.spec.model.systems.LifeSupport;
 import de.xftl.spec.model.systems.ShipSystem;
 
 public class BasicShip implements Ship {
@@ -24,6 +27,7 @@ public class BasicShip implements Ship {
 	private List<ShipSystem> _systems = new ArrayList<>();
 	private DoorSystem _doorSystem;
 	private EnergyManager _energyManager = new BasicEnergyManager();
+	private LifeSupport _lifeSupport = new BasicLifeSupport();
 	
 	public BasicShip() {
 	    super();
@@ -78,10 +82,20 @@ public class BasicShip implements Ship {
     public void onRoomConnectorAdded(RoomConnector roomConnector) {
         _doorSystem.addRoomConnector(roomConnector);
     }
+    
+    @Override
+    public void onRoomAdded(Room room) {
+        _lifeSupport.addRoom(room);
+    }
 
     @Override
     public EnergyManager getEnergyManager() {
         return _energyManager;
+    }
+
+    @Override
+    public LifeSupport getLifeSupport() {
+        return _lifeSupport;
     }
 
 }

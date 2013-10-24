@@ -12,6 +12,10 @@ import de.xftl.spec.model.ships.TileUnit;
 
 public class BasicTile implements Tile {
 
+	private static final float HULL_BREACH_AIR_VENT_FACTOR = 0.1f;
+	
+	private float _elapsedTime;
+	
 	private Room _room;
 	private Point<TileUnit> _leftUpperCornerPos;
 	private CrewMember _crewMember;
@@ -22,6 +26,9 @@ public class BasicTile implements Tile {
 	private TileOrRoomConnector _south;
 	private TileOrRoomConnector _west;
 	
+	private float _hullBreachLevel;
+	private Fire _fire;
+	
 	public BasicTile(Room room, Point<TileUnit> leftUpperCornerPos) {
 		super();
 		
@@ -31,8 +38,14 @@ public class BasicTile implements Tile {
 	
 	@Override
 	public void update(float elapsedTime) {
-		// TODO Auto-generated method stub
-
+		_elapsedTime += elapsedTime;
+		
+		if (_elapsedTime >= 1) {
+			updateHullBreach();
+			updateFire();
+			
+			_elapsedTime = 0;
+		}
 	}
 
 	@Override
@@ -105,4 +118,57 @@ public class BasicTile implements Tile {
     public TileOrRoomConnector getWestNeighbor() {
         return _west;
     }
+
+	@Override
+	public float getHullBreachLevel() {
+		return _hullBreachLevel;
+	}
+
+	@Override
+	public boolean hasHullBreach() {
+		return _hullBreachLevel > MIN_HULL_BREACH;
+	}
+
+	@Override
+	public void createHullBreach(float initialBreachValue) {
+		_hullBreachLevel = Math.min(MAX_HULL_BREACH, _hullBreachLevel + initialBreachValue);
+		_fire.extinguish();
+	}
+
+	@Override
+	public void repairHullBreach(float repairValue) {
+		_hullBreachLevel = Math.min(MIN_HULL_BREACH, _hullBreachLevel - repairValue);
+	}
+	
+	private void updateHullBreach() {
+        _room.consumeOxygen((_hullBreachLevel * HULL_BREACH_AIR_VENT_FACTOR) / _room.getTiles().size());
+    }
+
+	@Override
+	public float getFireLevel() {
+		return _fire.getFireLevel();
+	}
+
+	@Override
+	public boolean isOnFire() {
+		return getFireLevel() > MIN_FIRE;
+	}
+
+	@Override
+	public void ignite(float initialFireLevel) {
+		if (!hasHullBreach()) {
+			_fire.ignite(initialFireLevel);
+		}
+	}
+	
+	@Override
+	public void extinguishFire(float extinguishingLevel) {
+		_fire.extinguishFire(extinguishingLevel);
+	}
+	
+	private void updateFire() {
+	    float consumedOxygen = _fire.updateFireAndReturnConsumedOxygen(_room.getOxygenLevel());
+	    
+	    _room.consumeOxygen(consumedOxygen / _room.getTiles().size());
+	}
 }

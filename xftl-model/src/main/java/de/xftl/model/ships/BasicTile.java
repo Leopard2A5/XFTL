@@ -14,8 +14,6 @@ public class BasicTile implements Tile {
 
 	private static final float HULL_BREACH_AIR_VENT_FACTOR = 0.1f;
 	
-	private float _elapsedTime;
-	
 	private Room _room;
 	private Point<TileUnit> _leftUpperCornerPos;
 	private CrewMember _crewMember;
@@ -38,14 +36,8 @@ public class BasicTile implements Tile {
 	
 	@Override
 	public void update(float elapsedTime) {
-		_elapsedTime += elapsedTime;
-		
-		if (_elapsedTime >= 1) {
-			updateHullBreach();
-			updateFire();
-			
-			_elapsedTime = 0;
-		}
+		updateHullBreach(elapsedTime);
+		updateFire(elapsedTime);
 	}
 
 	@Override
@@ -140,8 +132,8 @@ public class BasicTile implements Tile {
 		_hullBreachLevel = Math.min(NO_HULL_BREACH, _hullBreachLevel - repairValue);
 	}
 	
-	private void updateHullBreach() {
-        _room.consumeOxygen((_hullBreachLevel * HULL_BREACH_AIR_VENT_FACTOR) / _room.getTiles().size());
+	private void updateHullBreach(float elapsedTime) {
+        _room.consumeOxygen((_hullBreachLevel * HULL_BREACH_AIR_VENT_FACTOR * elapsedTime) / _room.getTiles().size());
     }
 
 	@Override
@@ -166,8 +158,8 @@ public class BasicTile implements Tile {
 		_fire.extinguishFire(extinguishingLevel);
 	}
 	
-	private void updateFire() {
-	    float consumedOxygen = _fire.updateFireAndReturnConsumedOxygen(_room.getOxygenLevel());
+	private void updateFire(float elapsedTime) {
+	    float consumedOxygen = _fire.updateFireAndReturnConsumedOxygen(elapsedTime, _room.getOxygenLevel());
 	    
 	    _room.consumeOxygen(consumedOxygen / _room.getTiles().size());
 	}

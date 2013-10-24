@@ -51,15 +51,15 @@ public class Fire {
             _fireLevel = NO_FIRE;
     }
     
-    public float updateFireAndReturnConsumedOxygen(float currentOxygen) {
-        if (currentOxygen == Room.NO_OXYGEN) {
+    public float updateFireAndReturnConsumedOxygen(float elapsedTime, float currentOxygen) {
+        if (currentOxygen <= Room.NO_OXYGEN) {
             _fireLevel = NO_FIRE;
         }
         else if (currentOxygen > _fireLevel) {
-            setFireLevel(_fireLevel + Math.min(FIRE_GROWTH_FACTOR, currentOxygen - _fireLevel));
+            setFireLevel(_fireLevel + (Math.min(FIRE_GROWTH_FACTOR, currentOxygen - _fireLevel)) * elapsedTime);
         }
         else if (currentOxygen < _fireLevel) {
-            setFireLevel(_fireLevel - Math.min(FIRE_GROWTH_FACTOR, _fireLevel - currentOxygen));
+            setFireLevel(_fireLevel - (Math.min(FIRE_GROWTH_FACTOR, _fireLevel - currentOxygen)) * elapsedTime);
         }
         
         return _fireLevel * AIR_CONSUMPTION_FACTOR;

@@ -13,7 +13,6 @@ import de.xftl.spec.model.ships.TileUnit;
 public class BasicTile implements Tile {
 
 	private static final float HULL_BREACH_AIR_VENT_FACTOR = 0.1f;
-	private static final float FIRE_AIR_CONSUMPTION_FACTOR = 0.1f;
 	
 	private float _elapsedTime;
 	
@@ -28,7 +27,7 @@ public class BasicTile implements Tile {
 	private TileOrRoomConnector _west;
 	
 	private float _hullBreachLevel;
-	private float _fireLevel;
+	private Fire _fire;
 	
 	public BasicTile(Room room, Point<TileUnit> leftUpperCornerPos) {
 		super();
@@ -132,42 +131,44 @@ public class BasicTile implements Tile {
 
 	@Override
 	public void createHullBreach(float initialBreachValue) {
-		_hullBreachLevel = Math.min(MAX_HULL_BREACH, initialBreachValue);
-		_fireLevel = MIN_FIRE;
+		_hullBreachLevel = Math.min(MAX_HULL_BREACH, _hullBreachLevel + initialBreachValue);
+		_fire.extinguish();
 	}
 
 	@Override
 	public void repairHullBreach(float repairValue) {
 		_hullBreachLevel = Math.min(MIN_HULL_BREACH, _hullBreachLevel - repairValue);
 	}
+	
+	private void updateHullBreach() {
+        _room.consumeOxygen((_hullBreachLevel * HULL_BREACH_AIR_VENT_FACTOR) / _room.getTiles().size());
+    }
 
 	@Override
 	public float getFireLevel() {
-		return _fireLevel;
+		return _fire.getFireLevel();
 	}
 
 	@Override
 	public boolean isOnFire() {
-		return _fireLevel > MIN_FIRE;
+		return getFireLevel() > MIN_FIRE;
 	}
 
 	@Override
 	public void ignite(float initialFireLevel) {
 		if (!hasHullBreach()) {
-			_fireLevel = Math.min(MAX_FIRE, initialFireLevel);
+			_fire.ignite(initialFireLevel);
 		}
 	}
-
+	
 	@Override
 	public void extinguishFire(float extinguishingLevel) {
-		_fireLevel = Math.min(MIN_FIRE, _fireLevel - extinguishingLevel); 
-	}
-	
-	private void updateHullBreach() {
-		_room.consumeOxygen(_hullBreachLevel * HULL_BREACH_AIR_VENT_FACTOR);
+		_fire.extinguishFire(extinguishingLevel);
 	}
 	
 	private void updateFire() {
-		_room.consumeOxygen(_fireLevel * FIRE_AIR_CONSUMPTION_FACTOR);
+	    float consumedOxygen = _fire.updateFireAndReturnConsumedOxygen(_room.getOxygenLevel());
+	    
+	    _room.consumeOxygen(consumedOxygen / _room.getTiles().size());
 	}
 }

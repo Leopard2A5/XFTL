@@ -7,6 +7,9 @@ import de.xftl.spec.model.crew.CrewMember;
 import de.xftl.spec.model.systems.ShipSystem;
 
 public interface Room extends XFTLModelObject, Positioned<TileUnit> {
+    public static final float MIN_OXYGEN = 0;
+    public static final float MAX_OXYGEN = 1;
+    
 	public ShipSystem getSystem();
 	public List<Tile> getTiles();
 	public List<CrewMember> getCrewMembers();

@@ -145,12 +145,12 @@ public class BasicRoom implements Room {
 	
 	@Override
 	public void consumeOxygen(float oxygen) {
-		_oxygenLevel = Math.min(0, _oxygenLevel - oxygen);
+		_oxygenLevel = Math.max(MIN_OXYGEN, _oxygenLevel - oxygen);
 	}
 
 	@Override
 	public void replenishOxygen(float oxygen) {
-		_oxygenLevel = Math.max(1, _oxygenLevel + oxygen);
+		_oxygenLevel = Math.min(MAX_OXYGEN, _oxygenLevel + oxygen);
 	}
 
 	@Override

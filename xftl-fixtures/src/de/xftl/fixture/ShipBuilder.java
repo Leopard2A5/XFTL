@@ -95,7 +95,7 @@ public class ShipBuilder {
 		
 		_matrices.remove(_currentDeck);
 		
-		_currentRoom = new BasicRoom(_currentDeck, width, height, x, y);
+		_currentRoom = new BasicRoom(width, height, x, y);
 		_currentDeck.addRoom(_currentRoom);
 		
 		return this;

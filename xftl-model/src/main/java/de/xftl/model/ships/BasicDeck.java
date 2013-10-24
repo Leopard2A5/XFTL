@@ -80,7 +80,9 @@ public class BasicDeck implements Deck {
 		return _deckNumber.toString();
 	}
 	
+	@Override
 	public void addRoom(Room room) {
+	    room.setDeck(this);
 		_rooms.add(room);
 		_ship.onRoomAdded(room);
 	}

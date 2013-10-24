@@ -17,6 +17,8 @@ public interface Room extends XFTLModelObject, Positioned<TileUnit> {
 	public List<Room> getAdjacentRooms();
 	public List<Room> getAdjacentRooms(Room origin);
 	
+	public void setDeck(Deck deck);
+	
 	public float getOxygenLevel();
 	public void consumeOxygen(float oxygen);
 	public void replenishOxygen(float oxygen);

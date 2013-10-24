@@ -29,14 +29,18 @@ public class BasicRoom implements Room {
 	private float _oxygenLevel = MAX_OXYGEN;
 	private List<RoomConnector> _roomConnectors = new ArrayList<>();
 	
-	public BasicRoom(Deck deck, int width, int height, int x, int y) {
+	public BasicRoom(int width, int height, int x, int y) {
 	    super();
 
-	    _deck = deck;
 	    _leftUpperCornerPos = new Point<TileUnit>(new TileUnit(x), new TileUnit(y));
 	    _width = new TileUnit(width);
 	    _height = new TileUnit(height);
 	    _tiles = buildTiles(width, height, x, y);
+	}
+	
+	@Override
+	public void setDeck(Deck deck) {
+	    _deck = deck;
 	}
 
 	private List<Tile> buildTiles(int width, int height, int pX, int pY) {

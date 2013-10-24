@@ -24,7 +24,7 @@ public class ShipRenderer extends RenderedGameObject {
 			_decks.add(deckRenderer);
 		}
 		
-		_energyRenderer = new EnergyRenderer(game);
+		_energyRenderer = new EnergyRenderer(game, ship.getEnergyManager());
 		_energyRenderer.setPosition(0, 400);
 		addChild(_energyRenderer);
 	}

@@ -60,6 +60,8 @@ public class DeckRenderer extends RenderedGameObject {
 				_sizeX = Math.max(_sizeX, tilePosition.getX().getValue() * getGame().TileSize + getGame().TileSize);
 				_sizeY = Math.max(_sizeY, tilePosition.getY().getValue() * getGame().TileSize + getGame().TileSize);
 			}
+			
+			addChild(new RoomOverlay(game, room));
 		}
 	}
 	

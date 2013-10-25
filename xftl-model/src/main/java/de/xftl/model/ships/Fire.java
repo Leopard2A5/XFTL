@@ -18,21 +18,24 @@ package de.xftl.model.ships;
 
 import static de.xftl.spec.model.ships.Tile.MAX_FIRE;
 import static de.xftl.spec.model.ships.Tile.NO_FIRE;
-import de.xftl.spec.model.ships.Room;
 
 public class Fire {
-    private static final float AIR_CONSUMPTION_FACTOR = 0.1f;
+    private static final float AIR_CONSUMPTION_FACTOR = 0.02f;
     private static final float FIRE_GROWTH_FACTOR = 0.1f;
     private static final float FIRE_DIE_DOWN_THRESHOLD = 0.15f;
     
     private float _fireLevel;
+    
+    public Fire() {
+        super();
+    }
     
     public float getFireLevel() {
         return _fireLevel;
     }
 
     public void extinguish() {
-        _fireLevel = NO_FIRE;
+        setFireLevel(NO_FIRE);
     }
     
     public void ignite(float initialFireLevel) {
@@ -52,9 +55,16 @@ public class Fire {
             _fireLevel = NO_FIRE;
     }
     
+    public boolean isOnFire() {
+        return getFireLevel() > NO_FIRE;
+    }
+    
     public float updateFireAndReturnConsumedOxygen(float elapsedTime, float currentOxygen) {
+        if (!isOnFire())
+            return 0f;
+        
         if (currentOxygen <=  FIRE_DIE_DOWN_THRESHOLD) {
-            _fireLevel = NO_FIRE;
+            extinguish();
         }
         else if (currentOxygen > _fireLevel) {
             setFireLevel(_fireLevel + (Math.min(FIRE_GROWTH_FACTOR, currentOxygen - _fireLevel)) * elapsedTime);

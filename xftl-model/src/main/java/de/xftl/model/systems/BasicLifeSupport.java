@@ -26,7 +26,7 @@ import de.xftl.spec.model.systems.LifeSupport;
 
 public class BasicLifeSupport implements LifeSupport {
 
-    private static final float OXYGEN_REPLENISHMENT_RATE = 0.1f;
+    private static final float OXYGEN_REPLENISHMENT_RATE = 0.05f;
     
     private Energy _energyConsumption = Energy.valueOf(1);
     private List<Room> _rooms = new ArrayList<>();

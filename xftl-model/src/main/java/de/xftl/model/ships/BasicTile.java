@@ -17,6 +17,7 @@ public class BasicTile implements Tile {
 
 	private static final float HULL_BREACH_AIR_VENT_FACTOR = 0.1f;
 	private static final float FIRE_SPREAD_PROBABILITY = 0.2f;
+	private static final float FIRE_SPREAD_OXYGEN_REQUIREMENT = 0.5f;
 	
 	private Room _room;
 	private Point<TileUnit> _leftUpperCornerPos;
@@ -150,7 +151,7 @@ public class BasicTile implements Tile {
 
 	@Override
 	public boolean isOnFire() {
-		return getFireLevel() > NO_FIRE;
+		return _fire.isOnFire();
 	}
 
 	@Override
@@ -170,11 +171,14 @@ public class BasicTile implements Tile {
 	    
 	    _room.consumeOxygen(consumedOxygen / _room.getTiles().size());
 	    
-	    float spreadProbability = FIRE_SPREAD_PROBABILITY * elapsedTime * _fire.getFireLevel();
-	    if (spreadProbability >= Math.random()) {
-	        Tile tile = getNeighboringTileNotOnFire();
-	        if (tile != null)
-	            tile.ignite(_fire.getFireLevel() / 2);
+	    if (_room.getOxygenLevel() >= FIRE_SPREAD_OXYGEN_REQUIREMENT) {
+	        float spreadProbability = FIRE_SPREAD_PROBABILITY * elapsedTime * _fire.getFireLevel();
+	        if (spreadProbability >= Math.random()) {
+	            Tile tile = getNeighboringTileNotOnFire();
+	            if (tile != null) {
+	                tile.ignite(_fire.getFireLevel() / 2);
+	            }
+	        }
 	    }
 	}
 	

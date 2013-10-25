@@ -27,16 +27,19 @@ public class BasicShip implements Ship {
 	private List<ShipSystem> _systems = new ArrayList<>();
 	private DoorSystem _doorSystem;
 	private EnergyManager _energyManager = new BasicEnergyManager();
-	private LifeSupport _lifeSupport = new BasicLifeSupport();
+	private LifeSupport _lifeSupport;
 	
 	public BasicShip() {
 	    super();
 	    
 	    addSystem(new BasicDoorSystem());
+	    addSystem(new BasicLifeSupport());
 	}
 	
 	@Override
 	public void update(float elapsedTime) {
+	    for (ShipSystem system : _systems)
+	        system.update(elapsedTime);
 		for (Deck deck : _decks)
 		    deck.update(elapsedTime);
 	}
@@ -71,6 +74,8 @@ public class BasicShip implements Ship {
         
         if (system instanceof DoorSystem)
             _doorSystem = (DoorSystem) system;
+        if (system instanceof LifeSupport)
+            _lifeSupport = (LifeSupport) system;
     }
 
     @Override

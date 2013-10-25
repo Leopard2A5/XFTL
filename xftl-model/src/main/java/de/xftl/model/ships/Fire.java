@@ -23,6 +23,7 @@ import de.xftl.spec.model.ships.Room;
 public class Fire {
     private static final float AIR_CONSUMPTION_FACTOR = 0.1f;
     private static final float FIRE_GROWTH_FACTOR = 0.1f;
+    private static final float FIRE_DIE_DOWN_THRESHOLD = 0.15f;
     
     private float _fireLevel;
     
@@ -52,7 +53,7 @@ public class Fire {
     }
     
     public float updateFireAndReturnConsumedOxygen(float elapsedTime, float currentOxygen) {
-        if (currentOxygen <= Room.NO_OXYGEN) {
+        if (currentOxygen <=  FIRE_DIE_DOWN_THRESHOLD) {
             _fireLevel = NO_FIRE;
         }
         else if (currentOxygen > _fireLevel) {

@@ -30,6 +30,8 @@ import de.xftl.spec.model.systems.LifeSupport;
 
 public class FireTest {
 
+    private static final float STEP = 0.1f;
+    
     Ship ship = new BasicShip();
     Deck deck = new BasicDeck(ship, new DeckNumber(1));
     Room room = new BasicRoom(2, 1, 0, 0);
@@ -39,6 +41,8 @@ public class FireTest {
     
     @Before
     public void setUp() throws Exception {
+        deck.addRoom(room);
+        
         tile.ignite(0.5f);
     }
 
@@ -48,8 +52,8 @@ public class FireTest {
         
         while (elapsedTime < 10) {
             room.replenishOxygen(Room.MAX_OXYGEN);
-            tile.update(0.1f);
-            elapsedTime += 0.1;
+            tile.update(STEP);
+            elapsedTime += STEP;
         }
         
         assertEquals(Tile.MAX_FIRE, tile.getFireLevel(), 0.05f);
@@ -60,9 +64,9 @@ public class FireTest {
         float elapsedTime = 0;
         
         while (elapsedTime < 10) {
-            room.consumeOxygen(0.1f);
-            tile.update(0.1f);
-            elapsedTime += 0.1f;
+            room.consumeOxygen(STEP);
+            tile.update(STEP);
+            elapsedTime += STEP;
         }
         
         assertEquals(Tile.NO_FIRE, tile.getFireLevel(), 0.05f);
@@ -72,12 +76,25 @@ public class FireTest {
     public void shouldSpreadToOtherTiles() {
         float elapsedTime = 0;
         
-        while (elapsedTime < 10 && !tile2.isOnFire()) {
+        while (elapsedTime < 20 && !tile2.isOnFire()) {
             room.replenishOxygen(Room.MAX_OXYGEN);
-            tile.update(0.1f);
-            elapsedTime += 0.1f;
+            tile.update(STEP);
+            elapsedTime += STEP;
         }
         
         assertTrue(tile2.isOnFire());
+    }
+    
+    @Test
+    public void shouldDieDownWithWorkingLifeSupport() {
+        float elapsedTime = 0;
+        
+        while (elapsedTime < 10 && tile.isOnFire()) {
+            lifeSupport.update(STEP);
+            tile.update(STEP);
+            elapsedTime += STEP;
+        }
+        
+        assertFalse(tile.isOnFire());
     }
 }

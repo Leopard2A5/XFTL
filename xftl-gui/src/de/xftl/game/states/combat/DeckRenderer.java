@@ -19,8 +19,6 @@ import de.xftl.spec.model.ships.TileUnit;
 
 public class DeckRenderer extends RenderedGameObject {
 
-	private Texture _floorTexture;
-	private ArrayList<Sprite> _roomTiles;
 	private ArrayList<DoorRenderer> _doors;
 	private ArrayList<LiftRenderer> _lifts;
 	private float _x;
@@ -31,9 +29,6 @@ public class DeckRenderer extends RenderedGameObject {
 	public DeckRenderer(XftlGameRenderer game, Deck deck) {
 		super(game);
 		
-		_floorTexture = getResources().getTexture("res/tex/floor.png");
-		
-		_roomTiles = new ArrayList<Sprite>();
 		_doors = new ArrayList<DoorRenderer>();
 		_lifts = new ArrayList<LiftRenderer>();
 		
@@ -46,15 +41,13 @@ public class DeckRenderer extends RenderedGameObject {
 			
 			for(Tile tile : room.getTiles()) {
 				
-				Sprite sprite = new Sprite(_floorTexture);
-				Point<TileUnit> pos = tile.getLeftUpperCornerPos();
-				sprite.setPosition(pos.getX().getValue() * tileSize, pos.getY().getValue() * tileSize);
-				_roomTiles.add(sprite);
+				TileRenderer tileRenderer = new TileRenderer(game, tile);
+				addChild(tileRenderer);
 				
-				handleNeighbour(tile.getNorthNeighbor(), sprite.getX(), sprite.getY(), Direction.NORTH);
-				handleNeighbour(tile.getSouthNeighbor(), sprite.getX(), sprite.getY(), Direction.SOUTH);
-				handleNeighbour(tile.getEastNeighbor(), sprite.getX(), sprite.getY(), Direction.EAST);
-				handleNeighbour(tile.getWestNeighbor(), sprite.getX(), sprite.getY(), Direction.WEST);
+				handleNeighbour(tile.getNorthNeighbor(), tileRenderer.getX(), tileRenderer.getY(), Direction.NORTH);
+				handleNeighbour(tile.getSouthNeighbor(), tileRenderer.getX(), tileRenderer.getY(), Direction.SOUTH);
+				handleNeighbour(tile.getEastNeighbor(), tileRenderer.getX(), tileRenderer.getY(), Direction.EAST);
+				handleNeighbour(tile.getWestNeighbor(), tileRenderer.getX(), tileRenderer.getY(), Direction.WEST);
 				
 				Point<TileUnit> tilePosition = tile.getLeftUpperCornerPos();
 				_sizeX = Math.max(_sizeX, tilePosition.getX().getValue() * getGame().TileSize + getGame().TileSize);
@@ -110,27 +103,6 @@ public class DeckRenderer extends RenderedGameObject {
 		return false;
 	}
 			
-	public void setPosition(float x, float y) {
-		super.setPosition(x, y);
-		
-		float diffX = x - _x;
-		float diffY = y - _y;
-		
-		_x = x;
-		_y = y;
-		
-		for(Sprite sprite : _roomTiles) {
-			sprite.setPosition(sprite.getX() + diffX, sprite.getY() + diffY);
-		}
-	}
-	
-	public void draw() {
-		for(Sprite sprite : _roomTiles) {
-			sprite.draw(getSpriteBatch());
-		}
-		super.draw();
-	}
-
 	@Override
 	public float getX() {
 		return _x;

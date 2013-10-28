@@ -43,24 +43,11 @@ public class FireTest {
     public void setUp() throws Exception {
         deck.addRoom(room);
         
-        tile.ignite(0.5f);
+        tile.ignite();
     }
 
     @Test
-    public void shouldGrowToMaxValueGivenMaxOxygen() {
-        float elapsedTime = 0;
-        
-        while (elapsedTime < 10) {
-            room.replenishOxygen(Room.MAX_OXYGEN);
-            tile.update(STEP);
-            elapsedTime += STEP;
-        }
-        
-        assertEquals(Tile.MAX_FIRE, tile.getFireLevel(), 0.05f);
-    }
-
-    @Test
-    public void shouldDecreaseOnLowOxygenSupply() {
+    public void shouldDieOnLowOxygenSupply() {
         float elapsedTime = 0;
         
         while (elapsedTime < 10) {
@@ -69,7 +56,7 @@ public class FireTest {
             elapsedTime += STEP;
         }
         
-        assertEquals(Tile.NO_FIRE, tile.getFireLevel(), 0.05f);
+        assertFalse(tile.isOnFire());
     }
     
     @Test
@@ -89,7 +76,7 @@ public class FireTest {
     public void shouldDieDownWithWorkingLifeSupport() {
         float elapsedTime = 0;
         
-        while (elapsedTime < 10 && tile.isOnFire()) {
+        while (elapsedTime < 20 && tile.isOnFire()) {
             lifeSupport.update(STEP);
             tile.update(STEP);
             elapsedTime += STEP;

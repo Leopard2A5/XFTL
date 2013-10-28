@@ -26,7 +26,7 @@ import de.xftl.spec.model.systems.LifeSupport;
 
 public class BasicLifeSupport implements LifeSupport {
 
-    private static final float OXYGEN_REPLENISHMENT_RATE = 0.05f;
+    private static final float OXYGEN_REPLENISHMENT_RATE = 0.1f;
     
     private Energy _energyConsumption = Energy.valueOf(1);
     private List<Room> _rooms = new ArrayList<>();
@@ -34,8 +34,9 @@ public class BasicLifeSupport implements LifeSupport {
     @Override
     public void update(float elapsedTime) {
         if (_energyConsumption.intValue() >= 1) {
-            for (Room room : _rooms)
-                room.replenishOxygen(OXYGEN_REPLENISHMENT_RATE * elapsedTime);
+            for (Room room : _rooms) {
+                room.replenishOxygen((OXYGEN_REPLENISHMENT_RATE * elapsedTime) / room.getTiles().size());
+            }
         }
     }
 

@@ -31,7 +31,7 @@ public class TileRenderer extends RenderedGameObject{
 	
 	@Override
 	public void update(float elapsedTime) {
-		_fireSprite.setScale(0.5f + _tile.getFireLevel() * 0.5f);
+		_fireSprite.setScale(0.5f + 1f * 0.5f);
 		if (_tile.isOnFire()) {
 			_fireLifeTime += elapsedTime;
 			if (_fireLifeTime > 0.1f) {

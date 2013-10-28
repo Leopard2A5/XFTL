@@ -16,8 +16,10 @@ import de.xftl.spec.model.ships.TileUnit;
 public class BasicTile implements Tile {
 
 	private static final float HULL_BREACH_AIR_VENT_FACTOR = 0.1f;
+	private static final float FIRE_OXYGEN_CONSUMPTION = 0.2f;
 	private static final float FIRE_SPREAD_PROBABILITY = 0.2f;
 	private static final float FIRE_SPREAD_OXYGEN_REQUIREMENT = 0.5f;
+	private static final float FIRE_DIE_THRESHOLD = 0.2f;
 	
 	private Room _room;
 	private Point<TileUnit> _leftUpperCornerPos;
@@ -31,7 +33,7 @@ public class BasicTile implements Tile {
 	private List<Tile> _neightboringTiles = new ArrayList<>(4);
 	
 	private float _hullBreachLevel;
-	private Fire _fire = new Fire();
+	private boolean _onFire;
 	
 	public BasicTile(Room room, Point<TileUnit> leftUpperCornerPos) {
 		super();
@@ -132,7 +134,7 @@ public class BasicTile implements Tile {
 	@Override
 	public void createHullBreach(float initialBreachValue) {
 		_hullBreachLevel = Math.min(MAX_HULL_BREACH, _hullBreachLevel + initialBreachValue);
-		_fire.extinguish();
+		_onFire = false;
 	}
 
 	@Override
@@ -145,38 +147,31 @@ public class BasicTile implements Tile {
     }
 
 	@Override
-	public float getFireLevel() {
-		return _fire.getFireLevel();
-	}
-
-	@Override
 	public boolean isOnFire() {
-		return _fire.isOnFire();
+		return _onFire;
 	}
 
 	@Override
-	public void ignite(float initialFireLevel) {
+	public void ignite() {
 		if (!hasHullBreach()) {
-			_fire.ignite(initialFireLevel);
+			_onFire = true;
 		}
 	}
 	
-	@Override
-	public void extinguishFire(float extinguishingLevel) {
-		_fire.extinguishFire(extinguishingLevel);
-	}
-	
 	private void updateFire(float elapsedTime) {
-	    float consumedOxygen = _fire.updateFireAndReturnConsumedOxygen(elapsedTime, _room.getOxygenLevel());
+	    float consumedOxygen = FIRE_OXYGEN_CONSUMPTION * elapsedTime;
 	    
 	    _room.consumeOxygen(consumedOxygen / _room.getTiles().size());
 	    
-	    if (_room.getOxygenLevel() >= FIRE_SPREAD_OXYGEN_REQUIREMENT) {
-	        float spreadProbability = FIRE_SPREAD_PROBABILITY * elapsedTime * _fire.getFireLevel();
+	    if (_room.getOxygenLevel() < FIRE_DIE_THRESHOLD) {
+	    	_onFire = false;
+	    }
+	    else if (_room.getOxygenLevel() >= FIRE_SPREAD_OXYGEN_REQUIREMENT) {
+	        float spreadProbability = FIRE_SPREAD_PROBABILITY * elapsedTime;
 	        if (spreadProbability >= Math.random()) {
 	            Tile tile = getNeighboringTileNotOnFire();
 	            if (tile != null) {
-	                tile.ignite(_fire.getFireLevel() / 2);
+	                tile.ignite();
 	            }
 	        }
 	    }

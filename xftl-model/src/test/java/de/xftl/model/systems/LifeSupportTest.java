@@ -32,6 +32,8 @@ import de.xftl.spec.model.systems.LifeSupport;
 
 public class LifeSupportTest {
 
+    private static final float STEP = 0.1f;
+    
     Ship ship = new BasicShip();
     Deck deck = new BasicDeck(ship, new DeckNumber(1));
     Room room = new BasicRoom(0, 0, 2, 2);
@@ -49,9 +51,9 @@ public class LifeSupportTest {
         
         float elapsedTime = 0;
         while (elapsedTime < 10) {
-            sut.update(0.1f);
+            ship.update(STEP);
             
-            elapsedTime += 0.1f;
+            elapsedTime += STEP;
         }
         
         assertEquals(Room.MAX_OXYGEN, room.getOxygenLevel(), 0.05f);

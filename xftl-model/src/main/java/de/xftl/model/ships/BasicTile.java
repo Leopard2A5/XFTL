@@ -19,7 +19,7 @@ public class BasicTile implements Tile {
 	private static final float FIRE_OXYGEN_CONSUMPTION = 0.2f;
 	private static final float FIRE_SPREAD_PROBABILITY = 0.2f;
 	private static final float FIRE_SPREAD_OXYGEN_REQUIREMENT = 0.5f;
-	private static final float FIRE_DIE_THRESHOLD = 0.2f;
+	private static final float FIRE_DIE_THRESHOLD = 0.15f;
 	
 	private Room _room;
 	private Point<TileUnit> _leftUpperCornerPos;
@@ -159,14 +159,18 @@ public class BasicTile implements Tile {
 	}
 	
 	private void updateFire(float elapsedTime) {
-	    float consumedOxygen = FIRE_OXYGEN_CONSUMPTION * elapsedTime;
-	    
-	    _room.consumeOxygen(consumedOxygen / _room.getTiles().size());
+	    if (!isOnFire())
+	        return;
 	    
 	    if (_room.getOxygenLevel() < FIRE_DIE_THRESHOLD) {
-	    	_onFire = false;
-	    }
-	    else if (_room.getOxygenLevel() >= FIRE_SPREAD_OXYGEN_REQUIREMENT) {
+            _onFire = false;
+            return;
+        }
+	    
+	    float consumedOxygen = FIRE_OXYGEN_CONSUMPTION * elapsedTime;
+	    _room.consumeOxygen(consumedOxygen / _room.getTiles().size());
+	    
+	    if (_room.getOxygenLevel() >= FIRE_SPREAD_OXYGEN_REQUIREMENT) {
 	        float spreadProbability = FIRE_SPREAD_PROBABILITY * elapsedTime;
 	        if (spreadProbability >= Math.random()) {
 	            Tile tile = getNeighboringTileNotOnFire();

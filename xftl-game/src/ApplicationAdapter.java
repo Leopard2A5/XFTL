@@ -9,6 +9,8 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Application.ApplicationType;
 import com.badlogic.gdx.backends.lwjgl.LwjglApplication;
 
+import de.xftl.game.framework.XftlGameRenderer;
+
 
 public class ApplicationAdapter implements ApplicationListener {
 

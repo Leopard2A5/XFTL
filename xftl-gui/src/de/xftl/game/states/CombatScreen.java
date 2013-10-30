@@ -1,5 +1,7 @@
 package de.xftl.game.states;
 
+import com.badlogic.gdx.graphics.g2d.Sprite;
+
 import de.xftl.game.framework.ScreenChangeInformation;
 import de.xftl.game.framework.XftlGameRenderer;
 import de.xftl.game.framework.ui.UiGameScreenBase;
@@ -8,6 +10,7 @@ import de.xftl.spec.game.Game;
 
 public class CombatScreen extends UiGameScreenBase {
 
+	private Sprite _backgroundSprite;
 	private ShipRenderer _shipRenderer;
 	
 	public CombatScreen(XftlGameRenderer game) {
@@ -23,7 +26,7 @@ public class CombatScreen extends UiGameScreenBase {
 
 	@Override
 	public void onRender() {
-		//getGame().clearScreen(1.0f, 1.0f, 1.0f);
+		_backgroundSprite.draw(getSpriteBatch());
 		_shipRenderer.draw();
 		super.onRender();
 	}
@@ -35,6 +38,9 @@ public class CombatScreen extends UiGameScreenBase {
 		
 		_shipRenderer = new ShipRenderer(getGame(), model.getShip());
 		_shipRenderer.setPosition(30, 60);
+		
+		_backgroundSprite = new Sprite(getResources().getTexture("res/tex/starbackground.png"));
+		_backgroundSprite.flip(false, true);
 	}
 
 	@Override

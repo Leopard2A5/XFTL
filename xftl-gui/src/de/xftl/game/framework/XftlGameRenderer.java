@@ -4,6 +4,7 @@ import java.util.HashMap;
 
 import com.badlogic.gdx.ApplicationListener;
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.Input.Keys;
 import com.badlogic.gdx.graphics.GL10;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Pixmap;
@@ -16,6 +17,7 @@ import de.xftl.spec.game.Game;
 
 public class XftlGameRenderer implements ApplicationListener {
 	
+		private PerformanceProfilerView _profiler; 
 		private Texture _blank;
 		private OrthographicCamera _camera;
 		private SpriteBatch _spriteBatch;
@@ -90,15 +92,26 @@ public class XftlGameRenderer implements ApplicationListener {
         	map.drawPixel(0, 0, 0xffffffff);
         	_blank = new Texture(map);
         	
+        	_profiler = new PerformanceProfilerView(this);
+        	
         	addGameScreen(GameScreenName.CombatScreen, new CombatScreen(this));
         	addGameScreen(GameScreenName.MainMenuState, new MainMenuScreen(this));
         	setCurrentGameState(GameScreenName.MainMenuState, null);
         }
+		
+		public void setIsProfilerEnabled(boolean isTrue) {
+			_profiler.setIsEnabled(isTrue);
+		}
 
         public void render () {
         	float elapsedTime = Gdx.graphics.getDeltaTime();
+        	if (Gdx.input.isKeyPressed(Keys.Q)) _profiler.toggleIsEnabled();
+
         	updateCurrentState(elapsedTime);
         	renderCurrentState();
+        	
+        	_profiler.update(elapsedTime);
+        	_profiler.draw();
         }
         
         private void updateCurrentState(float elapsedTime) {

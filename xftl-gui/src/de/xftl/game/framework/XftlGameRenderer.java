@@ -18,6 +18,7 @@ import de.xftl.spec.game.Game;
 public class XftlGameRenderer implements ApplicationListener {
 	
 		private PerformanceProfilerView _profiler; 
+		private DebugConsoleView _console;
 		private Texture _blank;
 		private OrthographicCamera _camera;
 		private SpriteBatch _spriteBatch;
@@ -93,6 +94,7 @@ public class XftlGameRenderer implements ApplicationListener {
         	_blank = new Texture(map);
         	
         	_profiler = new PerformanceProfilerView(this);
+        	_console = new DebugConsoleView(this);
         	
         	addGameScreen(GameScreenName.CombatScreen, new CombatScreen(this));
         	addGameScreen(GameScreenName.MainMenuState, new MainMenuScreen(this));
@@ -111,7 +113,9 @@ public class XftlGameRenderer implements ApplicationListener {
         	renderCurrentState();
         	
         	_profiler.update(elapsedTime);
+        	
         	_profiler.draw();
+        	_console.draw();
         }
         
         private void updateCurrentState(float elapsedTime) {

@@ -4,7 +4,6 @@ import java.util.HashMap;
 
 import com.badlogic.gdx.ApplicationListener;
 import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.Input.Keys;
 import com.badlogic.gdx.graphics.GL10;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Pixmap;
@@ -74,7 +73,7 @@ public class XftlGameRenderer implements ApplicationListener {
         	_blank = new Texture(map);
         	
         	_profiler = new PerformanceProfilerView(this);
-        	_console = new DebugConsoleView(this, new CommandInterpreter(_gameModel));
+        	_console = new DebugConsoleView(this, new CommandInterpreter(this));
         	_console.setEnable(true);
         	
         	addGameScreen(GameScreenName.CombatScreen, new CombatScreen(this));
@@ -88,13 +87,15 @@ public class XftlGameRenderer implements ApplicationListener {
 
         public void render () {
         	float elapsedTime = Gdx.graphics.getDeltaTime();
-        	if (Gdx.input.isKeyPressed(Keys.Q)) _profiler.toggleIsEnabled();
 
         	updateCurrentState(elapsedTime);
         	renderCurrentState();
         	
+        	updateAndRenderHelperControls(elapsedTime);
+        }
+        
+        private void updateAndRenderHelperControls(float elapsedTime) {
         	_profiler.update(elapsedTime);
-        	
         	_profiler.draw();
         	_console.draw();
         }

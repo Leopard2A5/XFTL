@@ -1,17 +1,24 @@
 package de.xftl.game.framework;
 
-import de.xftl.spec.game.Game;
+public class CommandInterpreter extends GameObject {
 
-public class CommandInterpreter {
-
-	private Game _gameModel;
-	
-	public CommandInterpreter(Game gameModel) {
-		_gameModel = gameModel;
+	public CommandInterpreter(XftlGameRenderer game) {
+		super(game);
 	}
 	
 	public String interpretCommand(String text) {
 		
-		return "invalid Command: " + text;
+		String response = "invalid Command: " + text;
+		
+		if (text.equalsIgnoreCase("enable profiler")) {
+			getGame().setIsProfilerEnabled(true);
+			response = null;
+		}
+		else if (text.equalsIgnoreCase("disable profiler")) {
+			getGame().setIsProfilerEnabled(false);
+			response = null;
+		}
+		
+		return response;
 	}
 }

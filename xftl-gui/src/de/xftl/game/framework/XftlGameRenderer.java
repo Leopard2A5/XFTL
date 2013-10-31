@@ -34,33 +34,13 @@ public class XftlGameRenderer implements ApplicationListener {
 			_gameModel = game;
 		}
 		
-		public Game getGameModel() {
-			return _gameModel;
-		}
-		
-		public SpriteBatch getSpriteBatch() {
-			return _spriteBatch;
-		}
-		
-		public int getScreenWidth(){
-			return Gdx.graphics.getWidth();
-		}
-		
-		public int getScreenHeight(){
-			return Gdx.graphics.getHeight();
-		}
-		
-		public Mouse getMouse() {
-			return _mouse;
-		}
-		
-		public ResourceManager getResources() {
-			return _resourceManager;
-		}
-		
-		public Texture getBlankTexture() {
-			return _blank;
-		}
+		public Game getGameModel() { return _gameModel; }
+		public SpriteBatch getSpriteBatch() { return _spriteBatch; }
+		public int getScreenWidth() { return Gdx.graphics.getWidth(); }
+		public int getScreenHeight() { return Gdx.graphics.getHeight(); }
+		public Mouse getMouse() { return _mouse; }
+		public ResourceManager getResources() {	return _resourceManager; }
+		public Texture getBlankTexture() { return _blank; }
 				
 		private void addGameScreen(GameScreenName gameScreenName, GameScreen gameScreen){
 			_gameScreensByGameScreenName.put(gameScreenName, gameScreen);
@@ -94,7 +74,8 @@ public class XftlGameRenderer implements ApplicationListener {
         	_blank = new Texture(map);
         	
         	_profiler = new PerformanceProfilerView(this);
-        	_console = new DebugConsoleView(this);
+        	_console = new DebugConsoleView(this, new CommandInterpreter(_gameModel));
+        	_console.setEnable(true);
         	
         	addGameScreen(GameScreenName.CombatScreen, new CombatScreen(this));
         	addGameScreen(GameScreenName.MainMenuState, new MainMenuScreen(this));

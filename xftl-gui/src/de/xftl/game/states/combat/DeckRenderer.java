@@ -42,7 +42,7 @@ public class DeckRenderer extends RenderedGameObject {
 			for(Tile tile : room.getTiles()) {
 				
 				TileRenderer tileRenderer = new TileRenderer(game, tile);
-				addChild(tileRenderer);
+				addChild(0, tileRenderer);
 				
 				handleNeighbour(tile.getNorthNeighbor(), tileRenderer.getX(), tileRenderer.getY(), Direction.NORTH);
 				handleNeighbour(tile.getSouthNeighbor(), tileRenderer.getX(), tileRenderer.getY(), Direction.SOUTH);
@@ -79,18 +79,18 @@ public class DeckRenderer extends RenderedGameObject {
 		if (tile == null) {
 			addChild(new WallRenderer(getGame(), x, y, direction));
 		}
-		else if (tile instanceof Lift) {
-			if (!liftExists((Lift)tile)) {
-				LiftRenderer liftRenderer = new LiftRenderer(getGame(), (Lift)tile,x,y, direction);
-				_lifts.add(liftRenderer);
-				addChild(liftRenderer);
-			}
-		}
 		else if (tile instanceof Door) {
 			if (!doorExists((Door)tile)) {
 				DoorRenderer doorRenderer = new DoorRenderer(getGame(), (Door)tile, x, y, direction);
 				addChild(doorRenderer);
 				_doors.add(doorRenderer);
+			}
+		}
+		else if (tile instanceof Lift) {
+			if (!liftExists((Lift)tile)) {
+				LiftRenderer liftRenderer = new LiftRenderer(getGame(), (Lift)tile,x,y, direction);
+				_lifts.add(liftRenderer);
+				addChild(liftRenderer);
 			}
 		}
 	}

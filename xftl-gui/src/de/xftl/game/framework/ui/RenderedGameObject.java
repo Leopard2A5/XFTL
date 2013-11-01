@@ -18,6 +18,10 @@ public abstract class RenderedGameObject extends GameObject {
 		_children.add(child);
 	}
 	
+	protected void addChild(int index, RenderedGameObject child) {
+		_children.add(index, child);
+	}
+	
 	public void setPosition(float x, float y) {
 		float differenceX = x - getX();
 		float differenY = y - getY();

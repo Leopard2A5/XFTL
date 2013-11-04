@@ -6,7 +6,6 @@ import de.xftl.game.framework.XftlGameRenderer;
 import de.xftl.game.framework.ui.RenderedGameObject;
 import de.xftl.spec.model.Point;
 import de.xftl.spec.model.ships.Tile;
-import de.xftl.spec.model.ships.TileUnit;
 
 public class TileRenderer extends RenderedGameObject{
 
@@ -20,12 +19,12 @@ public class TileRenderer extends RenderedGameObject{
 		super(game);
 		_tile = tile;
 		
-		Point<TileUnit> pos = tile.getLeftUpperCornerPos();
+		Point<Integer> pos = tile.getLeftUpperCornerPos();
 		_floorSprite = new Sprite(getResources().getTexture("res/tex/floor.png"));
 		_fireSprite = new Sprite(getResources().getTexture("res/tex/fire.png"),0,0,32,32);
 		
-		_floorSprite.setPosition(pos.getX().getValue() * game.TileSize, pos.getY().getValue() * game.TileSize);
-		_fireSprite.setPosition(pos.getX().getValue() * game.TileSize, pos.getY().getValue() * game.TileSize);
+		_floorSprite.setPosition(pos.getX() * game.TileSize, pos.getY() * game.TileSize);
+		_fireSprite.setPosition(pos.getX() * game.TileSize, pos.getY() * game.TileSize);
 		_fireSprite.flip(false, true);
 	}
 	

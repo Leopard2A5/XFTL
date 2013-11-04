@@ -11,7 +11,6 @@ import de.xftl.spec.model.ships.Room;
 import de.xftl.spec.model.ships.RoomConnector;
 import de.xftl.spec.model.ships.Tile;
 import de.xftl.spec.model.ships.TileOrRoomConnector;
-import de.xftl.spec.model.ships.TileUnit;
 
 public class BasicTile implements Tile {
 
@@ -22,7 +21,7 @@ public class BasicTile implements Tile {
 	private static final float FIRE_DIE_THRESHOLD = 0.15f;
 	
 	private Room _room;
-	private Point<TileUnit> _leftUpperCornerPos;
+	private Point<Integer> _leftUpperCornerPos;
 	private CrewMember _crewMember;
 	private CrewMember _enemyCrewMember;
 	
@@ -35,7 +34,7 @@ public class BasicTile implements Tile {
 	private float _hullBreachLevel;
 	private boolean _onFire;
 	
-	public BasicTile(Room room, Point<TileUnit> leftUpperCornerPos) {
+	public BasicTile(Room room, Point<Integer> leftUpperCornerPos) {
 		super();
 		
 		_room = room;
@@ -49,7 +48,7 @@ public class BasicTile implements Tile {
 	}
 
 	@Override
-	public Point<TileUnit> getLeftUpperCornerPos() {
+	public Point<Integer> getLeftUpperCornerPos() {
 		return _leftUpperCornerPos;
 	}
 
@@ -64,7 +63,7 @@ public class BasicTile implements Tile {
 	}
 
 	@Override
-	public int compareTo(Positioned<TileUnit> o) {
+	public int compareTo(Positioned<Integer> o) {
 	    return _leftUpperCornerPos.compareTo(o.getLeftUpperCornerPos());
 	}
 	

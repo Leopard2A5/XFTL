@@ -15,15 +15,14 @@ import de.xftl.spec.model.ships.Positioned;
 import de.xftl.spec.model.ships.Room;
 import de.xftl.spec.model.ships.RoomConnector;
 import de.xftl.spec.model.ships.Tile;
-import de.xftl.spec.model.ships.TileUnit;
 import de.xftl.spec.model.systems.ShipSystem;
 
 public class BasicRoom implements Room {
 
     private Deck _deck;
-	private Point<TileUnit> _leftUpperCornerPos;
-	private TileUnit _width;
-	private TileUnit _height;
+	private Point<Integer> _leftUpperCornerPos;
+	private int _width;
+	private int _height;
 	private ShipSystem _system;
 	private List<Tile> _tiles;
 	private float _oxygenLevel = MAX_OXYGEN;
@@ -32,9 +31,9 @@ public class BasicRoom implements Room {
 	public BasicRoom(int width, int height, int x, int y) {
 	    super();
 
-	    _leftUpperCornerPos = new Point<TileUnit>(new TileUnit(x), new TileUnit(y));
-	    _width = new TileUnit(width);
-	    _height = new TileUnit(height);
+	    _leftUpperCornerPos = new Point<Integer>(x, y);
+	    _width = width;
+	    _height = height;
 	    _tiles = buildTiles(width, height, x, y);
 	}
 	
@@ -49,9 +48,9 @@ public class BasicRoom implements Room {
 		
 		for (int y = 0; y < height; y++) {
 			for (int x = 0; x < width; x++) {
-				TileUnit tux = new TileUnit(x + pX);
-				TileUnit tuy = new TileUnit(y + pY);
-				BasicTile tile = new BasicTile(this, new Point<TileUnit>(tux, tuy));
+				int tux = x + pX;
+				int tuy = y + pY;
+				BasicTile tile = new BasicTile(this, new Point<Integer>(tux, tuy));
 				tiles.add(tile);
 				basicTiles.add(tile);
 			}
@@ -86,17 +85,17 @@ public class BasicRoom implements Room {
 	}
 
 	@Override
-	public Point<TileUnit> getLeftUpperCornerPos() {
+	public Point<Integer> getLeftUpperCornerPos() {
 		return _leftUpperCornerPos;
 	}
 	
 	@Override
-    public TileUnit getWidth() {
+    public int getWidth() {
         return _width;
     }
 
     @Override
-    public TileUnit getHeigth() {
+    public int getHeigth() {
         return _height;
     }
 
@@ -158,7 +157,7 @@ public class BasicRoom implements Room {
 	}
 
 	@Override
-    public int compareTo(Positioned<TileUnit> o) {
+    public int compareTo(Positioned<Integer> o) {
         return _leftUpperCornerPos.compareTo(o.getLeftUpperCornerPos());
     }
 	

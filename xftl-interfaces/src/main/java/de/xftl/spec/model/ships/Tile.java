@@ -3,7 +3,7 @@ package de.xftl.spec.model.ships;
 import de.xftl.spec.model.XFTLModelObject;
 import de.xftl.spec.model.crew.CrewMember;
 
-public interface Tile extends XFTLModelObject, Positioned<TileUnit>, TileOrRoomConnector {
+public interface Tile extends XFTLModelObject, Positioned<Integer>, TileOrRoomConnector {
 	public static final float NO_HULL_BREACH = 0;
 	public static final float MAX_HULL_BREACH = 1;
 	

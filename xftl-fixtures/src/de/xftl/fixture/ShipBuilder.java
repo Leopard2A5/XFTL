@@ -20,7 +20,6 @@ import de.xftl.spec.model.ships.Deck;
 import de.xftl.spec.model.ships.DeckNumber;
 import de.xftl.spec.model.ships.Room;
 import de.xftl.spec.model.ships.Tile;
-import de.xftl.spec.model.ships.TileUnit;
 import de.xftl.spec.model.systems.DoorSystem;
 import de.xftl.spec.model.systems.LifeSupport;
 import de.xftl.spec.model.systems.ShipSystem;
@@ -182,14 +181,14 @@ public class ShipBuilder {
 	}
 	
 	private boolean adjacent(Tile tile1, Tile tile2) {
-		Point<TileUnit> pos1 = tile1.getLeftUpperCornerPos();
-		Point<TileUnit> pos2 = tile2.getLeftUpperCornerPos();
+		Point<Integer> pos1 = tile1.getLeftUpperCornerPos();
+		Point<Integer> pos2 = tile2.getLeftUpperCornerPos();
 		
 		if (pos1.getX().equals(pos2.getX())) {
-			return Math.abs(pos1.getY().getValue() - pos2.getY().getValue()) == 1;
+			return Math.abs(pos1.getY() - pos2.getY()) == 1;
 		}
 		else if (pos1.getY().equals(pos2.getY())) {
-			return Math.abs(pos1.getX().getValue() - pos2.getX().getValue()) == 1;
+			return Math.abs(pos1.getX() - pos2.getX()) == 1;
 		}
 		
 		return false;
@@ -201,12 +200,12 @@ public class ShipBuilder {
 	}
 
 	private TileUnitMatrix<BasicTile> createDeckMatrix(BasicDeck deck) {
-		Set<Point<TileUnit>> usedCoords = new HashSet<>();
+		Set<Point<Integer>> usedCoords = new HashSet<>();
 		List<BasicTile> tiles = new ArrayList<>();
 		
 		for (Room room : deck.getRooms()) {
 			for (Tile tile : room.getTiles()) {
-				Point<TileUnit> pos = tile.getLeftUpperCornerPos();
+				Point<Integer> pos = tile.getLeftUpperCornerPos();
 				if (usedCoords.contains(pos))
 					throw new RuntimeException(String.format("Position %s is used more than once on deck %s", pos, deck));
 				usedCoords.add(pos);

@@ -7,7 +7,6 @@ import de.xftl.spec.model.Point;
 import de.xftl.spec.model.ships.Room;
 import de.xftl.spec.model.ships.Ship;
 import de.xftl.spec.model.ships.Tile;
-import de.xftl.spec.model.ships.TileUnit;
 import de.xftl.spec.model.systems.Energy;
 
 public class Fixture {
@@ -78,9 +77,9 @@ public class Fixture {
 		
 		for (Room room : ship.getDecks().get(0).getRooms()) {
 			for (Tile tile : room.getTiles()) {
-				Point<TileUnit> pos = tile.getLeftUpperCornerPos();
-				int x = pos.getX().getValue();
-				int y = pos.getY().getValue();
+				Point<Integer> pos = tile.getLeftUpperCornerPos();
+				int x = pos.getX();
+				int y = pos.getY();
 				
 				matrix[y][x] = tile;
 			}

@@ -6,7 +6,7 @@ import de.xftl.spec.model.XFTLModelObject;
 import de.xftl.spec.model.crew.CrewMember;
 import de.xftl.spec.model.systems.ShipSystem;
 
-public interface Room extends XFTLModelObject, Positioned<TileUnit> {
+public interface Room extends XFTLModelObject, Positioned<Integer> {
     public static final float NO_OXYGEN = 0;
     public static final float MAX_OXYGEN = 1;
     
@@ -23,8 +23,8 @@ public interface Room extends XFTLModelObject, Positioned<TileUnit> {
 	public void consumeOxygen(float oxygen);
 	public void replenishOxygen(float oxygen);
 	
-	public TileUnit getWidth();
-	public TileUnit getHeigth();
+	public int getWidth();
+	public int getHeigth();
 	
 	public void addRoomConnector(RoomConnector rc);
 }

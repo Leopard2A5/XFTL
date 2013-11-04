@@ -2,9 +2,6 @@ package de.xftl.game.states.combat;
 
 import java.util.ArrayList;
 
-import com.badlogic.gdx.graphics.Texture;
-import com.badlogic.gdx.graphics.g2d.Sprite;
-
 import de.xftl.game.framework.XftlGameRenderer;
 import de.xftl.game.framework.ui.RenderedGameObject;
 import de.xftl.spec.model.Direction;
@@ -15,7 +12,6 @@ import de.xftl.spec.model.ships.Lift;
 import de.xftl.spec.model.ships.Room;
 import de.xftl.spec.model.ships.Tile;
 import de.xftl.spec.model.ships.TileOrRoomConnector;
-import de.xftl.spec.model.ships.TileUnit;
 
 public class DeckRenderer extends RenderedGameObject {
 
@@ -49,9 +45,9 @@ public class DeckRenderer extends RenderedGameObject {
 				handleNeighbour(tile.getEastNeighbor(), tileRenderer.getX(), tileRenderer.getY(), Direction.EAST);
 				handleNeighbour(tile.getWestNeighbor(), tileRenderer.getX(), tileRenderer.getY(), Direction.WEST);
 				
-				Point<TileUnit> tilePosition = tile.getLeftUpperCornerPos();
-				_sizeX = Math.max(_sizeX, tilePosition.getX().getValue() * getGame().TileSize + getGame().TileSize);
-				_sizeY = Math.max(_sizeY, tilePosition.getY().getValue() * getGame().TileSize + getGame().TileSize);
+				Point<Integer> tilePosition = tile.getLeftUpperCornerPos();
+				_sizeX = Math.max(_sizeX, tilePosition.getX() * getGame().TileSize + getGame().TileSize);
+				_sizeY = Math.max(_sizeY, tilePosition.getY() * getGame().TileSize + getGame().TileSize);
 			}
 			
 			addChild(new RoomOverlay(game, room));

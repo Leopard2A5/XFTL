@@ -20,9 +20,8 @@ import java.util.Collection;
 import java.util.Iterator;
 
 import de.xftl.spec.model.ships.Positioned;
-import de.xftl.spec.model.ships.TileUnit;
 
-public class TileUnitMatrix<T extends Positioned<TileUnit>> implements Iterable<T> {
+public class TileUnitMatrix<T extends Positioned<Integer>> implements Iterable<T> {
     
     private Collection<T> _items;
     private Object[][] _matrix;
@@ -40,15 +39,15 @@ public class TileUnitMatrix<T extends Positioned<TileUnit>> implements Iterable<
 
     private void determineMaxDimensions() {
         for (T t : _items) {
-            _maxX = Math.max(_maxX, t.getLeftUpperCornerPos().getX().getValue());
-            _maxY = Math.max(_maxY, t.getLeftUpperCornerPos().getY().getValue());
+            _maxX = Math.max(_maxX, t.getLeftUpperCornerPos().getX());
+            _maxY = Math.max(_maxY, t.getLeftUpperCornerPos().getY());
         }
     }
 
     private void insertItems() {
         for (T t : _items) {
-            int x = t.getLeftUpperCornerPos().getX().getValue();
-            int y = t.getLeftUpperCornerPos().getY().getValue();
+            int x = t.getLeftUpperCornerPos().getX();
+            int y = t.getLeftUpperCornerPos().getY();
             
             _matrix[y][x] = t;
         }

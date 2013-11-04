@@ -20,9 +20,8 @@ import java.util.Iterator;
 
 import de.xftl.spec.model.Direction;
 import de.xftl.spec.model.ships.Positioned;
-import de.xftl.spec.model.ships.TileUnit;
 
-public class TileUnitMatrixIterator<T extends Positioned<TileUnit>> implements Iterator<T> {
+public class TileUnitMatrixIterator<T extends Positioned<Integer>> implements Iterator<T> {
     private TileUnitMatrix<T> _matrix;
     private Iterator<T> _itemIt;
     private T _currItem;
@@ -44,8 +43,8 @@ public class TileUnitMatrixIterator<T extends Positioned<TileUnit>> implements I
     @Override
     public T next() {
         _currItem = _itemIt.next();
-        _currX = _currItem.getLeftUpperCornerPos().getX().getValue();
-        _currY = _currItem.getLeftUpperCornerPos().getY().getValue();
+        _currX = _currItem.getLeftUpperCornerPos().getX();
+        _currY = _currItem.getLeftUpperCornerPos().getY();
         
         return _currItem;
     }

@@ -6,7 +6,6 @@ import de.xftl.game.framework.XftlGameRenderer;
 import de.xftl.game.framework.ui.RenderedGameObject;
 import de.xftl.spec.model.Point;
 import de.xftl.spec.model.ships.Room;
-import de.xftl.spec.model.ships.TileUnit;
 
 public class RoomOverlay extends RenderedGameObject{
 
@@ -18,12 +17,12 @@ public class RoomOverlay extends RenderedGameObject{
 		_room = room;
 		_oxygenSprite = new Sprite(game.getBlankTexture());
 		
-		Point<TileUnit> position = _room.getLeftUpperCornerPos();
+		Point<Integer> position = _room.getLeftUpperCornerPos();
 		
-		float x = position.getX().getValue() * getGame().TileSize;
-		float y = position.getY().getValue() * getGame().TileSize;
-		float height = _room.getHeigth().getValue() * getGame().TileSize;
-		float width = _room.getWidth().getValue() * getGame().TileSize;
+		float x = position.getX() * getGame().TileSize;
+		float y = position.getY() * getGame().TileSize;
+		float height = _room.getHeigth() * getGame().TileSize;
+		float width = _room.getWidth() * getGame().TileSize;
 		
 		_oxygenSprite.setPosition(x, y);
 		_oxygenSprite.setSize(width, height);

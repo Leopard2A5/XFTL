@@ -1,8 +1,8 @@
 package de.xftl.game.states;
 
-import com.badlogic.gdx.graphics.g2d.BitmapFont;
-
+import de.xftl.game.framework.BitmapFontSprite;
 import de.xftl.game.framework.GameScreenName;
+import de.xftl.game.framework.HorizontalTextAlign;
 import de.xftl.game.framework.ScreenChangeInformation;
 import de.xftl.game.framework.XftlGameRenderer;
 import de.xftl.game.framework.ui.MenuItem;
@@ -14,14 +14,14 @@ public class MainMenuScreen extends UiGameScreenBase {
 	private static final String GAME_HEADING = "XFTL";
 	
 	private ScreenChangeInformation _changeInformation;
-	private BitmapFont _mainFont;
-	private float _headingWidth;
+	private BitmapFontSprite _headingSprite;
 		
 	public MainMenuScreen(XftlGameRenderer game) {
 		super(game); 
 		
-		_mainFont = getResources().getBitmapFont("res/fnt/main.fnt");
-		_headingWidth = _mainFont.getBounds(GAME_HEADING).width;
+		_headingSprite = new BitmapFontSprite(getResources().getBitmapFont("res/fnt/main.fnt"), GAME_HEADING);
+		_headingSprite.setPosition(getGame().getScreenWidth() * 0.5f, 10);
+		_headingSprite.setHorizontalAlign(HorizontalTextAlign.Center);
 		
 		addUiElement(new MenuItem(game, "Continue", 50, 300, false));
 				
@@ -62,8 +62,7 @@ public class MainMenuScreen extends UiGameScreenBase {
 
 	@Override
 	public void onRender() {
-		float headingPositionX = (float)Math.floor(getGame().getScreenWidth() * 0.5f - _headingWidth * 0.5f);
-		_mainFont.draw(getSpriteBatch(), GAME_HEADING, headingPositionX , 10);
+		_headingSprite.draw(getSpriteBatch());
 		
 		super.onRender();
 	}

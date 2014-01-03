@@ -17,7 +17,6 @@ import de.xftl.model.util.TileUnitMatrix;
 import de.xftl.spec.model.Direction;
 import de.xftl.spec.model.Point;
 import de.xftl.spec.model.ships.Deck;
-import de.xftl.spec.model.ships.DeckNumber;
 import de.xftl.spec.model.ships.Room;
 import de.xftl.spec.model.ships.Tile;
 import de.xftl.spec.model.systems.DoorSystem;
@@ -82,7 +81,7 @@ public class ShipBuilder {
 	}
 	
 	public ShipBuilder addDeck() {
-		_currentDeck = new BasicDeck(_ship, new DeckNumber(_decks.size() + 1));
+		_currentDeck = new BasicDeck(_ship, _decks.size() + 1);
 		_decks.add(_currentDeck);
 		_currentRoom = null;
 		return this;

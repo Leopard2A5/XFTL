@@ -6,7 +6,6 @@ import java.util.List;
 
 import de.xftl.spec.model.hardpoints.Hardpoint;
 import de.xftl.spec.model.ships.Deck;
-import de.xftl.spec.model.ships.DeckNumber;
 import de.xftl.spec.model.ships.Room;
 import de.xftl.spec.model.ships.RoomConnector;
 import de.xftl.spec.model.ships.Ship;
@@ -14,13 +13,13 @@ import de.xftl.spec.model.systems.ShipSystem;
 
 public class BasicDeck implements Deck {
     private Ship _ship;
-	private DeckNumber _deckNumber;
+	private int _deckNumber;
 	private List<Room> _rooms = new ArrayList<>();
 	private List<Hardpoint> _hardpoints = new ArrayList<>();
 	private Deck _deckAbove;
 	private Deck _deckBelow;
 	
-	public BasicDeck(Ship ship, DeckNumber deckNumber) {
+	public BasicDeck(Ship ship, int deckNumber) {
 		super();
 		
 		_ship = ship;
@@ -56,7 +55,7 @@ public class BasicDeck implements Deck {
 	}
 
 	@Override
-	public DeckNumber getDeckNumber() {
+	public int getDeckNumber() {
 		return _deckNumber;
 	}
 	
@@ -64,7 +63,7 @@ public class BasicDeck implements Deck {
 	public boolean equals(Object obj) {
 		if (obj instanceof Deck) {
 			Deck o = (Deck) obj;
-			return _deckNumber.equals(o.getDeckNumber());
+			return _deckNumber == o.getDeckNumber();
 		}
 		
 		return false;
@@ -72,12 +71,12 @@ public class BasicDeck implements Deck {
 	
 	@Override
 	public int hashCode() {
-		return _deckNumber.hashCode(); 
+		return Integer.valueOf(_deckNumber).hashCode(); 
 	}
 
 	@Override
 	public String toString() {
-		return _deckNumber.toString();
+		return "Deck " + _deckNumber;
 	}
 	
 	@Override

@@ -16,7 +16,7 @@
 
 package de.xftl.model.systems;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -25,7 +25,6 @@ import de.xftl.model.ships.BasicDeck;
 import de.xftl.model.ships.BasicRoom;
 import de.xftl.model.ships.BasicShip;
 import de.xftl.spec.model.ships.Deck;
-import de.xftl.spec.model.ships.DeckNumber;
 import de.xftl.spec.model.ships.Room;
 import de.xftl.spec.model.ships.Ship;
 import de.xftl.spec.model.systems.LifeSupport;
@@ -35,7 +34,7 @@ public class LifeSupportTest {
     private static final float STEP = 0.1f;
     
     Ship ship = new BasicShip();
-    Deck deck = new BasicDeck(ship, new DeckNumber(1));
+    Deck deck = new BasicDeck(ship, 1);
     Room room = new BasicRoom(0, 0, 2, 2);
     LifeSupport sut = ship.getLifeSupport();
     

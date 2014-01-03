@@ -16,13 +16,13 @@
 
 package de.xftl.model.ships;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertTrue;
 
 import org.junit.Before;
 import org.junit.Test;
 
 import de.xftl.spec.model.ships.Deck;
-import de.xftl.spec.model.ships.DeckNumber;
 import de.xftl.spec.model.ships.Room;
 import de.xftl.spec.model.ships.Ship;
 import de.xftl.spec.model.ships.Tile;
@@ -33,7 +33,7 @@ public class FireTest {
     private static final float STEP = 0.1f;
     
     Ship ship = new BasicShip();
-    Deck deck = new BasicDeck(ship, new DeckNumber(1));
+    Deck deck = new BasicDeck(ship, 1);
     Room room = new BasicRoom(2, 1, 0, 0);
     LifeSupport lifeSupport = ship.getLifeSupport();
     Tile tile = room.getTiles().get(0);

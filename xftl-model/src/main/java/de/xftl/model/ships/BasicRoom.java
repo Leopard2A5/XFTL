@@ -153,6 +153,9 @@ public class BasicRoom implements Room {
 
 	@Override
 	public void replenishOxygen(float oxygen) {
+		if (isOnFire())
+			return;
+		
 		_oxygenLevel = Math.min(MAX_OXYGEN, _oxygenLevel + oxygen);
 	}
 
@@ -167,6 +170,14 @@ public class BasicRoom implements Room {
 	        _roomConnectors.add(rc);
 	        _deck.onRoomConnectorAdded(rc);
 	    }
+	}
+
+	@Override
+	public boolean isOnFire() {
+		for (Tile t : _tiles)
+			if (t.isOnFire())
+				return true;
+		return false;
 	}
 	
 }

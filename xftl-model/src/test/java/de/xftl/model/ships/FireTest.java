@@ -42,7 +42,6 @@ public class FireTest {
     @Before
     public void setUp() throws Exception {
         deck.addRoom(room);
-        
         tile.ignite();
     }
 

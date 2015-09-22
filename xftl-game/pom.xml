@@ -13,6 +13,7 @@
 
 	<artifactId>xftl-game</artifactId>
 	<name>xftl-game</name>
+	
 	<dependencies>
 		<dependency>
 			<groupId>com.badlogicgames.gdx</groupId>
@@ -21,6 +22,13 @@
 		<dependency>
 			<groupId>com.badlogicgames.gdx</groupId>
 			<artifactId>gdx-backend-lwjgl</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>com.badlogicgames.gdx</groupId>
+			<artifactId>native</artifactId>
+			<version>${gdx.version}</version>
+			<scope>system</scope>
+			<systemPath>${basedir}/native/gdx-natives.jar</systemPath>
 		</dependency>
 		<dependency>
 			<groupId>de.xftl</groupId>

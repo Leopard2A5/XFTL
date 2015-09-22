@@ -1,5 +1,5 @@
-*.class
+**/target/
+**/.classpath
+**/.settings
+**/.project
 
-# Package Files #
-*.war
-*.ear

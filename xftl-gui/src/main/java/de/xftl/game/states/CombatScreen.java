@@ -39,7 +39,7 @@ public class CombatScreen extends UiGameScreenBase {
 		_shipRenderer = new ShipRenderer(getGame(), model.getShip());
 		_shipRenderer.setPosition(30, 60);
 		
-		_backgroundSprite = new Sprite(getResources().getTexture("res/tex/starbackground.png"));
+		_backgroundSprite = new Sprite(getResources().getTexture("tex/starbackground.png"));
 		_backgroundSprite.flip(false, true);
 	}
 

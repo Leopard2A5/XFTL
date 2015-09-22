@@ -22,8 +22,8 @@ public class PerformanceProfilerView extends RenderedGameObject {
 	
 	public PerformanceProfilerView(XftlGameRenderer game) {
 		super(game);
-		_ninePatch = new NinePatch(getResources().getTexture("res/tex/performanceframe.png"), 2,2,2,2);
-		_font = getResources().getBitmapFont("res/fnt/debug.fnt");
+		_ninePatch = new NinePatch(getResources().getTexture("tex/performanceframe.png"), 2,2,2,2);
+		_font = getResources().getBitmapFont("fnt/debug.fnt");
 		_fontColor = new Color(1, 1, 0, 1);
 	}
 	

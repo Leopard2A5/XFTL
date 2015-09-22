@@ -22,7 +22,7 @@ public class MenuItem extends UiElement {
 	public MenuItem(XftlGameRenderer game, String text, float x, float y, boolean isEnabled) {
 		super(game);
 		_isEnabled = isEnabled;
-		_bitmapFontSprite = new BitmapFontSprite(getResources().getBitmapFont("res/fnt/main.fnt"), text);
+		_bitmapFontSprite = new BitmapFontSprite(getResources().getBitmapFont("fnt/main.fnt"), text);
 		_bitmapFontSprite.setPosition(x, y);
 		_normalColor = new Color(1.0f, 1.0f, 1.0f, 1.0f);
 		_activeColor = new Color(1.0f, 1.0f, 0.0f, 1.0f);

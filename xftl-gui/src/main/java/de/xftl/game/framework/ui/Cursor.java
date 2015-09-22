@@ -14,7 +14,7 @@ public class Cursor extends GameObject {
 	public Cursor(XftlGameRenderer game) {
 		super(game);
 		
-		Texture texture = getResources().getTexture("res/tex/cursor.png");
+		Texture texture = getResources().getTexture("tex/cursor.png");
 		_sprite = new Sprite(texture);
 		_sprite.flip(false, true);
 	}

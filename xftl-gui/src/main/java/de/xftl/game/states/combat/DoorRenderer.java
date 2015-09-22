@@ -28,7 +28,7 @@ public class DoorRenderer extends TileRenderedGameObject {
 		super(game);
 
 		_door = door;
-		_doorTexture = getResources().getTexture("res/tex/door.png");
+		_doorTexture = getResources().getTexture("tex/door.png");
 		_doorClosedSprite = new Sprite(_doorTexture, 0, 0, 32, 32);
 		_doorOpenedSprite = new Sprite(_doorTexture, 32, 0, 32, 32);
 		_doorClosedSprite.setOrigin(16, 16);

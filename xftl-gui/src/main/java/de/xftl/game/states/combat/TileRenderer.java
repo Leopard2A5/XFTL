@@ -20,8 +20,8 @@ public class TileRenderer extends RenderedGameObject{
 		_tile = tile;
 		
 		Point<Integer> pos = tile.getLeftUpperCornerPos();
-		_floorSprite = new Sprite(getResources().getTexture("res/tex/floor.png"));
-		_fireSprite = new Sprite(getResources().getTexture("res/tex/fire.png"),0,0,32,32);
+		_floorSprite = new Sprite(getResources().getTexture("tex/floor.png"));
+		_fireSprite = new Sprite(getResources().getTexture("tex/fire.png"),0,0,32,32);
 		
 		_floorSprite.setPosition(pos.getX() * game.TileSize, pos.getY() * game.TileSize);
 		_fireSprite.setPosition(pos.getX() * game.TileSize, pos.getY() * game.TileSize);

@@ -19,7 +19,7 @@ public class MainMenuScreen extends UiGameScreenBase {
 	public MainMenuScreen(XftlGameRenderer game) {
 		super(game); 
 		
-		_headingSprite = new BitmapFontSprite(getResources().getBitmapFont("res/fnt/main.fnt"), GAME_HEADING);
+		_headingSprite = new BitmapFontSprite(getResources().getBitmapFont("fnt/main.fnt"), GAME_HEADING);
 		_headingSprite.setPosition(getGame().getScreenWidth() * 0.5f, 10);
 		_headingSprite.setHorizontalAlign(HorizontalTextAlign.Center);
 		

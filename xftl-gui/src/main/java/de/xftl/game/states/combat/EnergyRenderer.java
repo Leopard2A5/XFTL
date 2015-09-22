@@ -31,7 +31,7 @@ public class EnergyRenderer extends RenderedGameObject {
 		super(game);
 				
 		_energymanager = energyManager;
-		_ninePatch = new NinePatch(getResources().getTexture("res/tex/energycontainer.png"), 4, 4, 4, 24);
+		_ninePatch = new NinePatch(getResources().getTexture("tex/energycontainer.png"), 4, 4, 4, 24);
 		
 		_energySprites = new ArrayList<Sprite>(energyManager.getMaxEnergy().intValue());
 		for(int i = 0; i < energyManager.getMaxEnergy().intValue(); i++) {

@@ -25,7 +25,7 @@ public class LiftRenderer extends TileRenderedGameObject {
 	public LiftRenderer(XftlGameRenderer game, Lift lift, float x, float y, Direction direction) {
 		super(game);
 		_lift = lift;
-		_texture = getResources().getTexture("res/tex/lift.png");
+		_texture = getResources().getTexture("tex/lift.png");
 		_openedSprite = new Sprite(_texture, 32, 0, 32, 36);
 		_openedSprite.flip(false, true);
 		_openedSprite.setOrigin(16, 16);

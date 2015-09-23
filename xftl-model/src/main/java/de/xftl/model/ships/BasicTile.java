@@ -2,6 +2,7 @@ package de.xftl.model.ships;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Random;
 
 import de.xftl.spec.model.Direction;
 import de.xftl.spec.model.Point;
@@ -19,6 +20,8 @@ public class BasicTile implements Tile {
 	private static final float FIRE_SPREAD_PROBABILITY = 0.2f;
 	private static final float FIRE_SPREAD_OXYGEN_REQUIREMENT = 0.5f;
 	private static final float FIRE_DIE_THRESHOLD = 0.15f;
+	
+	private static final Random RANDOM = new Random(1);
 	
 	private Room _room;
 	private Point<Integer> _leftUpperCornerPos;
@@ -171,7 +174,7 @@ public class BasicTile implements Tile {
 	    
 	    if (_room.getOxygenLevel() >= FIRE_SPREAD_OXYGEN_REQUIREMENT) {
 	        float spreadProbability = FIRE_SPREAD_PROBABILITY * elapsedTime;
-	        if (spreadProbability >= Math.random()) {
+	        if (spreadProbability >= RANDOM.nextFloat()) {
 	            Tile tile = getNeighboringTileNotOnFire();
 	            if (tile != null) {
 	                tile.ignite();

@@ -38,7 +38,7 @@ public class BasicEnergyManager implements EnergyManager {
     }
     
     private void calculateMaxEnergy() {
-        Energy e = Energy.valueOf(0);
+    	Energy e = Energy.valueOf(0);
         
         for (EnergyProducingSystem prod : _energyProducers)
             e = e.plus(prod.getEnergyOutput());
@@ -61,7 +61,7 @@ public class BasicEnergyManager implements EnergyManager {
     }
 
     @Override
-    public void addEnergyProducer(EnergyProducingSystem producer) {
+    public void addEnergyProducer(final EnergyProducingSystem producer) {
         if (!_energyProducers.contains(producer)) {
             _energyProducers.add(producer);
             calculateMaxEnergy();
@@ -69,13 +69,13 @@ public class BasicEnergyManager implements EnergyManager {
     }
 
     @Override
-    public void removeEnergyProducer(EnergyProducingSystem producer) {
+    public void removeEnergyProducer(final EnergyProducingSystem producer) {
         _energyProducers.remove(producer);
         calculateMaxEnergy();
     }
 
     @Override
-    public void addEnergyConsumer(EnergyConsumer consumer) {
+    public void addEnergyConsumer(final EnergyConsumer consumer) {
         if (!_energyConsumers.contains(consumer)) {
             _energyConsumers.add(consumer);
             calculateConsumedEnergy();
@@ -83,7 +83,7 @@ public class BasicEnergyManager implements EnergyManager {
     }
 
     @Override
-    public void removeEnergyConsumer(EnergyConsumer consumer) {
+    public void removeEnergyConsumer(final EnergyConsumer consumer) {
         _energyConsumers.remove(consumer);
         calculateConsumedEnergy();
     }

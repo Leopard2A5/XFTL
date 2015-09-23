@@ -32,7 +32,7 @@ public class BasicLifeSupport implements LifeSupport {
     private List<Room> _rooms = new ArrayList<>();
     
     @Override
-    public void update(float elapsedTime) {
+    public void update(final float elapsedTime) {
         if (_energyConsumption.intValue() >= 1) {
             for (Room room : _rooms) {
                 room.replenishOxygen((OXYGEN_REPLENISHMENT_RATE * elapsedTime) / room.getTiles().size());
@@ -52,7 +52,7 @@ public class BasicLifeSupport implements LifeSupport {
     }
 
     @Override
-    public void addRoom(Room room) {
+    public void addRoom(final Room room) {
         if (!_rooms.contains(room))
             _rooms.add(room);
     }

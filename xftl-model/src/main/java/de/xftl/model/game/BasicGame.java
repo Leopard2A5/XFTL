@@ -32,7 +32,7 @@ public class BasicGame implements Game {
     private State _state = State.INITIAL;
     
     @Override
-    public void update(float elapsedTime) {
+    public void update(final float elapsedTime) {
         if (_ship != null)
             _ship.update(elapsedTime);
         
@@ -41,7 +41,7 @@ public class BasicGame implements Game {
     }
 
     @Override
-    public void setPause(boolean pause) {
+    public void setPause(final boolean pause) {
         // TODO Auto-generated method stub
     }
 
@@ -51,17 +51,17 @@ public class BasicGame implements Game {
     }
 
     @Override
-    public void startNewGame(GameStartParameters parameters) {
+    public void startNewGame(final GameStartParameters parameters) {
         _state = State.COMBAT;
     }
 
     @Override
-    public void saveGame(GameFile file) {
+    public void saveGame(final GameFile file) {
         // TODO Auto-generated method stub
     }
 
     @Override
-    public void loadGame(GameFile file) {
+    public void loadGame(final GameFile file) {
         // TODO Auto-generated method stub
     }
 

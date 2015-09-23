@@ -28,7 +28,7 @@ public class TileUnitMatrixIterator<T extends Positioned<Integer>> implements It
     private int _currX;
     private int _currY;
     
-    public TileUnitMatrixIterator(TileUnitMatrix<T> matrix) {
+    public TileUnitMatrixIterator(final TileUnitMatrix<T> matrix) {
         super();
         
         _matrix = matrix;
@@ -54,7 +54,7 @@ public class TileUnitMatrixIterator<T extends Positioned<Integer>> implements It
         throw new RuntimeException("Not supported");
     }
     
-    public T getNeighbor(Direction dir) {
+    public T getNeighbor(final Direction dir) {
         switch (dir) {
             case NORTH:
                 return getNorthNeighbor();

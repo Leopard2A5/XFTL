@@ -28,7 +28,7 @@ public class TileUnitMatrix<T extends Positioned<Integer>> implements Iterable<T
     private int _maxX;
     private int _maxY;
 
-    public TileUnitMatrix(Collection<T> items) {
+    public TileUnitMatrix(final Collection<T> items) {
         super();
         
         _items = items;
@@ -46,8 +46,8 @@ public class TileUnitMatrix<T extends Positioned<Integer>> implements Iterable<T
 
     private void insertItems() {
         for (T t : _items) {
-            int x = t.getLeftUpperCornerPos().getX();
-            int y = t.getLeftUpperCornerPos().getY();
+        	final int x = t.getLeftUpperCornerPos().getX();
+        	final int y = t.getLeftUpperCornerPos().getY();
             
             _matrix[y][x] = t;
         }

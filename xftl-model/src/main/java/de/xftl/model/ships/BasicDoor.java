@@ -12,7 +12,7 @@ public class BasicDoor extends AbstractRoomConnector implements Door {
 	}
 	
 	@Override
-    public void addRoom(Room room) {
+    public void addRoom(final Room room) {
 	    if (getConnectedRooms().size() == 2)
 	        throw new RuntimeException("This door already has 2 rooms!");
 	    
@@ -20,7 +20,7 @@ public class BasicDoor extends AbstractRoomConnector implements Door {
     }
 	
 	@Override
-	public void update(float elapsedTime) {
+	public void update(final float elapsedTime) {
 	}
 	
 	@Override

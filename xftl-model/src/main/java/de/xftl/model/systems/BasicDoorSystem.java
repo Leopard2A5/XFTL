@@ -33,7 +33,7 @@ public class BasicDoorSystem implements DoorSystem {
     private Energy _energyConsumption = Energy.valueOf(1);
     
     @Override
-    public void update(float elapsedTime) {
+    public void update(final float elapsedTime) {
         // TODO implement me
     }
 
@@ -49,13 +49,13 @@ public class BasicDoorSystem implements DoorSystem {
     }
 
     @Override
-    public void addRoomConnector(RoomConnector roomConnector) {
+    public void addRoomConnector(final RoomConnector roomConnector) {
         if (!_roomConnectors.contains(roomConnector))
             _roomConnectors.add(roomConnector);
     }
     
     @Override
-    public void openRoomConnector(RoomConnector rc) {
+    public void openRoomConnector(final RoomConnector rc) {
         if (!canOperateRoomConnectorsRemotely())
             return;
         
@@ -63,7 +63,7 @@ public class BasicDoorSystem implements DoorSystem {
     }
     
     @Override
-    public void closeRoomConnector(RoomConnector rc) {
+    public void closeRoomConnector(final RoomConnector rc) {
         if (!canOperateRoomConnectorsRemotely())
             return;
         

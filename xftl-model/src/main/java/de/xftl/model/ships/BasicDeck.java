@@ -20,7 +20,7 @@ public class BasicDeck implements Deck {
 	private Deck _deckAbove;
 	private Deck _deckBelow;
 	
-	public BasicDeck(Ship ship, int deckNumber) {
+	public BasicDeck(final Ship ship, final int deckNumber) {
 		super();
 		
 		_ship = ship;
@@ -28,7 +28,7 @@ public class BasicDeck implements Deck {
 	}
 	
 	@Override
-	public void update(float elapsedTime) {
+	public void update(final float elapsedTime) {
 		for (Room room : _rooms)
 		    room.update(elapsedTime);
 		for (Hardpoint hardpoint : _hardpoints)
@@ -81,19 +81,19 @@ public class BasicDeck implements Deck {
 	}
 	
 	@Override
-	public void addRoom(Room room) {
+	public void addRoom(final Room room) {
 	    room.setDeck(this);
 		_rooms.add(room);
 		_ship.onRoomAdded(room);
 	}
 
     @Override
-    public void onSystemAdded(ShipSystem system) {
+    public void onSystemAdded(final ShipSystem system) {
         _ship.addSystem(system);
     }
 
     @Override
-    public void onRoomConnectorAdded(RoomConnector roomConnector) {
+    public void onRoomConnectorAdded(final RoomConnector roomConnector) {
         _ship.onRoomConnectorAdded(roomConnector);
     }
 

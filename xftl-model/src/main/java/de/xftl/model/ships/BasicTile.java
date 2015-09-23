@@ -37,7 +37,7 @@ public class BasicTile implements Tile {
 	private float _hullBreachLevel;
 	private boolean _onFire;
 	
-	public BasicTile(Room room, Point<Integer> leftUpperCornerPos) {
+	public BasicTile(final Room room, final Point<Integer> leftUpperCornerPos) {
 		super();
 		
 		_room = room;
@@ -45,7 +45,7 @@ public class BasicTile implements Tile {
 	}
 	
 	@Override
-	public void update(float elapsedTime) {
+	public void update(final float elapsedTime) {
 		updateHullBreach(elapsedTime);
 		updateFire(elapsedTime);
 	}
@@ -66,11 +66,11 @@ public class BasicTile implements Tile {
 	}
 
 	@Override
-	public int compareTo(Positioned<Integer> o) {
+	public int compareTo(final Positioned<Integer> o) {
 	    return _leftUpperCornerPos.compareTo(o.getLeftUpperCornerPos());
 	}
 	
-	public void addNeighbor(Direction dir, TileOrRoomConnector neighbor) {
+	public void addNeighbor(final Direction dir, final TileOrRoomConnector neighbor) {
 		switch (dir) {
 		    case NORTH:
 		        _north = neighbor;
@@ -134,17 +134,17 @@ public class BasicTile implements Tile {
 	}
 
 	@Override
-	public void createHullBreach(float initialBreachValue) {
+	public void createHullBreach(final float initialBreachValue) {
 		_hullBreachLevel = Math.min(MAX_HULL_BREACH, _hullBreachLevel + initialBreachValue);
 		_onFire = false;
 	}
 
 	@Override
-	public void repairHullBreach(float repairValue) {
+	public void repairHullBreach(final float repairValue) {
 		_hullBreachLevel = Math.min(NO_HULL_BREACH, _hullBreachLevel - repairValue);
 	}
 	
-	private void updateHullBreach(float elapsedTime) {
+	private void updateHullBreach(final float elapsedTime) {
         _room.consumeOxygen((_hullBreachLevel * HULL_BREACH_AIR_VENT_FACTOR * elapsedTime) / _room.getTiles().size());
     }
 
@@ -160,7 +160,7 @@ public class BasicTile implements Tile {
 		}
 	}
 	
-	private void updateFire(float elapsedTime) {
+	private void updateFire(final float elapsedTime) {
 	    if (!isOnFire())
 	        return;
 	    

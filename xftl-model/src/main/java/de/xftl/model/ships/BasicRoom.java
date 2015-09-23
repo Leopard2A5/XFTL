@@ -28,7 +28,7 @@ public class BasicRoom implements Room {
 	private float _oxygenLevel = MAX_OXYGEN;
 	private List<RoomConnector> _roomConnectors = new ArrayList<>();
 	
-	public BasicRoom(int width, int height, int x, int y) {
+	public BasicRoom(final int width, final int height, final int x, final int y) {
 	    super();
 
 	    _leftUpperCornerPos = new Point<Integer>(x, y);
@@ -38,18 +38,18 @@ public class BasicRoom implements Room {
 	}
 	
 	@Override
-	public void setDeck(Deck deck) {
+	public void setDeck(final Deck deck) {
 	    _deck = deck;
 	}
 
-	private List<Tile> buildTiles(int width, int height, int pX, int pY) {
-		List<Tile> tiles = new ArrayList<>(width * height);
-		List<BasicTile> basicTiles = new ArrayList<>(width * height);
+	private List<Tile> buildTiles(final int width, final int height, final int pX, final int pY) {
+		final List<Tile> tiles = new ArrayList<>(width * height);
+		final List<BasicTile> basicTiles = new ArrayList<>(width * height);
 		
 		for (int y = 0; y < height; y++) {
 			for (int x = 0; x < width; x++) {
-				int tux = x + pX;
-				int tuy = y + pY;
+				final int tux = x + pX;
+				final int tuy = y + pY;
 				BasicTile tile = new BasicTile(this, new Point<Integer>(tux, tuy));
 				tiles.add(tile);
 				basicTiles.add(tile);
@@ -60,14 +60,14 @@ public class BasicRoom implements Room {
 		return tiles;
 	}
 	
-	private void connectTiles(Collection<BasicTile> tiles) {
-	    TileUnitMatrix<BasicTile> matrix = new TileUnitMatrix<>(tiles);
+	private void connectTiles(final Collection<BasicTile> tiles) {
+		final TileUnitMatrix<BasicTile> matrix = new TileUnitMatrix<>(tiles);
         
         for (TileUnitMatrixIterator<BasicTile> it = matrix.matrixIterator(); it.hasNext();) {
-            BasicTile t = it.next();
+        	final BasicTile t = it.next();
             
             for (Direction dir : Direction.values()) {
-                BasicTile other = it.getNeighbor(dir);
+            	final BasicTile other = it.getNeighbor(dir);
                 if (other != null) {
                     t.addNeighbor(dir, other);
                     other.addNeighbor(dir.getOpposite(), t);
@@ -77,7 +77,7 @@ public class BasicRoom implements Room {
 	}
 	
     @Override
-	public void update(float elapsedTime) {
+	public void update(final float elapsedTime) {
 		for (Tile tile : _tiles)
 		    tile.update(elapsedTime);
 		for (RoomConnector connector : _roomConnectors)
@@ -104,7 +104,7 @@ public class BasicRoom implements Room {
 		return _system;
 	}
 
-    public void setSystem(ShipSystem system) {
+    public void setSystem(final ShipSystem system) {
         if (_system != null)
             throw new RuntimeException("This room already has a system assigned!");
         
@@ -136,7 +136,7 @@ public class BasicRoom implements Room {
 	}
 
 	@Override
-	public List<Room> getAdjacentRooms(Room origin) {
+	public List<Room> getAdjacentRooms(final Room origin) {
 		// TODO Auto-generated method stub
 		return null;
 	}
@@ -147,12 +147,12 @@ public class BasicRoom implements Room {
 	}
 	
 	@Override
-	public void consumeOxygen(float oxygen) {
+	public void consumeOxygen(final float oxygen) {
 		_oxygenLevel = Math.max(NO_OXYGEN, _oxygenLevel - oxygen);
 	}
 
 	@Override
-	public void replenishOxygen(float oxygen) {
+	public void replenishOxygen(final float oxygen) {
 		if (isOnFire())
 			return;
 		
@@ -160,12 +160,12 @@ public class BasicRoom implements Room {
 	}
 
 	@Override
-    public int compareTo(Positioned<Integer> o) {
+    public int compareTo(final Positioned<Integer> o) {
         return _leftUpperCornerPos.compareTo(o.getLeftUpperCornerPos());
     }
 	
 	@Override
-	public void addRoomConnector(RoomConnector rc) {
+	public void addRoomConnector(final RoomConnector rc) {
 	    if (!_roomConnectors.contains(rc)) {
 	        _roomConnectors.add(rc);
 	        _deck.onRoomConnectorAdded(rc);

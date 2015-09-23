@@ -37,7 +37,7 @@ public class BasicShip implements Ship {
 	}
 	
 	@Override
-	public void update(float elapsedTime) {
+	public void update(final float elapsedTime) {
 	    for (ShipSystem system : _systems)
 	        system.update(elapsedTime);
 		for (Deck deck : _decks)
@@ -54,7 +54,7 @@ public class BasicShip implements Ship {
 		return _hitpoints;
 	}
 	
-	public void addDeck(Deck deck) {
+	public void addDeck(final Deck deck) {
 		_decks.add(deck);
 	}
 
@@ -64,7 +64,7 @@ public class BasicShip implements Ship {
     }
 
     @Override
-    public void addSystem(ShipSystem system) {
+    public void addSystem(final ShipSystem system) {
         _systems.add(system);
         
         if (system instanceof EnergyProducingSystem)
@@ -84,12 +84,12 @@ public class BasicShip implements Ship {
     }
 
     @Override
-    public void onRoomConnectorAdded(RoomConnector roomConnector) {
+    public void onRoomConnectorAdded(final RoomConnector roomConnector) {
         _doorSystem.addRoomConnector(roomConnector);
     }
     
     @Override
-    public void onRoomAdded(Room room) {
+    public void onRoomAdded(final Room room) {
         _lifeSupport.addRoom(room);
     }
 

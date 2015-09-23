@@ -16,7 +16,7 @@ public abstract class AbstractRoomConnector implements RoomConnector {
 	}
 	
 	@Override
-    public void addRoom(Room room) {
+    public void addRoom(final Room room) {
 	    _connectedRooms.add(room);
 	}
 	
@@ -26,8 +26,8 @@ public abstract class AbstractRoomConnector implements RoomConnector {
 	}
 
 	@Override
-	public List<Room> getConnectedRooms(Room origin) {
-		List<Room> ret = new ArrayList<>(_connectedRooms.size());
+	public List<Room> getConnectedRooms(final Room origin) {
+		final List<Room> ret = new ArrayList<>(_connectedRooms.size());
 
 		for (Room room : _connectedRooms)
 			if (!room.equals(origin))

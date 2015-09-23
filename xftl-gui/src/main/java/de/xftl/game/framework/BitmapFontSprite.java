@@ -70,11 +70,15 @@ public class BitmapFontSprite {
 			case Right:
 				x -= _layout.width;
 				break;
+			case Left:
+				break;
 		default:
 			throw new RuntimeException("Other enum values not yet supported");
 		}
 		
 		switch(_verticalAlign) {
+		case Top:
+			break;
 		case Middle:
 			y -= _layout.height * 0.5f;
 			break;

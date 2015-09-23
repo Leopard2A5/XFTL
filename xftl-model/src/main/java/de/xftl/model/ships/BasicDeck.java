@@ -3,6 +3,7 @@ package de.xftl.model.ships;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+import java.util.Objects;
 
 import de.xftl.spec.model.hardpoints.Hardpoint;
 import de.xftl.spec.model.ships.Deck;
@@ -60,18 +61,18 @@ public class BasicDeck implements Deck {
 	}
 	
 	@Override
-	public boolean equals(Object obj) {
-		if (obj instanceof Deck) {
-			Deck o = (Deck) obj;
-			return _deckNumber == o.getDeckNumber();
-		}
+	public boolean equals(final Object obj) {
+		if (obj == null) return false;
+		if (this == obj) return true;
+		if (!getClass().equals(obj)) return false;
 		
-		return false;
+		final Deck o = (Deck) obj;
+		return _deckNumber == o.getDeckNumber();
 	}
 	
 	@Override
 	public int hashCode() {
-		return Integer.valueOf(_deckNumber).hashCode(); 
+		return Objects.hash(getClass(), _deckNumber);
 	}
 
 	@Override

@@ -2,6 +2,7 @@ package de.xftl.spec.model.systems;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Objects;
 
 /** Immutable! */
 public final class Energy implements Comparable<Energy> {
@@ -48,18 +49,18 @@ public final class Energy implements Comparable<Energy> {
 	}
 
 	@Override
-	public boolean equals(Object obj) {
-		if (obj instanceof Energy) {
-			Energy e = (Energy) obj;
-			return _value.equals(e._value);
-		}
+	public boolean equals(final Object obj) {
+		if (obj == null) return false;
+		if (this == obj) return true;
+		if (!getClass().equals(obj)) return false;
 		
-		return false;
+		final Energy e = (Energy) obj;
+		return _value.equals(e._value);
 	}
 
 	@Override
 	public int hashCode() {
-		return _value.hashCode();
+		return Objects.hash(getClass(), _value);
 	}
 
 	@Override

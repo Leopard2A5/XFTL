@@ -1,5 +1,6 @@
 package de.xftl.spec.model.crew;
 
+import java.util.Objects;
 
 /** Mutable! */
 public final class Health {
@@ -34,18 +35,17 @@ public final class Health {
 	
 	@Override
 	public int hashCode() {
-		return Integer.valueOf(_value).hashCode();
+		return Objects.hash(getClass(), _value);
 	}
 
 	@Override
-	public boolean equals(Object obj) {
-		if (obj instanceof Health) {
-			Health o = (Health) obj;
-			
-			return _value == o._value; 
-		}
+	public boolean equals(final Object obj) {
+		if (obj == null) return false;
+		if (this == obj) return true;
+		if (!getClass().equals(obj)) return false;
 		
-		return false;
+		final Health o = (Health) obj;
+		return _value == o._value; 
 	}
 
 	@Override

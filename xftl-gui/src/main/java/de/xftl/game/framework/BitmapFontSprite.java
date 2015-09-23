@@ -2,7 +2,7 @@ package de.xftl.game.framework;
 
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
-import com.badlogic.gdx.graphics.g2d.BitmapFont.TextBounds;
+import com.badlogic.gdx.graphics.g2d.GlyphLayout;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Rectangle;
 
@@ -16,23 +16,23 @@ public class BitmapFontSprite {
 	private String _text;
 	private float _x;
 	private float _y;
-	private TextBounds _bounds;
+	private GlyphLayout _layout;
 	
 	public BitmapFontSprite(BitmapFont font, String text){
 		_bitmapFont = font;
+		_layout = new GlyphLayout();
 		_color = new Color(1,1,1,1);
 		_horizontalAlign = HorizontalTextAlign.Left;
 		_verticalAlign = VerticalTextAlign.Top;
 		_rectangle = new Rectangle();
-		
 		setText(text);
 	}
 	
 	public void setText(String text) {
 		_text = text;
-		_bounds = _bitmapFont.getBounds(_text);
-		_rectangle.width = _bounds.width;
-		_rectangle.height = _bounds.height;
+		_layout.setText(_bitmapFont, text);
+		_rectangle.width = _layout.width;
+		_rectangle.height = _layout.height;
 	}
 	
 	public void setPosition(float x, float y) {
@@ -65,20 +65,24 @@ public class BitmapFontSprite {
 		
 		switch(_horizontalAlign) {
 			case Center:
-				x -= _bounds.width * 0.5f;
+				x -= _layout.width * 0.5f;
 				break;
 			case Right:
-				x -= _bounds.width;
+				x -= _layout.width;
 				break;
+		default:
+			throw new RuntimeException("Other enum values not yet supported");
 		}
 		
 		switch(_verticalAlign) {
 		case Middle:
-			y -= _bounds.height * 0.5f;
+			y -= _layout.height * 0.5f;
 			break;
 		case Bottom:
-			y -= _bounds.height;
+			y -= _layout.height;
 			break;
+		default:
+			throw new RuntimeException("Other enum values not yet supported");
 		}
 		
 		_bitmapFont.setColor(_color);

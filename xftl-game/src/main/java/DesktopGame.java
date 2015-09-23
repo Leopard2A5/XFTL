@@ -14,7 +14,6 @@ public class DesktopGame {
 		config.height = 768;
 		config.resizable = false;
 		config.title = "xftl";
-		config.useGL20 = false;
 		config.vSyncEnabled = true;
 		config.width = 1024;
 		

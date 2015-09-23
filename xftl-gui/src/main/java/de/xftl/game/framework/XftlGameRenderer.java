@@ -4,7 +4,7 @@ import java.util.HashMap;
 
 import com.badlogic.gdx.ApplicationListener;
 import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.graphics.GL10;
+import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Pixmap;
 import com.badlogic.gdx.graphics.Texture;
@@ -53,7 +53,7 @@ public class XftlGameRenderer implements ApplicationListener {
 		
 		public void clearScreen(float r, float g, float b) {
 			Gdx.gl.glClearColor(r, g, b, 1.0f);
-			Gdx.gl.glClear(GL10.GL_COLOR_BUFFER_BIT);
+			Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 		}
 	
 		public void create () {
@@ -117,7 +117,7 @@ public class XftlGameRenderer implements ApplicationListener {
         }
         
         private void renderCurrentState() {
-    		Gdx.gl.glClear(GL10.GL_COLOR_BUFFER_BIT);
+    		Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
         	_spriteBatch.begin();
         	_currentGameScreen.onRender();
         	_spriteBatch.end();

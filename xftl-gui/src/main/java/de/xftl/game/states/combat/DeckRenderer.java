@@ -28,8 +28,6 @@ public class DeckRenderer extends RenderedGameObject {
 		_doors = new ArrayList<DoorRenderer>();
 		_lifts = new ArrayList<LiftRenderer>();
 		
-		float tileSize = getGame().TileSize;
-		
 		_sizeX = 0;
 		_sizeY = 0;
 		

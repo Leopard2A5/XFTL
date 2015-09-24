@@ -42,7 +42,7 @@ public final class Health {
 	public boolean equals(final Object obj) {
 		if (obj == null) return false;
 		if (this == obj) return true;
-		if (!getClass().equals(obj)) return false;
+		if (!getClass().equals(obj.getClass())) return false;
 		
 		final Health o = (Health) obj;
 		return _value == o._value; 

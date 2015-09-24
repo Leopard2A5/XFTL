@@ -1,5 +1,7 @@
 package de.xftl.model.ships;
 
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.within;
 import static org.junit.Assert.assertEquals;
 
 import org.junit.Before;
@@ -27,10 +29,10 @@ public class RoomTest {
     	assertEquals(1.0f, room.getOxygenLevel(), 0.05f);
     	
     	room.consumeOxygen(0.5f);
-    	assertEquals(0.5f, room.getOxygenLevel(), 0.05f);
+    	assertThat(room.getOxygenLevel()).isCloseTo(0.5f, within(0.05f));
     	
     	room.replenishOxygen(0.5f);
-    	assertEquals(1f, room.getOxygenLevel(), 0.05f);
+    	assertThat(room.getOxygenLevel()).isCloseTo(1.0f, within(0.05f));
     }
     
 	@Test
@@ -41,7 +43,7 @@ public class RoomTest {
 		tile.ignite();
 		room.replenishOxygen(0.5f);
 		
-		assertEquals(0.5f, room.getOxygenLevel(), 0.05f);
+		assertThat(room.getOxygenLevel()).isCloseTo(0.5f, within(0.05f));
 	}
 
 }

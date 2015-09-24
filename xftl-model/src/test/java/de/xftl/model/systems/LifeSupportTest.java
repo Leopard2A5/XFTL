@@ -16,6 +16,8 @@
 
 package de.xftl.model.systems;
 
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.within;
 import static org.junit.Assert.assertEquals;
 
 import org.junit.Before;
@@ -55,7 +57,7 @@ public class LifeSupportTest {
             elapsedTime += STEP;
         }
         
-        assertEquals(Room.MAX_OXYGEN, room.getOxygenLevel(), 0.05f);
+        assertThat(room.getOxygenLevel()).isCloseTo(Room.MAX_OXYGEN, within(0.05f));
     }
 
 }

@@ -16,8 +16,7 @@
 
 package de.xftl.model.ships;
 
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertTrue;
+import static org.assertj.core.api.Assertions.assertThat;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -55,7 +54,7 @@ public class FireTest {
             elapsedTime += STEP;
         }
         
-        assertFalse(tile.isOnFire());
+        assertThat(tile.isOnFire()).isFalse();
     }
     
     @Test
@@ -68,7 +67,7 @@ public class FireTest {
             elapsedTime += STEP;
         }
         
-        assertTrue(tile2.isOnFire());
+        assertThat(tile2.isOnFire()).isTrue();
     }
     
     @Test
@@ -81,6 +80,6 @@ public class FireTest {
             elapsedTime += STEP;
         }
         
-        assertFalse(tile.isOnFire());
+        assertThat(tile.isOnFire()).isFalse();
     }
 }

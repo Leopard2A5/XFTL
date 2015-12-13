@@ -130,7 +130,7 @@ public class BasicTile implements Tile {
 
 	@Override
 	public void repairHullBreach(final float repairValue) {
-		_hullBreachLevel = Math.min(NO_HULL_BREACH, _hullBreachLevel - repairValue);
+		_hullBreachLevel = Math.max(NO_HULL_BREACH, _hullBreachLevel - repairValue);
 	}
 	
 	private void updateHullBreach(final float elapsedTime) {

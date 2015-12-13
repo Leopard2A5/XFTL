@@ -14,10 +14,10 @@ import de.xftl.spec.model.ships.Tile;
 
 public class RoomTest {
 
-	Ship ship = new BasicShip();
-    Deck deck = new BasicDeck(ship, 1);
-    Room room = new BasicRoom(2, 1, 0, 0);
-    Tile tile = room.getTiles().get(0);
+	private Ship ship = new BasicShip();
+	private Deck deck = new BasicDeck(ship, 1);
+	private Room room = new BasicRoom(2, 1, 0, 0);
+	private Tile tile = room.getTiles().get(0);
 	
     @Before
     public void setUp() {

@@ -1,16 +1,19 @@
 package de.xftl.game.states;
 
-import com.badlogic.gdx.graphics.g2d.Sprite;
+import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.graphics.GL20;
+import com.badlogic.gdx.scenes.scene2d.Stage;
+import com.badlogic.gdx.utils.viewport.ScreenViewport;
 
+import de.xftl.game.framework.GameScreenBase;
 import de.xftl.game.framework.ScreenChangeInformation;
 import de.xftl.game.framework.XftlGameRenderer;
-import de.xftl.game.framework.ui.UiGameScreenBase;
 import de.xftl.game.states.combat.ShipRenderer;
 import de.xftl.spec.game.Game;
 
-public class CombatScreen extends UiGameScreenBase {
-
-	private Sprite _backgroundSprite;
+public class CombatScreen extends GameScreenBase 
+{
+	private Stage _stage;
 	private ShipRenderer _shipRenderer;
 	
 	public CombatScreen(XftlGameRenderer game) {
@@ -18,29 +21,24 @@ public class CombatScreen extends UiGameScreenBase {
 	}
 	
 	@Override
-	public ScreenChangeInformation onUpdate(float elapsedTime) {
-		super.onUpdate(elapsedTime);
-		_shipRenderer.update(elapsedTime);
+	public ScreenChangeInformation onUpdate(float elapsedTime) {	
+		Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
+		_stage.act(elapsedTime);
 		return ScreenChangeInformation.emtpy;
 	}
 
 	@Override
 	public void onRender() {
-		_backgroundSprite.draw(getSpriteBatch());
-		_shipRenderer.draw();
-		super.onRender();
+		_stage.draw();
 	}
 
 	@Override
 	public void onEnter(Object enterInformation) {
+		_stage = new Stage(new ScreenViewport());
+		Gdx.input.setInputProcessor(_stage);
 		Game model = getGame().getGameModel();
 		model.startNewGame(null);
-		
-		_shipRenderer = new ShipRenderer(getGame(), model.getShip());
-		_shipRenderer.setPosition(30, 60);
-		
-		_backgroundSprite = new Sprite(getResources().getTexture("tex/starbackground.png"));
-		_backgroundSprite.flip(false, true);
+		_shipRenderer = new ShipRenderer(_stage, getGame(), model.getShip());
 	}
 
 	@Override

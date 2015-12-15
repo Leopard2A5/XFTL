@@ -16,8 +16,6 @@ import de.xftl.spec.game.Game;
 
 public class XftlGameRenderer implements ApplicationListener {
 	
-		private PerformanceProfilerView _profiler; 
-		private DebugConsoleView _console;
 		private Texture _blank;
 		private OrthographicCamera _camera;
 		private SpriteBatch _spriteBatch;
@@ -72,34 +70,17 @@ public class XftlGameRenderer implements ApplicationListener {
         	map.drawPixel(0, 0, 0xffffffff);
         	_blank = new Texture(map);
         	
-        	_profiler = new PerformanceProfilerView(this);
-        	_console = new DebugConsoleView(this, new CommandInterpreter(this));
-        	_console.setEnable(true);
-        	
         	addGameScreen(GameScreenName.CombatScreen, new CombatScreen(this));
-        	addGameScreen(GameScreenName.MainMenuState, new MainMenuScreen(this));
-        	setCurrentGameState(GameScreenName.MainMenuState, null);
+        	setCurrentGameState(GameScreenName.CombatScreen, null);
         }
 		
-		public void setIsProfilerEnabled(boolean isTrue) {
-			_profiler.setIsEnabled(isTrue);
-		}
-
-        public void render () {
+		public void render () {
         	float elapsedTime = Gdx.graphics.getDeltaTime();
 
         	updateCurrentState(elapsedTime);
         	renderCurrentState();
-        	
-        	updateAndRenderHelperControls(elapsedTime);
         }
-        
-        private void updateAndRenderHelperControls(float elapsedTime) {
-        	_profiler.update(elapsedTime);
-        	_profiler.draw();
-        	_console.draw();
-        }
-        
+                
         private void updateCurrentState(float elapsedTime) {
         	_mouse.update();
         	_gameModel.update(elapsedTime);
@@ -117,6 +98,7 @@ public class XftlGameRenderer implements ApplicationListener {
         }
         
         private void renderCurrentState() {
+        	Gdx.gl.glClearColor(1.0f,0.0f,0.0f, 1.0f);
     		Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
         	_spriteBatch.begin();
         	_currentGameScreen.onRender();

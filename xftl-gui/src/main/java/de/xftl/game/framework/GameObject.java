@@ -18,10 +18,6 @@ public class GameObject {
 		return _game.getResources();
 	}
 	
-	public void update(float elapsedTime) {
-		
-	}
-	
 	public SpriteBatch getSpriteBatch() {
 		return _game.getSpriteBatch();
 	}

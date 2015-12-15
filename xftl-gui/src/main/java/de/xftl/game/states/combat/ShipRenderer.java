@@ -2,50 +2,29 @@ package de.xftl.game.states.combat;
 
 import java.util.ArrayList;
 
+import com.badlogic.gdx.scenes.scene2d.Group;
+import com.badlogic.gdx.scenes.scene2d.Stage;
+
+import de.xftl.game.framework.GameObject;
 import de.xftl.game.framework.XftlGameRenderer;
-import de.xftl.game.framework.ui.RenderedGameObject;
 import de.xftl.spec.model.ships.Deck;
 import de.xftl.spec.model.ships.Ship;
 
-public class ShipRenderer extends RenderedGameObject {
-
+public class ShipRenderer extends GameObject {
+	private Group _shipGroup;
 	private ArrayList<DeckRenderer> _decks;
-	private EnergyRenderer _energyRenderer;
 	
-	public ShipRenderer(XftlGameRenderer game, Ship ship) {
+	public ShipRenderer(Stage stage, XftlGameRenderer game, Ship ship) {
 		super(game);
-		_decks = new ArrayList<DeckRenderer>();
 		
+		_shipGroup = new Group();
+		_shipGroup.moveBy(24.0f, 100.0f);
+		stage.addActor(_shipGroup);
+		
+		_decks = new ArrayList<DeckRenderer>();
 		for(Deck deck : ship.getDecks()) {
-			DeckRenderer deckRenderer = new DeckRenderer(game, deck);
-			addChild(deckRenderer);
+			DeckRenderer deckRenderer = new DeckRenderer(_shipGroup, game, deck);
 			_decks.add(deckRenderer);
 		}
-		
-		_energyRenderer = new EnergyRenderer(game, ship.getEnergyManager());
-		_energyRenderer.setPosition(0, 400);
-		addChild(_energyRenderer);
 	}
-	
-	@Override
-	public void setPosition(float x, float y) {
-		float currentY = y;
-		for(DeckRenderer deck : _decks) {
-			deck.setPosition(x, currentY);
-			currentY += deck.getSizeY() + 2 * getGame().TileSize;
-		}
-	}
-	
-	@Override
-	public float getX() {
-		// TODO Auto-generated method stub
-		return 0;
-	}
-
-	@Override
-	public float getY() {
-		// TODO Auto-generated method stub
-		return 0;
-	}
-
 }

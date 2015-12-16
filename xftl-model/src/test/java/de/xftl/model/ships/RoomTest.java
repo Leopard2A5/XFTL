@@ -8,11 +8,6 @@ import org.assertj.core.data.Offset;
 import org.junit.Before;
 import org.junit.Test;
 
-import de.xftl.spec.model.ships.Deck;
-import de.xftl.spec.model.ships.Room;
-import de.xftl.spec.model.ships.Ship;
-import de.xftl.spec.model.ships.Tile;
-
 public class RoomTest {
 
 	private BasicShip ship = new BasicShip();

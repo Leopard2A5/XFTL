@@ -54,8 +54,9 @@ public class BasicShip implements Ship {
 		return _hitpoints;
 	}
 	
-	public void addDeck(final Deck deck) {
+	public void addDeck(final BasicDeck deck) {
 		_decks.add(deck);
+		deck.setShip(this);
 	}
 
     @Override

@@ -10,6 +10,7 @@ import de.xftl.model.util.TileUnitMatrixIterator;
 import de.xftl.spec.model.Direction;
 import de.xftl.spec.model.Point;
 import de.xftl.spec.model.crew.CrewMember;
+import de.xftl.spec.model.graphutils.OpennessToSpaceChecker;
 import de.xftl.spec.model.ships.Deck;
 import de.xftl.spec.model.ships.Positioned;
 import de.xftl.spec.model.ships.Room;
@@ -27,6 +28,8 @@ public class BasicRoom implements Room {
 	private List<Tile> _tiles;
 	private float _oxygenLevel = MAX_OXYGEN;
 	private List<RoomConnector> _roomConnectors = new ArrayList<>();
+	
+	private final OpennessToSpaceChecker _opennessToSpaceCheck = new OpennessToSpaceChecker();
 	
 	public BasicRoom(final int width, final int height, final int x, final int y) {
 	    super();
@@ -78,10 +81,18 @@ public class BasicRoom implements Room {
 	
     @Override
 	public void update(final float elapsedTime) {
+    	handleOpennessToSpace(elapsedTime);
+    	
 		for (Tile tile : _tiles)
 		    tile.update(elapsedTime);
 		for (RoomConnector connector : _roomConnectors)
 		    connector.update(elapsedTime);
+	}
+
+	private void handleOpennessToSpace(final float elapsedTime) {
+		if (isOpenToSpace()) {
+			consumeOxygen(0.1f * elapsedTime);
+		}
 	}
 
 	@Override
@@ -153,7 +164,7 @@ public class BasicRoom implements Room {
 
 	@Override
 	public void replenishOxygen(final float oxygen) {
-		if (isOnFire())
+		if (isOnFire() || isOpenToSpace())
 			return;
 		
 		_oxygenLevel = Math.min(MAX_OXYGEN, _oxygenLevel + oxygen);
@@ -178,6 +189,18 @@ public class BasicRoom implements Room {
 			if (t.isOnFire())
 				return true;
 		return false;
+	}
+	
+	@Override
+	public boolean isOpenToSpace() {
+		_opennessToSpaceCheck.reset();
+		return _opennessToSpaceCheck.isOpenToSpace(this);
+		
+//		for (final RoomConnector rc : _roomConnectors)
+//			if (rc.getConnectedRooms().size() < 2 && rc.isOpen())
+//				return true;
+//
+//		return false;
 	}
 	
 }

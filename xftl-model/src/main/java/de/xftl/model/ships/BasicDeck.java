@@ -97,4 +97,7 @@ public class BasicDeck implements Deck {
         _ship.onRoomConnectorAdded(roomConnector);
     }
 
+    public void setShip(Ship ship) {
+		_ship = ship;
+	}
 }

@@ -83,5 +83,19 @@ public class RoomTest {
 		assertThat(room1.getOxygenLevel()).isCloseTo(0.5f, Offset.offset(0.05f));
 		assertThat(room2.getOxygenLevel()).isCloseTo(1f, Offset.offset(0.05f));
 	}
+	
+	@Test
+	public void shouldLooseOxygenToDoorOpenToSpaceThroughOtherRoom() {
+		door1.open();
+		door2.open();
+		
+		assertThat(room1.getOxygenLevel()).isCloseTo(1f, Offset.offset(0.05f));
+		assertThat(room2.getOxygenLevel()).isCloseTo(1f, Offset.offset(0.05f));
+		
+		ship.update(5f);
+		
+		assertThat(room1.getOxygenLevel()).isCloseTo(0.5f, Offset.offset(0.05f));
+		assertThat(room2.getOxygenLevel()).isCloseTo(0.5f, Offset.offset(0.05f));
+	}
 
 }

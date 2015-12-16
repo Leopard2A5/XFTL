@@ -20,6 +20,7 @@ public interface Room extends XFTLModelObject, Positioned<Integer> {
 	public void setDeck(Deck deck);
 
 	public boolean isOnFire();
+	public boolean isOpenToSpace();
 	public float getOxygenLevel();
 	public void consumeOxygen(float oxygen);
 	public void replenishOxygen(float oxygen);

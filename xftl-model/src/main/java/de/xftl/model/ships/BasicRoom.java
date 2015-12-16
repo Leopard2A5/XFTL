@@ -78,10 +78,18 @@ public class BasicRoom implements Room {
 	
     @Override
 	public void update(final float elapsedTime) {
+    	handleOpennessToSpace(elapsedTime);
+    	
 		for (Tile tile : _tiles)
 		    tile.update(elapsedTime);
 		for (RoomConnector connector : _roomConnectors)
 		    connector.update(elapsedTime);
+	}
+
+	private void handleOpennessToSpace(final float elapsedTime) {
+		if (isOpenToSpace()) {
+			consumeOxygen(0.1f * elapsedTime);
+		}
 	}
 
 	@Override
@@ -153,7 +161,7 @@ public class BasicRoom implements Room {
 
 	@Override
 	public void replenishOxygen(final float oxygen) {
-		if (isOnFire())
+		if (isOnFire() || isOpenToSpace())
 			return;
 		
 		_oxygenLevel = Math.min(MAX_OXYGEN, _oxygenLevel + oxygen);
@@ -177,6 +185,15 @@ public class BasicRoom implements Room {
 		for (Tile t : _tiles)
 			if (t.isOnFire())
 				return true;
+		return false;
+	}
+	
+	@Override
+	public boolean isOpenToSpace() {
+		for (final RoomConnector rc : _roomConnectors)
+			if (rc.getConnectedRooms().size() < 2 && rc.isOpen())
+				return true;
+
 		return false;
 	}
 	

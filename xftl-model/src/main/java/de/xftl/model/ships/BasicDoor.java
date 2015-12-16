@@ -17,6 +17,7 @@ public class BasicDoor extends AbstractRoomConnector implements Door {
 	        throw new RuntimeException("This door already has 2 rooms!");
 	    
 	    super.addRoom(room);
+	    room.addRoomConnector(this);
     }
 	
 	@Override

@@ -14,7 +14,6 @@ import java.util.Random;
 import de.xftl.spec.model.Direction;
 import de.xftl.spec.model.Point;
 import de.xftl.spec.model.crew.CrewMember;
-import de.xftl.spec.model.ships.Positioned;
 import de.xftl.spec.model.ships.Room;
 import de.xftl.spec.model.ships.RoomConnector;
 import de.xftl.spec.model.ships.Tile;
@@ -69,11 +68,6 @@ public class BasicTile implements Tile {
 		return _enemyCrewMember;
 	}
 
-	@Override
-	public int compareTo(final Positioned<Integer> o) {
-	    return _leftUpperCornerPos.compareTo(o.getLeftUpperCornerPos());
-	}
-	
 	public void addNeighbor(final Direction dir, final TileOrRoomConnector neighbor) {
 		_neighbors.put(dir, neighbor);
 		

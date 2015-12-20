@@ -8,6 +8,7 @@ import de.xftl.model.systems.BasicDoorSystem;
 import de.xftl.model.systems.BasicEnergyManager;
 import de.xftl.model.systems.BasicLifeSupport;
 import de.xftl.spec.model.EnergyConsumer;
+import de.xftl.spec.model.crew.CrewMember;
 import de.xftl.spec.model.ships.Deck;
 import de.xftl.spec.model.ships.Hitpoints;
 import de.xftl.spec.model.ships.Room;
@@ -22,12 +23,13 @@ import de.xftl.spec.model.systems.ShipSystem;
 
 public class BasicShip implements Ship {
 
-	private List<Deck> _decks = new ArrayList<>();
+	private final List<Deck> _decks = new ArrayList<>();
 	private Hitpoints _hitpoints;
-	private List<ShipSystem> _systems = new ArrayList<>();
+	private final List<ShipSystem> _systems = new ArrayList<>();
 	private DoorSystem _doorSystem;
 	private EnergyManager _energyManager = new BasicEnergyManager();
 	private LifeSupport _lifeSupport;
+	private final List<CrewMember> _crew = new ArrayList<>();
 	
 	public BasicShip() {
 	    super();
@@ -103,5 +105,20 @@ public class BasicShip implements Ship {
     public LifeSupport getLifeSupport() {
         return _lifeSupport;
     }
+    
+    @Override
+    public List<CrewMember> getCrew() {
+    	return Collections.unmodifiableList(_crew);
+    }
+
+	@Override
+	public void addCrewMember(final CrewMember crewMember) {
+		_crew.add(crewMember);
+	}
+
+	@Override
+	public void removeCrewMember(final CrewMember crewMember) {
+		_crew.remove(crewMember);
+	}
 
 }

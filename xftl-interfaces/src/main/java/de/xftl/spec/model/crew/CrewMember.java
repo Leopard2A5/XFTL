@@ -1,9 +1,12 @@
 package de.xftl.spec.model.crew;
 
-import de.xftl.spec.model.XFTLModelObject;
-import de.xftl.spec.model.ships.Room;
+import java.util.Optional;
 
-public interface CrewMember extends XFTLModelObject {
+import de.xftl.spec.model.XFTLModelObject;
+import de.xftl.spec.model.ships.Positioned;
+import de.xftl.spec.model.ships.Tile;
+
+public interface CrewMember extends XFTLModelObject, Positioned<Float> {
 	public Health getHealth();
-	public void goToRoom(Room room);
+	public Optional<Tile> getCurrentTile();
 }

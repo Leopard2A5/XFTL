@@ -12,7 +12,6 @@ import de.xftl.spec.model.Point;
 import de.xftl.spec.model.crew.CrewMember;
 import de.xftl.spec.model.graphutils.OpennessToSpaceChecker;
 import de.xftl.spec.model.ships.Deck;
-import de.xftl.spec.model.ships.Positioned;
 import de.xftl.spec.model.ships.Room;
 import de.xftl.spec.model.ships.RoomConnector;
 import de.xftl.spec.model.ships.Tile;
@@ -170,11 +169,6 @@ public class BasicRoom implements Room {
 		_oxygenLevel = Math.min(MAX_OXYGEN, _oxygenLevel + oxygen);
 	}
 
-	@Override
-    public int compareTo(final Positioned<Integer> o) {
-        return _leftUpperCornerPos.compareTo(o.getLeftUpperCornerPos());
-    }
-	
 	@Override
 	public void addRoomConnector(final RoomConnector rc) {
 	    if (!_roomConnectors.contains(rc)) {

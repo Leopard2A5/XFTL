@@ -2,6 +2,7 @@ package de.xftl.spec.game;
 
 import java.util.List;
 
+import de.xftl.spec.model.crew.CrewMember;
 import de.xftl.spec.model.ships.Ship;
 
 public interface Game {
@@ -13,4 +14,8 @@ public interface Game {
 	public void loadGame(GameFile file);
 	public Ship getShip();
 	public List<Ship> getEnemyShips();
+	
+	public List<CrewMember> getSelectedCrewMembers();
+	public void selectCrewMembers(List<CrewMember> members);
+	public void deselectCrewMembers();
 }

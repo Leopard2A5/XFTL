@@ -1,12 +1,14 @@
 package de.xftl.model.game;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 import de.xftl.spec.game.Game;
 import de.xftl.spec.game.GameFile;
 import de.xftl.spec.game.GameStartParameters;
 import de.xftl.spec.game.State;
+import de.xftl.spec.model.crew.CrewMember;
 import de.xftl.spec.model.ships.Ship;
 
 public class BasicGame implements Game {
@@ -14,6 +16,7 @@ public class BasicGame implements Game {
     private Ship _ship;
     private List<Ship> _enemyShips = new ArrayList<>();
     private State _state = State.INITIAL;
+    private final List<CrewMember> _selectedCrew = new ArrayList<>();
     
     @Override
     public void update(final float elapsedTime) {
@@ -58,5 +61,21 @@ public class BasicGame implements Game {
     public List<Ship> getEnemyShips() {
         return _enemyShips;
     }
+
+	@Override
+	public List<CrewMember> getSelectedCrewMembers() {
+		return Collections.unmodifiableList(_selectedCrew);
+	}
+
+	@Override
+	public void selectCrewMembers(final List<CrewMember> members) {
+		deselectCrewMembers();
+		_selectedCrew.addAll(members);
+	}
+
+	@Override
+	public void deselectCrewMembers() {
+		_selectedCrew.clear();
+	}
 
 }

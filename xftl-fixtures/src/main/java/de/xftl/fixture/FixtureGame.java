@@ -1,11 +1,13 @@
 package de.xftl.fixture;
 
+import java.util.Collections;
 import java.util.List;
 
 import de.xftl.spec.game.Game;
 import de.xftl.spec.game.GameFile;
 import de.xftl.spec.game.GameStartParameters;
 import de.xftl.spec.game.State;
+import de.xftl.spec.model.crew.CrewMember;
 import de.xftl.spec.model.ships.Ship;
 
 public class FixtureGame implements Game {
@@ -56,6 +58,21 @@ public class FixtureGame implements Game {
 	public List<Ship> getEnemyShips() {
 		// TODO Auto-generated method stub
 		return null;
+	}
+
+	@Override
+	public List<CrewMember> getSelectedCrewMembers() {
+		return Collections.emptyList();
+	}
+
+	@Override
+	public void selectCrewMembers(List<CrewMember> members) {
+		
+	}
+
+	@Override
+	public void deselectCrewMembers() {
+		
 	}
 
 }

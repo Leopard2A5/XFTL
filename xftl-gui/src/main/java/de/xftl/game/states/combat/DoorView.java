@@ -5,6 +5,7 @@ import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.InputListener;
 
 import de.xftl.game.framework.FrameSpriteActor;
+import de.xftl.game.framework.ViewConstants;
 import de.xftl.game.framework.XftlGameRenderer;
 import de.xftl.spec.model.ships.Door;
 
@@ -14,8 +15,8 @@ public class DoorView extends FrameSpriteActor {
 	public DoorView(XftlGameRenderer game, Door door) {
 		super(game.getResources().getTexture("tex/door.png"));
 		
-		addFrame(0, 16-4, 32, 8);
-		addFrame(32,16-4,32,8);
+		addFrame(0, 16-ViewConstants.WALLTHICKNESS, 32, 2*ViewConstants.WALLTHICKNESS);
+		addFrame(32,16-ViewConstants.WALLTHICKNESS,32,2*ViewConstants.WALLTHICKNESS);
 		
 		_door = door;
 		

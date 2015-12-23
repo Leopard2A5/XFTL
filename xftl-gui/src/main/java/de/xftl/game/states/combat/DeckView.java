@@ -62,10 +62,11 @@ public class DeckView extends GameObject {
 
 	private void handleNeighbour(TileOrRoomConnector tile, Actor currentActor, Direction direction, ArrayList<Actor> connectors) {
 		
+		boolean vertical = direction == Direction.WEST || direction == Direction.EAST;
+		
 		if (tile == null) {
 			
 			SpriteActor wall = new SpriteActor(new TextureRegion(getGame().getBlankTexture()));
-			boolean vertical = direction == Direction.WEST || direction == Direction.EAST;
 			
 			if (vertical) {
 				wall.setSize(ViewConstants.WALLTHICKNESS, ViewConstants.TILESIZE + ViewConstants.WALLOFFSET * 2);
@@ -92,7 +93,17 @@ public class DeckView extends GameObject {
 				float x = currentActor.getX() + getOffsetXForDirection(direction);
 				float y = currentActor.getY() + getOffsetYForDirection(direction);
 				
+				if (vertical) {
+					x += ViewConstants.WALLTHICKNESS;
+				} else {
+					y -= ViewConstants.WALLTHICKNESS;
+				}
+				
 				doorView.setPosition(x,y);
+				if (vertical){
+					doorView.setRotation(90);
+				}
+				
 				connectors.add(doorView);
 			}
 		}

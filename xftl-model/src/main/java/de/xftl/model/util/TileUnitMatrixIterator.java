@@ -1,19 +1,3 @@
-/*
- * Copyright 2005-2012 IT Service Omikron.
- * 
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- * 
- *      http://www.apache.org/licenses/LICENSE-2.0
- * 
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
- */
-
 package de.xftl.model.util;
 
 import java.util.Iterator;
@@ -28,7 +12,7 @@ public class TileUnitMatrixIterator<T extends Positioned<Integer>> implements It
     private int _currX;
     private int _currY;
     
-    public TileUnitMatrixIterator(TileUnitMatrix<T> matrix) {
+    public TileUnitMatrixIterator(final TileUnitMatrix<T> matrix) {
         super();
         
         _matrix = matrix;
@@ -54,7 +38,7 @@ public class TileUnitMatrixIterator<T extends Positioned<Integer>> implements It
         throw new RuntimeException("Not supported");
     }
     
-    public T getNeighbor(Direction dir) {
+    public T getNeighbor(final Direction dir) {
         switch (dir) {
             case NORTH:
                 return getNorthNeighbor();

@@ -8,6 +8,7 @@ import de.xftl.model.systems.BasicDoorSystem;
 import de.xftl.model.systems.BasicEnergyManager;
 import de.xftl.model.systems.BasicLifeSupport;
 import de.xftl.spec.model.EnergyConsumer;
+import de.xftl.spec.model.crew.CrewMember;
 import de.xftl.spec.model.ships.Deck;
 import de.xftl.spec.model.ships.Hitpoints;
 import de.xftl.spec.model.ships.Room;
@@ -22,12 +23,13 @@ import de.xftl.spec.model.systems.ShipSystem;
 
 public class BasicShip implements Ship {
 
-	private List<Deck> _decks = new ArrayList<>();
+	private final List<Deck> _decks = new ArrayList<>();
 	private Hitpoints _hitpoints;
-	private List<ShipSystem> _systems = new ArrayList<>();
+	private final List<ShipSystem> _systems = new ArrayList<>();
 	private DoorSystem _doorSystem;
 	private EnergyManager _energyManager = new BasicEnergyManager();
 	private LifeSupport _lifeSupport;
+	private final List<CrewMember> _crew = new ArrayList<>();
 	
 	public BasicShip() {
 	    super();
@@ -37,7 +39,7 @@ public class BasicShip implements Ship {
 	}
 	
 	@Override
-	public void update(float elapsedTime) {
+	public void update(final float elapsedTime) {
 	    for (ShipSystem system : _systems)
 	        system.update(elapsedTime);
 		for (Deck deck : _decks)
@@ -54,8 +56,9 @@ public class BasicShip implements Ship {
 		return _hitpoints;
 	}
 	
-	public void addDeck(Deck deck) {
+	public void addDeck(final BasicDeck deck) {
 		_decks.add(deck);
+		deck.setShip(this);
 	}
 
     @Override
@@ -64,7 +67,7 @@ public class BasicShip implements Ship {
     }
 
     @Override
-    public void addSystem(ShipSystem system) {
+    public void addSystem(final ShipSystem system) {
         _systems.add(system);
         
         if (system instanceof EnergyProducingSystem)
@@ -84,12 +87,12 @@ public class BasicShip implements Ship {
     }
 
     @Override
-    public void onRoomConnectorAdded(RoomConnector roomConnector) {
+    public void onRoomConnectorAdded(final RoomConnector roomConnector) {
         _doorSystem.addRoomConnector(roomConnector);
     }
     
     @Override
-    public void onRoomAdded(Room room) {
+    public void onRoomAdded(final Room room) {
         _lifeSupport.addRoom(room);
     }
 
@@ -102,5 +105,20 @@ public class BasicShip implements Ship {
     public LifeSupport getLifeSupport() {
         return _lifeSupport;
     }
+    
+    @Override
+    public List<CrewMember> getCrew() {
+    	return Collections.unmodifiableList(_crew);
+    }
+
+	@Override
+	public void addCrewMember(final CrewMember crewMember) {
+		_crew.add(crewMember);
+	}
+
+	@Override
+	public void removeCrewMember(final CrewMember crewMember) {
+		_crew.remove(crewMember);
+	}
 
 }

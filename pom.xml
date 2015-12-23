@@ -16,12 +16,12 @@
 		<module>xftl-game</module>
 		<module>xftl-fixtures</module>
 	</modules>
-	
+
 	<properties>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 		<gdx.version>1.7.0</gdx.version>
 	</properties>
-	
+
 	<build>
 		<plugins>
 			<plugin>
@@ -78,7 +78,19 @@
 				<artifactId>gdx-backend-lwjgl</artifactId>
 				<version>${gdx.version}</version>
 			</dependency>
+			<dependency>
+				<groupId>org.assertj</groupId>
+				<artifactId>assertj-core</artifactId>
+				<version>3.2.0</version>
+			</dependency>
 		</dependencies>
 	</dependencyManagement>
+
+	<repositories>
+		<repository>
+			<id>gdx-nightlies</id>
+			<url>https://oss.sonatype.org/content/repositories/snapshots/</url>
+		</repository>
+	</repositories>
 
 </project>

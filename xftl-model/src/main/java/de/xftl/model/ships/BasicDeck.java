@@ -3,6 +3,7 @@ package de.xftl.model.ships;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+import java.util.Objects;
 
 import de.xftl.spec.model.hardpoints.Hardpoint;
 import de.xftl.spec.model.ships.Deck;
@@ -19,7 +20,7 @@ public class BasicDeck implements Deck {
 	private Deck _deckAbove;
 	private Deck _deckBelow;
 	
-	public BasicDeck(Ship ship, int deckNumber) {
+	public BasicDeck(final Ship ship, final int deckNumber) {
 		super();
 		
 		_ship = ship;
@@ -27,7 +28,7 @@ public class BasicDeck implements Deck {
 	}
 	
 	@Override
-	public void update(float elapsedTime) {
+	public void update(final float elapsedTime) {
 		for (Room room : _rooms)
 		    room.update(elapsedTime);
 		for (Hardpoint hardpoint : _hardpoints)
@@ -60,18 +61,18 @@ public class BasicDeck implements Deck {
 	}
 	
 	@Override
-	public boolean equals(Object obj) {
-		if (obj instanceof Deck) {
-			Deck o = (Deck) obj;
-			return _deckNumber == o.getDeckNumber();
-		}
+	public boolean equals(final Object obj) {
+		if (obj == null) return false;
+		if (this == obj) return true;
+		if (!getClass().equals(obj)) return false;
 		
-		return false;
+		final Deck o = (Deck) obj;
+		return _deckNumber == o.getDeckNumber();
 	}
 	
 	@Override
 	public int hashCode() {
-		return Integer.valueOf(_deckNumber).hashCode(); 
+		return Objects.hash(getClass(), _deckNumber);
 	}
 
 	@Override
@@ -80,20 +81,23 @@ public class BasicDeck implements Deck {
 	}
 	
 	@Override
-	public void addRoom(Room room) {
+	public void addRoom(final Room room) {
 	    room.setDeck(this);
 		_rooms.add(room);
 		_ship.onRoomAdded(room);
 	}
 
     @Override
-    public void onSystemAdded(ShipSystem system) {
+    public void onSystemAdded(final ShipSystem system) {
         _ship.addSystem(system);
     }
 
     @Override
-    public void onRoomConnectorAdded(RoomConnector roomConnector) {
+    public void onRoomConnectorAdded(final RoomConnector roomConnector) {
         _ship.onRoomConnectorAdded(roomConnector);
     }
 
+    public void setShip(Ship ship) {
+		_ship = ship;
+	}
 }

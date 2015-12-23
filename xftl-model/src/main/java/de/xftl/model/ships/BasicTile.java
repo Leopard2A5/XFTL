@@ -1,13 +1,19 @@
 package de.xftl.model.ships;
 
+import static de.xftl.spec.model.Direction.EAST;
+import static de.xftl.spec.model.Direction.NORTH;
+import static de.xftl.spec.model.Direction.SOUTH;
+import static de.xftl.spec.model.Direction.WEST;
+
 import java.util.ArrayList;
+import java.util.EnumMap;
 import java.util.List;
+import java.util.Map;
 import java.util.Random;
 
 import de.xftl.spec.model.Direction;
 import de.xftl.spec.model.Point;
 import de.xftl.spec.model.crew.CrewMember;
-import de.xftl.spec.model.ships.Positioned;
 import de.xftl.spec.model.ships.Room;
 import de.xftl.spec.model.ships.RoomConnector;
 import de.xftl.spec.model.ships.Tile;
@@ -28,16 +34,13 @@ public class BasicTile implements Tile {
 	private CrewMember _crewMember;
 	private CrewMember _enemyCrewMember;
 	
-	private TileOrRoomConnector _north;
-	private TileOrRoomConnector _east;
-	private TileOrRoomConnector _south;
-	private TileOrRoomConnector _west;
-	private List<Tile> _neightboringTiles = new ArrayList<>(4);
+	private final Map<Direction, TileOrRoomConnector> _neighbors = new EnumMap<>(Direction.class);
+	private final List<Tile> _neightboringTiles = new ArrayList<>(4);
 	
 	private float _hullBreachLevel;
 	private boolean _onFire;
 	
-	public BasicTile(Room room, Point<Integer> leftUpperCornerPos) {
+	public BasicTile(final Room room, final Point<Integer> leftUpperCornerPos) {
 		super();
 		
 		_room = room;
@@ -45,7 +48,7 @@ public class BasicTile implements Tile {
 	}
 	
 	@Override
-	public void update(float elapsedTime) {
+	public void update(final float elapsedTime) {
 		updateHullBreach(elapsedTime);
 		updateFire(elapsedTime);
 	}
@@ -65,28 +68,8 @@ public class BasicTile implements Tile {
 		return _enemyCrewMember;
 	}
 
-	@Override
-	public int compareTo(Positioned<Integer> o) {
-	    return _leftUpperCornerPos.compareTo(o.getLeftUpperCornerPos());
-	}
-	
-	public void addNeighbor(Direction dir, TileOrRoomConnector neighbor) {
-		switch (dir) {
-		    case NORTH:
-		        _north = neighbor;
-		        break;
-		    case EAST:
-		        _east = neighbor;
-		        break;
-		    case SOUTH:
-		        _south = neighbor;
-		        break;
-		    case WEST:
-		        _west = neighbor;
-		        break;
-		    default:
-		        throw new IllegalArgumentException("Unknown enum value " + dir);
-		}
+	public void addNeighbor(final Direction dir, final TileOrRoomConnector neighbor) {
+		_neighbors.put(dir, neighbor);
 		
 		if (neighbor instanceof RoomConnector)
 		    _room.addRoomConnector((RoomConnector) neighbor);
@@ -105,22 +88,22 @@ public class BasicTile implements Tile {
 
     @Override
     public TileOrRoomConnector getNorthNeighbor() {
-        return _north;
+    	return _neighbors.get(NORTH);
     }
 
     @Override
     public TileOrRoomConnector getEastNeighbor() {
-        return _east;
+    	return _neighbors.get(EAST);
     }
 
     @Override
     public TileOrRoomConnector getSouthNeighbor() {
-        return _south;
+    	return _neighbors.get(SOUTH);
     }
 
     @Override
     public TileOrRoomConnector getWestNeighbor() {
-        return _west;
+    	return _neighbors.get(WEST);
     }
 
 	@Override
@@ -134,17 +117,17 @@ public class BasicTile implements Tile {
 	}
 
 	@Override
-	public void createHullBreach(float initialBreachValue) {
+	public void createHullBreach(final float initialBreachValue) {
 		_hullBreachLevel = Math.min(MAX_HULL_BREACH, _hullBreachLevel + initialBreachValue);
 		_onFire = false;
 	}
 
 	@Override
-	public void repairHullBreach(float repairValue) {
-		_hullBreachLevel = Math.min(NO_HULL_BREACH, _hullBreachLevel - repairValue);
+	public void repairHullBreach(final float repairValue) {
+		_hullBreachLevel = Math.max(NO_HULL_BREACH, _hullBreachLevel - repairValue);
 	}
 	
-	private void updateHullBreach(float elapsedTime) {
+	private void updateHullBreach(final float elapsedTime) {
         _room.consumeOxygen((_hullBreachLevel * HULL_BREACH_AIR_VENT_FACTOR * elapsedTime) / _room.getTiles().size());
     }
 
@@ -160,7 +143,7 @@ public class BasicTile implements Tile {
 		}
 	}
 	
-	private void updateFire(float elapsedTime) {
+	private void updateFire(final float elapsedTime) {
 	    if (!isOnFire())
 	        return;
 	    

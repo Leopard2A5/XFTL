@@ -13,20 +13,20 @@ public class EnergyConverter implements Converter {
 	private static final String VALUE = "value";
 
 	@Override
-	public boolean canConvert(@SuppressWarnings("rawtypes") Class clazz) {
+	public boolean canConvert(@SuppressWarnings("rawtypes") final Class clazz) {
 		return clazz.equals(Energy.class);
 	}
 
 	@Override
-	public void marshal(Object value, HierarchicalStreamWriter w, MarshallingContext ctx) {
-		Energy e = (Energy) value;
+	public void marshal(final Object value, final HierarchicalStreamWriter w, final MarshallingContext ctx) {
+		final Energy e = (Energy) value;
 		
 		w.addAttribute(VALUE, Integer.toString(e.intValue()));
 	}
 
 	@Override
-	public Object unmarshal(HierarchicalStreamReader r, UnmarshallingContext ctx) {
-		Integer value = Integer.valueOf(r.getAttribute(VALUE));
+	public Object unmarshal(final HierarchicalStreamReader r, final UnmarshallingContext ctx) {
+		final Integer value = Integer.valueOf(r.getAttribute(VALUE));
 		
 		return Energy.valueOf(value.intValue());
 	}

@@ -11,7 +11,7 @@ public class BasicLift extends AbstractRoomConnector implements Lift {
 	}
 	
 	@Override
-	public void update(float elapsedTime) {
+	public void update(final float elapsedTime) {
 		// TODO Auto-generated method stub
 
 	}

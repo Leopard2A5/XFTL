@@ -1,28 +1,14 @@
-/*
- * Copyright 2005-2012 IT Service Omikron.
- * 
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- * 
- *      http://www.apache.org/licenses/LICENSE-2.0
- * 
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
- */
-
 package de.xftl.model.game;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 import de.xftl.spec.game.Game;
 import de.xftl.spec.game.GameFile;
 import de.xftl.spec.game.GameStartParameters;
 import de.xftl.spec.game.State;
+import de.xftl.spec.model.crew.CrewMember;
 import de.xftl.spec.model.ships.Ship;
 
 public class BasicGame implements Game {
@@ -30,9 +16,10 @@ public class BasicGame implements Game {
     private Ship _ship;
     private List<Ship> _enemyShips = new ArrayList<>();
     private State _state = State.INITIAL;
+    private final List<CrewMember> _selectedCrew = new ArrayList<>();
     
     @Override
-    public void update(float elapsedTime) {
+    public void update(final float elapsedTime) {
         if (_ship != null)
             _ship.update(elapsedTime);
         
@@ -41,7 +28,7 @@ public class BasicGame implements Game {
     }
 
     @Override
-    public void setPause(boolean pause) {
+    public void setPause(final boolean pause) {
         // TODO Auto-generated method stub
     }
 
@@ -51,17 +38,17 @@ public class BasicGame implements Game {
     }
 
     @Override
-    public void startNewGame(GameStartParameters parameters) {
+    public void startNewGame(final GameStartParameters parameters) {
         _state = State.COMBAT;
     }
 
     @Override
-    public void saveGame(GameFile file) {
+    public void saveGame(final GameFile file) {
         // TODO Auto-generated method stub
     }
 
     @Override
-    public void loadGame(GameFile file) {
+    public void loadGame(final GameFile file) {
         // TODO Auto-generated method stub
     }
 
@@ -74,5 +61,21 @@ public class BasicGame implements Game {
     public List<Ship> getEnemyShips() {
         return _enemyShips;
     }
+
+	@Override
+	public List<CrewMember> getSelectedCrewMembers() {
+		return Collections.unmodifiableList(_selectedCrew);
+	}
+
+	@Override
+	public void selectCrewMembers(final List<CrewMember> members) {
+		deselectCrewMembers();
+		_selectedCrew.addAll(members);
+	}
+
+	@Override
+	public void deselectCrewMembers() {
+		_selectedCrew.clear();
+	}
 
 }

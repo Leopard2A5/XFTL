@@ -9,12 +9,12 @@ import de.xftl.spec.model.systems.Energy;
 
 public class XFTLModelWriter {
 
-	public void write(Object o, OutputStream dest) {
+	public void write(final Object o, final OutputStream dest) {
 		buildXStream().toXML(o, dest);
 	}
 	
 	private XStream buildXStream() {
-		XStream xs = new XStream();
+		final XStream xs = new XStream();
 		
 		xs.alias("energy", Energy.class);
 		

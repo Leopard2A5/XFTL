@@ -1,23 +1,6 @@
-/*
- * Copyright 2005-2012 IT Service Omikron.
- * 
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- * 
- *      http://www.apache.org/licenses/LICENSE-2.0
- * 
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
- */
-
 package de.xftl.model.ships;
 
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertTrue;
+import static org.assertj.core.api.Assertions.assertThat;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -55,7 +38,7 @@ public class FireTest {
             elapsedTime += STEP;
         }
         
-        assertFalse(tile.isOnFire());
+        assertThat(tile.isOnFire()).isFalse();
     }
     
     @Test
@@ -68,7 +51,7 @@ public class FireTest {
             elapsedTime += STEP;
         }
         
-        assertTrue(tile2.isOnFire());
+        assertThat(tile2.isOnFire()).isTrue();
     }
     
     @Test
@@ -81,6 +64,6 @@ public class FireTest {
             elapsedTime += STEP;
         }
         
-        assertFalse(tile.isOnFire());
+        assertThat(tile.isOnFire()).isFalse();
     }
 }

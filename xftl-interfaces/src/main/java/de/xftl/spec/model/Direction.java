@@ -1,25 +1,32 @@
 package de.xftl.spec.model;
 
 public enum Direction {
-	NORTH,
-	EAST,
-	SOUTH,
-	WEST;
+	NORTH {
+		@Override
+		public Direction getOpposite() {
+			return SOUTH;
+		}
+	},
+	EAST {
+		@Override
+		public Direction getOpposite() {
+			return WEST;
+		}
+	},
+	SOUTH {
+		@Override
+		public Direction getOpposite() {
+			return NORTH;
+		}
+	},
+	WEST {
+		@Override
+		public Direction getOpposite() {
+			return EAST;
+		}
+	};
 	
-	public Direction getOpposite() {
-	    switch (this) {
-	        case NORTH:
-	            return SOUTH;
-	        case EAST:
-	            return WEST;
-	        case SOUTH:
-	            return NORTH;
-	        case WEST:
-	            return EAST;
-	        default:
-	            throw new IllegalArgumentException("Unknown direction " + this);
-	    }
-	}
+	public abstract Direction getOpposite();
 	
 	public static Direction getDirection(Point<Integer> src, Point<Integer> dest) {
 		if (src.equals(dest))

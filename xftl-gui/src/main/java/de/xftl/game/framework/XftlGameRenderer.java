@@ -25,8 +25,6 @@ public class XftlGameRenderer implements ApplicationListener {
 		private Mouse _mouse;
 		private ResourceManager _resourceManager;
 		
-		public final float TileSize = 32.0f;
-		
 		public XftlGameRenderer(Game game) {
 			_gameModel = game;
 		}

@@ -10,21 +10,24 @@ import de.xftl.game.framework.XftlGameRenderer;
 import de.xftl.spec.model.ships.Deck;
 import de.xftl.spec.model.ships.Ship;
 
-public class ShipRenderer extends GameObject {
+public class ShipView extends GameObject {
 	private Group _shipGroup;
-	private ArrayList<DeckRenderer> _decks;
+	private ArrayList<DeckView> _decks;
 	
-	public ShipRenderer(Stage stage, XftlGameRenderer game, Ship ship) {
+	public ShipView(Stage stage, XftlGameRenderer game, Ship ship) {
 		super(game);
 		
 		_shipGroup = new Group();
-		_shipGroup.moveBy(24.0f, 100.0f);
 		stage.addActor(_shipGroup);
 		
-		_decks = new ArrayList<DeckRenderer>();
+		_decks = new ArrayList<DeckView>();
+		
+		float verticalDistance = 0.0f;
 		for(Deck deck : ship.getDecks()) {
-			DeckRenderer deckRenderer = new DeckRenderer(_shipGroup, game, deck);
-			_decks.add(deckRenderer);
+			DeckView deckView = new DeckView(_shipGroup, game, deck);
+			_decks.add(deckView);
+			verticalDistance += 200.0f;
+			deckView.getGroup().moveBy(64.0f, verticalDistance);
 		}
 	}
 }

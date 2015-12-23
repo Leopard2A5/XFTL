@@ -8,13 +8,13 @@ import com.badlogic.gdx.utils.viewport.ScreenViewport;
 import de.xftl.game.framework.GameScreenBase;
 import de.xftl.game.framework.ScreenChangeInformation;
 import de.xftl.game.framework.XftlGameRenderer;
-import de.xftl.game.states.combat.ShipRenderer;
+import de.xftl.game.states.combat.ShipView;
 import de.xftl.spec.game.Game;
 
 public class CombatScreen extends GameScreenBase 
 {
 	private Stage _stage;
-	private ShipRenderer _shipRenderer;
+	private ShipView _shipRenderer;
 	
 	public CombatScreen(XftlGameRenderer game) {
 		super(game);
@@ -38,7 +38,7 @@ public class CombatScreen extends GameScreenBase
 		Gdx.input.setInputProcessor(_stage);
 		Game model = getGame().getGameModel();
 		model.startNewGame(null);
-		_shipRenderer = new ShipRenderer(_stage, getGame(), model.getShip());
+		_shipRenderer = new ShipView(_stage, getGame(), model.getShip());
 	}
 
 	@Override

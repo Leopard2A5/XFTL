@@ -14,6 +14,7 @@ import de.xftl.spec.model.Direction;
 import de.xftl.spec.model.Point;
 import de.xftl.spec.model.ships.Deck;
 import de.xftl.spec.model.ships.Door;
+import de.xftl.spec.model.ships.Lift;
 import de.xftl.spec.model.ships.Room;
 import de.xftl.spec.model.ships.Tile;
 import de.xftl.spec.model.ships.TileOrRoomConnector;
@@ -23,11 +24,13 @@ public class DeckView extends GameObject {
 	private Group _deckGroup;
 	
 	private ArrayList<Door> _alldoors;
+	private ArrayList<Lift> _allLifts;
 	
 	public DeckView(Group group, XftlGameRenderer game, Deck deck) {
 		super(game);
 		
 		_alldoors = new ArrayList<Door>();
+		_allLifts = new ArrayList<Lift>();
 		
 		_deckGroup = new Group();
 		group.addActor(_deckGroup);
@@ -41,7 +44,7 @@ public class DeckView extends GameObject {
 				
 				Texture texture = getResources().getTexture("tex/floor.png");
 				SpriteActor tileActor = new SpriteActor(new TextureRegion(texture));
-				tileActor.setPosition((pos.getX()-1) * ViewConstants.TILESIZE, pos.getY() * ViewConstants.TILESIZE);
+				tileActor.setPosition((pos.getX()-1) * ViewConstants.TILESIZEF, pos.getY() * ViewConstants.TILESIZEF);
 				_deckGroup.addActor(tileActor);
 								
 				handleNeighbour(tile.getNorthNeighbor(), tileActor, Direction.NORTH, fringe);
@@ -63,71 +66,90 @@ public class DeckView extends GameObject {
 	private void handleNeighbour(TileOrRoomConnector tile, Actor currentActor, Direction direction, ArrayList<Actor> connectors) {
 		
 		boolean vertical = direction == Direction.WEST || direction == Direction.EAST;
+		float posX = currentActor.getX() + getOffsetXForDirection(direction);
+		float posY = currentActor.getY() + getOffsetYForDirection(direction);
 		
 		if (tile == null) {
-			
-			SpriteActor wall = new SpriteActor(new TextureRegion(getGame().getBlankTexture()));
-			
-			if (vertical) {
-				wall.setSize(ViewConstants.WALLTHICKNESS, ViewConstants.TILESIZE + ViewConstants.WALLOFFSET * 2);
-			}
-			else {
-				wall.setSize(ViewConstants.TILESIZE + ViewConstants.WALLOFFSET * 2, ViewConstants.WALLTHICKNESS);
-			}
-			
-			float posX = currentActor.getX() + getOffsetXForDirection(direction);
-			float posY = currentActor.getY() + getOffsetYForDirection(direction);
-			
-			wall.setPosition(posX - ViewConstants.WALLOFFSET, posY-ViewConstants.WALLOFFSET);
-			wall.setColor(0.0f, 0.0f, 0.0f, 1.0f);
-		
-			connectors.add(wall);	
+			connectors.add(createWall(posX, posY, vertical));
 		}
-		else if (tile instanceof Door)
+		else if (tile instanceof Door && !_alldoors.contains(tile))
 		{
-			if (!_alldoors.contains(tile)) {
-				_alldoors.add((Door)tile);
-				
-				DoorView doorView = new DoorView(getGame(), (Door)tile);
-				
-				float x = currentActor.getX() + getOffsetXForDirection(direction);
-				float y = currentActor.getY() + getOffsetYForDirection(direction);
-				
-				if (vertical) {
-					x += ViewConstants.WALLTHICKNESS;
-				} else {
-					y -= ViewConstants.WALLTHICKNESS;
-				}
-				
-				doorView.setPosition(x,y);
-				if (vertical){
-					doorView.setRotation(90);
-				}
-				
-				connectors.add(doorView);
-			}
+			_alldoors.add((Door)tile);
+			connectors.add(createDoor((Door)tile, posX, posY, vertical));
 		}
+		else if (tile instanceof Lift && !_allLifts.contains(tile)) {
+			_allLifts.add((Lift)tile);
+			connectors.add(createLift((Lift)tile, posX, posY, direction));
+		}
+	}
+	
+	private Actor createWall(float posX, float posY, Boolean vertical) {
+		SpriteActor wall = new SpriteActor(new TextureRegion(getGame().getBlankTexture()));
+		
+		if (vertical) {
+			wall.setSize(ViewConstants.WALLTHICKNESS, ViewConstants.TILESIZEF + ViewConstants.WALLOFFSET * 2);
+		}
+		else {
+			wall.setSize(ViewConstants.TILESIZEF + ViewConstants.WALLOFFSET * 2, ViewConstants.WALLTHICKNESS);
+		}
+		wall.setPosition(posX - ViewConstants.WALLOFFSET, posY-ViewConstants.WALLOFFSET);
+		wall.setColor(0.0f, 0.0f, 0.0f, 1.0f);
+	
+		return wall;
+	}
+	
+	private Actor createDoor(Door door, float posX, float posY, Boolean vertical){
+		DoorView doorView = new DoorView(getGame(), door);
+		
+		if (vertical) {
+			posX += ViewConstants.WALLTHICKNESS;
+		} else {
+			posY -= ViewConstants.WALLTHICKNESS;
+		}
+		
+		doorView.setPosition(posX,posY);
+		if (vertical){
+			doorView.setRotation(90);
+		}
+		
+		return doorView;
+	}
+	
+	private Actor createLift(Lift lift, float posX, float posY, Direction direction) {
+		LiftView liftView = new LiftView(getGame(), lift);
+		liftView.setOrigin(ViewConstants.TILESIZEF * 0.5f, ViewConstants.TILESIZEF * 0.5f);
+		
+		switch(direction)
+		{
+		case EAST:
+			posX += ViewConstants.TILESIZEF;
+			liftView.setRotation(-90);
+			break;
+		case NORTH:
+			posY -= ViewConstants.TILESIZEF;
+			liftView.setRotation(180);
+			break;
+		case SOUTH:
+			posY += ViewConstants.TILESIZEF;
+			break;
+		case WEST:
+			liftView.setRotation(90);
+			posX -= ViewConstants.TILESIZEF;
+			break;
+		}
+		
+		liftView.setPosition(posX, posY);
+		
+		return liftView;
 	}
 	
 	private float getOffsetYForDirection(Direction direction)
 	{	
-		switch(direction)
-		{
-		case SOUTH:
-			return ViewConstants.TILESIZE;
-		default:
-			return 0.0f;
-		}
+		return direction == Direction.SOUTH ? ViewConstants.TILESIZEF : 0.0f;
 	}
 	
 	private float getOffsetXForDirection(Direction direction)
 	{	
-		switch(direction)
-		{
-		case EAST:
-			return ViewConstants.TILESIZE;
-		default:
-			return 0.0f;
-		}
+		return direction == Direction.EAST ? ViewConstants.TILESIZEF : 0.0f;
 	}
 }

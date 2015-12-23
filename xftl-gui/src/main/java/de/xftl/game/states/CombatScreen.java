@@ -24,6 +24,7 @@ public class CombatScreen extends GameScreenBase
 	public ScreenChangeInformation onUpdate(float elapsedTime) {	
 		Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 		_stage.act(elapsedTime);
+		
 		return ScreenChangeInformation.emtpy;
 	}
 

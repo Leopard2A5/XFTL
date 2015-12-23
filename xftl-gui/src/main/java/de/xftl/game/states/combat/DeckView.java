@@ -6,8 +6,6 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.Group;
-import com.badlogic.gdx.scenes.scene2d.Stage;
-
 import de.xftl.game.framework.GameObject;
 import de.xftl.game.framework.SpriteActor;
 import de.xftl.game.framework.ViewConstants;
@@ -15,6 +13,7 @@ import de.xftl.game.framework.XftlGameRenderer;
 import de.xftl.spec.model.Direction;
 import de.xftl.spec.model.Point;
 import de.xftl.spec.model.ships.Deck;
+import de.xftl.spec.model.ships.Door;
 import de.xftl.spec.model.ships.Room;
 import de.xftl.spec.model.ships.Tile;
 import de.xftl.spec.model.ships.TileOrRoomConnector;
@@ -23,8 +22,12 @@ public class DeckView extends GameObject {
 
 	private Group _deckGroup;
 	
+	private ArrayList<Door> _alldoors;
+	
 	public DeckView(Group group, XftlGameRenderer game, Deck deck) {
 		super(game);
+		
+		_alldoors = new ArrayList<Door>();
 		
 		_deckGroup = new Group();
 		group.addActor(_deckGroup);
@@ -78,6 +81,20 @@ public class DeckView extends GameObject {
 			wall.setColor(0.0f, 0.0f, 0.0f, 1.0f);
 		
 			connectors.add(wall);	
+		}
+		else if (tile instanceof Door)
+		{
+			if (!_alldoors.contains(tile)) {
+				_alldoors.add((Door)tile);
+				
+				DoorView doorView = new DoorView(getGame(), (Door)tile);
+				
+				float x = currentActor.getX() + getOffsetXForDirection(direction);
+				float y = currentActor.getY() + getOffsetYForDirection(direction);
+				
+				doorView.setPosition(x,y);
+				connectors.add(doorView);
+			}
 		}
 	}
 	

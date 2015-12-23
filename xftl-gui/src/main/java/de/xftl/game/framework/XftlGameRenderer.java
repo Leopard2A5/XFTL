@@ -11,6 +11,7 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.Pixmap.Format;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 
+import de.xftl.game.framework.ui.Cursor;
 import de.xftl.game.states.*;
 import de.xftl.spec.game.Game;
 
@@ -24,6 +25,7 @@ public class XftlGameRenderer implements ApplicationListener {
 		private Game _gameModel;
 		private Mouse _mouse;
 		private ResourceManager _resourceManager;
+		private Cursor _cursor;
 		
 		public XftlGameRenderer(Game game) {
 			_gameModel = game;
@@ -68,6 +70,8 @@ public class XftlGameRenderer implements ApplicationListener {
         	map.drawPixel(0, 0, 0xffffffff);
         	_blank = new Texture(map);
         	
+        	_cursor = new Cursor(this);
+        	
         	addGameScreen(GameScreenName.CombatScreen, new CombatScreen(this));
         	setCurrentGameState(GameScreenName.CombatScreen, null);
         }
@@ -81,6 +85,7 @@ public class XftlGameRenderer implements ApplicationListener {
                 
         private void updateCurrentState(float elapsedTime) {
         	_mouse.update();
+        	_cursor.update();
         	_gameModel.update(elapsedTime);
         	ScreenChangeInformation changeInformation = _currentGameScreen.onUpdate(elapsedTime);
         	
@@ -98,8 +103,9 @@ public class XftlGameRenderer implements ApplicationListener {
         private void renderCurrentState() {
         	Gdx.gl.glClearColor(1.0f,0.0f,0.0f, 1.0f);
     		Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
+    		_currentGameScreen.onRender();
         	_spriteBatch.begin();
-        	_currentGameScreen.onRender();
+        	_cursor.draw();
         	_spriteBatch.end();
         }
 

@@ -1,6 +1,5 @@
 package de.xftl.game.states.combat;
 
-import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.InputListener;
@@ -10,7 +9,7 @@ import de.xftl.game.framework.ViewConstants;
 import de.xftl.game.framework.XftlGameRenderer;
 import de.xftl.spec.model.ships.Lift;
 
-public class LiftView extends FrameSpriteActor{
+public class LiftView extends FrameSpriteActor {
 
 	private Lift _lift;
 	
@@ -19,8 +18,8 @@ public class LiftView extends FrameSpriteActor{
 		
 		_lift = lift;
 		
-		addFrame(0,0,ViewConstants.TILESIZE, ViewConstants.TILESIZE);
-		addFrame(ViewConstants.TILESIZE,0,ViewConstants.TILESIZE,ViewConstants.TILESIZE);
+		addFrame(0,0,ViewConstants.TILESIZE, ViewConstants.TILESIZE+ViewConstants.WALLTHICKNESS);
+		addFrame(ViewConstants.TILESIZE,0,ViewConstants.TILESIZE,ViewConstants.TILESIZE+ViewConstants.WALLTHICKNESS);
 		
 		addListener(new InputListener(){
 			@Override

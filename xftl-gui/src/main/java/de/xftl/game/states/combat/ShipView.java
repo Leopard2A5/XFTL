@@ -27,7 +27,7 @@ public class ShipView extends GameObject {
 			DeckView deckView = new DeckView(_shipGroup, game, deck);
 			_decks.add(deckView);
 			verticalDistance += 200.0f;
-			deckView.getGroup().moveBy(64.0f, verticalDistance);
+			deckView.moveBy(64.0f, verticalDistance);
 		}
 	}
 }

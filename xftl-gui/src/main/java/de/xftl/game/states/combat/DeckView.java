@@ -21,7 +21,8 @@ import de.xftl.spec.model.ships.TileOrRoomConnector;
 
 public class DeckView extends GameObject {
 
-	private Group _deckGroup;
+	private Group _wallAndFringeLayerGroup;
+	private Group _groundLayerGroup;
 	
 	private ArrayList<Door> _alldoors;
 	private ArrayList<Lift> _allLifts;
@@ -32,10 +33,10 @@ public class DeckView extends GameObject {
 		_alldoors = new ArrayList<Door>();
 		_allLifts = new ArrayList<Lift>();
 		
-		_deckGroup = new Group();
-		group.addActor(_deckGroup);
-		
-		ArrayList<Actor> fringe = new ArrayList<Actor>();
+		_wallAndFringeLayerGroup = new Group();
+		_groundLayerGroup = new Group();
+		group.addActor(_groundLayerGroup);
+		group.addActor(_wallAndFringeLayerGroup);
 		
 		for(Room room : deck.getRooms()) {
 			for(Tile tile : room.getTiles()) {
@@ -45,41 +46,38 @@ public class DeckView extends GameObject {
 				Texture texture = getResources().getTexture("tex/floor.png");
 				SpriteActor tileActor = new SpriteActor(new TextureRegion(texture));
 				tileActor.setPosition((pos.getX()-1) * ViewConstants.TILESIZEF, pos.getY() * ViewConstants.TILESIZEF);
-				_deckGroup.addActor(tileActor);
+				_groundLayerGroup.addActor(tileActor);
 								
-				handleNeighbour(tile.getNorthNeighbor(), tileActor, Direction.NORTH, fringe);
-				handleNeighbour(tile.getSouthNeighbor(), tileActor, Direction.SOUTH, fringe);
-				handleNeighbour(tile.getEastNeighbor(), tileActor, Direction.EAST, fringe);
-				handleNeighbour(tile.getWestNeighbor(), tileActor, Direction.WEST, fringe);
+				handleNeighbour(tile.getNorthNeighbor(), tileActor, Direction.NORTH);
+				handleNeighbour(tile.getSouthNeighbor(), tileActor, Direction.SOUTH);
+				handleNeighbour(tile.getEastNeighbor(), tileActor, Direction.EAST);
+				handleNeighbour(tile.getWestNeighbor(), tileActor, Direction.WEST);
 			}
-		}
-		
-		for(Actor actor : fringe) {
-			_deckGroup.addActor(actor);
 		}
 	}
 	
-	public Group getGroup() {
-		return _deckGroup;
+	public void moveBy(float x, float y){
+		_wallAndFringeLayerGroup.moveBy(x, y);
+		_groundLayerGroup.moveBy(x, y);
 	}
 
-	private void handleNeighbour(TileOrRoomConnector tile, Actor currentActor, Direction direction, ArrayList<Actor> connectors) {
+	private void handleNeighbour(TileOrRoomConnector tile, Actor currentActor, Direction direction) {
 		
 		boolean vertical = direction == Direction.WEST || direction == Direction.EAST;
 		float posX = currentActor.getX() + getOffsetXForDirection(direction);
 		float posY = currentActor.getY() + getOffsetYForDirection(direction);
 		
 		if (tile == null) {
-			connectors.add(createWall(posX, posY, vertical));
+			_wallAndFringeLayerGroup.addActor(createWall(posX, posY, vertical));
 		}
 		else if (tile instanceof Door && !_alldoors.contains(tile))
 		{
 			_alldoors.add((Door)tile);
-			connectors.add(createDoor((Door)tile, posX, posY, vertical));
+			_wallAndFringeLayerGroup.addActor(createDoor((Door)tile, posX, posY, vertical));
 		}
 		else if (tile instanceof Lift && !_allLifts.contains(tile)) {
 			_allLifts.add((Lift)tile);
-			connectors.add(createLift((Lift)tile, posX, posY, direction));
+			_groundLayerGroup.addActor(createLift((Lift)tile, posX, posY, direction));
 		}
 	}
 	
@@ -117,28 +115,30 @@ public class DeckView extends GameObject {
 	
 	private Actor createLift(Lift lift, float posX, float posY, Direction direction) {
 		LiftView liftView = new LiftView(getGame(), lift);
-		liftView.setOrigin(ViewConstants.TILESIZEF * 0.5f, ViewConstants.TILESIZEF * 0.5f);
+		liftView.setOrigin(ViewConstants.TILESIZEF * 0.5f,
+						   ViewConstants.TILESIZEF * 0.5f);
 		
 		switch(direction)
 		{
 		case EAST:
-			posX += ViewConstants.TILESIZEF;
+			posX += ViewConstants.TILESIZEF + ViewConstants.WALLTHICKNESS;
 			liftView.setRotation(-90);
 			break;
 		case NORTH:
-			posY -= ViewConstants.TILESIZEF;
+			posY -= ViewConstants.TILESIZEF - ViewConstants.WALLTHICKNESS;
 			liftView.setRotation(180);
 			break;
 		case SOUTH:
-			posY += ViewConstants.TILESIZEF;
+			posY += ViewConstants.TILESIZEF + ViewConstants.WALLTHICKNESS;
 			break;
 		case WEST:
 			liftView.setRotation(90);
-			posX -= ViewConstants.TILESIZEF;
+			posX -= ViewConstants.TILESIZEF - ViewConstants.WALLTHICKNESS;
 			break;
 		}
 		
 		liftView.setPosition(posX, posY);
+		liftView.setZIndex(5);
 		
 		return liftView;
 	}

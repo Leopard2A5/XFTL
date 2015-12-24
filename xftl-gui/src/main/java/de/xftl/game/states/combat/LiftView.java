@@ -1,11 +1,11 @@
 package de.xftl.game.states.combat;
 
+import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.InputListener;
 
 import de.xftl.game.framework.FrameSpriteActor;
-import de.xftl.game.framework.ViewConstants;
 import de.xftl.game.framework.XftlGameRenderer;
 import de.xftl.spec.model.ships.Lift;
 
@@ -14,12 +14,14 @@ public class LiftView extends FrameSpriteActor {
 	private Lift _lift;
 	
 	public LiftView(XftlGameRenderer game, Lift lift) {
-		super(game.getResources().getTexture("tex/lift.png"));
+		super();
 		
 		_lift = lift;
 		
-		addFrame(0,0,ViewConstants.TILESIZE, ViewConstants.TILESIZE+ViewConstants.WALLTHICKNESS);
-		addFrame(ViewConstants.TILESIZE,0,ViewConstants.TILESIZE,ViewConstants.TILESIZE+ViewConstants.WALLTHICKNESS);
+		TextureAtlas main = game.getResources().getAtlas("tex/mainAtlas.txt");
+		
+		addFrame(main.findRegion("lift_closed"));
+		addFrame(main.findRegion("lift_open"));
 		
 		addListener(new InputListener(){
 			@Override

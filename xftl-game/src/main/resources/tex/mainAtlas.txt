@@ -1,0 +1,75 @@
+mainAtlas.png
+size: 128, 128
+format: RGBA8888
+filter: Linear,Linear
+repeat: none
+cursor
+  rotate: false
+  xy: 0, 0
+  size: 18, 23
+  orig: 18, 23
+  offset: 0, 0
+  index: -1
+door_closed
+  rotate: false
+  xy: 18, 0
+  size: 32, 6
+  orig: 32, 6
+  offset: 0, 0
+  index: -1
+door_open
+  rotate: false
+  xy: 50, 0
+  size: 32, 6
+  orig: 32, 6
+  offset: 0, 0
+  index: -1
+fire1
+  rotate: false
+  xy: 82, 0
+  size: 32, 32
+  orig: 32, 32
+  offset: 0, 0
+  index: -1
+fire2
+  rotate: false
+  xy: 0, 32
+  size: 32, 32
+  orig: 32, 32
+  offset: 0, 0
+  index: -1
+fire3
+  rotate: false
+  xy: 32, 32
+  size: 32, 32
+  orig: 32, 32
+  offset: 0, 0
+  index: -1
+fire4
+  rotate: false
+  xy: 64, 32
+  size: 32, 32
+  orig: 32, 32
+  offset: 0, 0
+  index: -1
+floor
+  rotate: false
+  xy: 96, 32
+  size: 32, 32
+  orig: 32, 32
+  offset: 0, 0
+  index: -1
+lift_closed
+  rotate: false
+  xy: 0, 64
+  size: 32, 35
+  orig: 32, 35
+  offset: 0, 0
+  index: -1
+lift_open
+  rotate: false
+  xy: 32, 64
+  size: 32, 35
+  orig: 32, 35
+  offset: 0, 0
+  index: -1

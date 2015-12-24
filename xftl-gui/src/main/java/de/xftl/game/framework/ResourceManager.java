@@ -5,16 +5,19 @@ import java.util.HashMap;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
+import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.utils.Disposable;
 
 public class ResourceManager implements Disposable {
 	
+	private HashMap<String, TextureAtlas> _textureAtlasByPath;
 	private HashMap<String, Texture> _texturesByPath;
 	private HashMap<String, BitmapFont> _bitmapFontsByPath;
 	
 	public ResourceManager() {
 		_texturesByPath = new HashMap<String, Texture>();
     	_bitmapFontsByPath = new HashMap<String, BitmapFont>();
+    	_textureAtlasByPath = new HashMap<String, TextureAtlas>();
 	}
 	
 	public Texture getTexture(String path){
@@ -26,6 +29,17 @@ public class ResourceManager implements Disposable {
 		}
 		
 		return texture;
+	}
+	
+	public TextureAtlas getAtlas(String path) {
+		TextureAtlas atlas = _textureAtlasByPath.get(path);
+		
+		if (atlas == null) {
+			atlas = new TextureAtlas(Gdx.files.internal(path));
+			_textureAtlasByPath.put(path, atlas);
+		}
+		
+		return atlas;
 	}
 	
 	public BitmapFont getBitmapFont(String path){

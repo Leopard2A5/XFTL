@@ -1,11 +1,11 @@
 package de.xftl.game.states.combat;
 
+import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.InputListener;
 
 import de.xftl.game.framework.FrameSpriteActor;
-import de.xftl.game.framework.ViewConstants;
 import de.xftl.game.framework.XftlGameRenderer;
 import de.xftl.spec.model.ships.Door;
 
@@ -13,10 +13,10 @@ public class DoorView extends FrameSpriteActor {
 	private Door _door;
 	
 	public DoorView(XftlGameRenderer game, Door door) {
-		super(game.getResources().getTexture("tex/door.png"));
+		TextureAtlas main = game.getResources().getAtlas("tex/mainAtlas.txt");
 		
-		addFrame(0, 16-ViewConstants.WALLTHICKNESS, 32, 2*ViewConstants.WALLTHICKNESS);
-		addFrame(32,16-ViewConstants.WALLTHICKNESS,32,2*ViewConstants.WALLTHICKNESS);
+		addFrame(main.findRegion("door_closed"));
+		addFrame(main.findRegion("door_open"));
 		
 		_door = door;
 		

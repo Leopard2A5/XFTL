@@ -1,8 +1,6 @@
 package de.xftl.game.states.combat;
 
 import java.util.ArrayList;
-
-import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.Group;
@@ -38,13 +36,14 @@ public class DeckView extends GameObject {
 		group.addActor(_groundLayerGroup);
 		group.addActor(_wallAndFringeLayerGroup);
 		
+		TextureRegion floor = game.getResources().getAtlas("tex/mainAtlas.txt").findRegion("floor");
+		
 		for(Room room : deck.getRooms()) {
 			for(Tile tile : room.getTiles()) {
 				
 				Point<Integer> pos = tile.getLeftUpperCornerPos();
 				
-				Texture texture = getResources().getTexture("tex/floor.png");
-				SpriteActor tileActor = new SpriteActor(new TextureRegion(texture));
+				SpriteActor tileActor = new SpriteActor(floor);
 				tileActor.setPosition((pos.getX()-1) * ViewConstants.TILESIZEF, pos.getY() * ViewConstants.TILESIZEF);
 				_groundLayerGroup.addActor(tileActor);
 								

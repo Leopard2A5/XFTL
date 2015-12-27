@@ -16,7 +16,8 @@ public interface Room extends XFTLModelObject, Positioned<Integer> {
 	public List<RoomConnector> getRoomConnectors();
 	public List<Room> getAdjacentRooms();
 	public List<Room> getAdjacentRooms(Room origin);
-	
+
+	public Deck getDeck();
 	public void setDeck(Deck deck);
 
 	public boolean isOnFire();

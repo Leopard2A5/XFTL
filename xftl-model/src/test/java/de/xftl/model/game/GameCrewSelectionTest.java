@@ -13,7 +13,7 @@ import de.xftl.spec.model.crew.CrewMember;
 import de.xftl.spec.model.ships.Room;
 import de.xftl.spec.model.ships.Tile;
 
-public class GameTest {
+public class GameCrewSelectionTest {
 
 	private Game _game = new BasicGame();
 	private Room _room = new BasicRoom(2, 2, 2, 2);

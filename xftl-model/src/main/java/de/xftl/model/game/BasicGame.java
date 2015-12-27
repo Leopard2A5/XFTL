@@ -7,9 +7,11 @@ import java.util.List;
 import de.xftl.spec.game.Game;
 import de.xftl.spec.game.GameFile;
 import de.xftl.spec.game.GameStartParameters;
+import de.xftl.spec.game.MovementPreview;
 import de.xftl.spec.game.State;
 import de.xftl.spec.model.crew.CrewMember;
 import de.xftl.spec.model.ships.Ship;
+import de.xftl.spec.model.ships.Tile;
 
 public class BasicGame implements Game {
 
@@ -17,6 +19,7 @@ public class BasicGame implements Game {
     private List<Ship> _enemyShips = new ArrayList<>();
     private State _state = State.INITIAL;
     private final List<CrewMember> _selectedCrew = new ArrayList<>();
+    private final MovementPreviewProcessor _movementPreviewProcessor = new MovementPreviewProcessor();
     
     @Override
     public void update(final float elapsedTime) {
@@ -78,4 +81,9 @@ public class BasicGame implements Game {
 		_selectedCrew.clear();
 	}
 
+	@Override
+	public MovementPreview previewMovement(final Tile tile) {
+		return _movementPreviewProcessor.previewMovement(_selectedCrew, tile);
+	}
+	
 }

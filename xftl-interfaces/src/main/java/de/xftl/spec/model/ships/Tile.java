@@ -7,7 +7,9 @@ public interface Tile extends XFTLModelObject, Positioned<Integer>, TileOrRoomCo
 	public static final float NO_HULL_BREACH = 0;
 	public static final float MAX_HULL_BREACH = 1;
 	
+	public Room getRoom();
 	public CrewMember getCrewMember();
+	public void setCrewMember(CrewMember crew);
 	public CrewMember getEnemyCrewMember();
 	public TileOrRoomConnector getNorthNeighbor();
 	public TileOrRoomConnector getEastNeighbor();

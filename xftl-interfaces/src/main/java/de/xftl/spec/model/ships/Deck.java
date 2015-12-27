@@ -7,6 +7,7 @@ import de.xftl.spec.model.hardpoints.Hardpoint;
 import de.xftl.spec.model.systems.ShipSystem;
 
 public interface Deck extends XFTLModelObject {
+	public Ship getShip();
 	public int getDeckNumber();
 	public List<Room> getRooms();
 	public void addRoom(Room room);

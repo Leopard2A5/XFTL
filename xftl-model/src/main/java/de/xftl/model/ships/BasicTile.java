@@ -62,6 +62,14 @@ public class BasicTile implements Tile {
 	public CrewMember getCrewMember() {
 		return _crewMember;
 	}
+	
+	@Override
+	public void setCrewMember(final CrewMember crew) {
+		if (_crewMember != null)
+			throw new RuntimeException("Can only call setCrewMember when _crewMember is null!");
+		
+		_crewMember = crew;
+	}
 
 	@Override
 	public CrewMember getEnemyCrewMember() {
@@ -82,6 +90,7 @@ public class BasicTile implements Tile {
 	    return String.format("BasicTile %s", _leftUpperCornerPos);
 	}
 
+	@Override
 	public Room getRoom() {
 		return _room;
 	}

@@ -18,7 +18,7 @@ public class AbstractCrewMemberTest {
 	
 	@Test
 	public void shouldInitializeCorrectly() {
-		assertThat(crew.getCurrentTile()).contains(tile);
+		assertThat(crew.getCurrentTile()).isEqualTo(tile);
 		
 		final Point<Float> tileFloatPos = new Point<>(Float.valueOf(tile.getLeftUpperCornerPos().getX()),
 				                                      Float.valueOf(tile.getLeftUpperCornerPos().getY()));

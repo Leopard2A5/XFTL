@@ -6,9 +6,11 @@ import java.util.List;
 import de.xftl.spec.game.Game;
 import de.xftl.spec.game.GameFile;
 import de.xftl.spec.game.GameStartParameters;
+import de.xftl.spec.game.MovementPreview;
 import de.xftl.spec.game.State;
 import de.xftl.spec.model.crew.CrewMember;
 import de.xftl.spec.model.ships.Ship;
+import de.xftl.spec.model.ships.Tile;
 
 public class FixtureGame implements Game {
 
@@ -73,6 +75,11 @@ public class FixtureGame implements Game {
 	@Override
 	public void deselectCrewMembers() {
 		
+	}
+
+	@Override
+	public MovementPreview previewMovement(Tile tile) {
+		return null;
 	}
 
 }

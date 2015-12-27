@@ -40,6 +40,11 @@ public class BasicRoom implements Room {
 	}
 	
 	@Override
+	public Deck getDeck() {
+		return _deck;
+	}
+	
+	@Override
 	public void setDeck(final Deck deck) {
 	    _deck = deck;
 	}
@@ -130,8 +135,15 @@ public class BasicRoom implements Room {
 
 	@Override
 	public List<CrewMember> getCrewMembers() {
-		// TODO Auto-generated method stub
-		return null;
+		final List<CrewMember> ret = new ArrayList<>();
+		
+		for (final Tile tile : _tiles) {
+			if (tile.getCrewMember() != null) {
+				ret.add(tile.getCrewMember());
+			}
+		}
+		
+		return ret;
 	}
 
 	@Override

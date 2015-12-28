@@ -1,8 +1,11 @@
 package de.xftl.model.crew;
 
+import java.util.Optional;
+
 import de.xftl.spec.model.Point;
 import de.xftl.spec.model.crew.CrewMember;
 import de.xftl.spec.model.crew.Health;
+import de.xftl.spec.model.crew.Movement;
 import de.xftl.spec.model.ships.Tile;
 
 public abstract class AbstractCrewMember implements CrewMember {
@@ -10,6 +13,7 @@ public abstract class AbstractCrewMember implements CrewMember {
 	private Health health = new Health();
 	private Tile currentTile;
 	private Point<Float> leftUpperCornerPos;
+	private Movement movement;
 	
 	public AbstractCrewMember(final Tile tile) {
 		super();
@@ -39,5 +43,23 @@ public abstract class AbstractCrewMember implements CrewMember {
 	@Override
 	public Point<Float> getLeftUpperCornerPos() {
 		return leftUpperCornerPos;
+	}
+	
+	@Override
+	public Optional<Movement> getMovement() {
+		return Optional.ofNullable(movement);
+	}
+	
+	@Override
+	public Optional<Tile> getMovementTargetTile() {
+		if (movement == null)
+			return Optional.empty();
+		else
+			return Optional.of(movement.getTargetTile());
+	}
+	
+	@Override
+	public void setMovement(final Movement movement) {
+		this.movement = movement;
 	}
 }

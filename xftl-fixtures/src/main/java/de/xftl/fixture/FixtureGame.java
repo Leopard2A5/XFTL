@@ -82,4 +82,9 @@ public class FixtureGame implements Game {
 		return null;
 	}
 
+	@Override
+	public void move(MovementPreview preview) {
+		
+	}
+
 }

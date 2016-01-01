@@ -95,6 +95,11 @@ public class BasicTile implements Tile {
 		return _room;
 	}
 
+	@Override
+	public TileOrRoomConnector getNeighbor(final Direction dir) {
+		return _neighbors.get(dir);
+	}
+	
     @Override
     public TileOrRoomConnector getNorthNeighbor() {
     	return _neighbors.get(NORTH);

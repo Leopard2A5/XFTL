@@ -25,7 +25,7 @@ import de.xftl.spec.model.ships.Door;
 import de.xftl.spec.model.ships.Room;
 import de.xftl.spec.model.ships.Ship;
 
-public class GameWaypointPlanningTest {
+public class GameWaypointPlanningTestSingleway {
 
 	/*
 	 * Room layout:      r6 r5

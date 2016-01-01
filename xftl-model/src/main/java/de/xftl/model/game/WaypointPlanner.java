@@ -74,7 +74,7 @@ public class WaypointPlanner {
 		final List<Point<Float>> waypoints = new ArrayList<>();
 		
 		if (pathByRooms.size() == 1) {
-			waypoints.add(getPointForTile(targetTile));
+			addWaypoint(waypoints, getPointForTile(targetTile));
 		}
 		else if (pathByRooms.size() > 1) {
 			while (pathByRooms.size() > 1) {
@@ -113,11 +113,27 @@ public class WaypointPlanner {
 		final Pair<Tile, Direction> tile1 = getTileForRoomConnectorAndRoom(curRoom, connector);
 		final Tile tile2 = getTileForRoomConnectorAndRoom(nextRoom, connector).getLeft();
 
-		tilePath.add(getPointForTile(tile1.getLeft()));
-		if (connector instanceof Lift) {
-			tilePath.add(getPointForLift(tile1.getLeft(), tile1.getRight()));
+		if (!tile1.getLeft().equals(startTile)) {
+			addWaypoint(tilePath, getPointForTile(tile1.getLeft()));
 		}
-		tilePath.add(getPointForTile(tile2));
+		
+		if (connector instanceof Lift) {
+			addWaypoint(tilePath, getPointForLift(tile1.getLeft(), tile1.getRight()));
+		}
+		
+		addWaypoint(tilePath, getPointForTile(tile2));
+	}
+	
+	private void addWaypoint(final List<Point<Float>> list, final Point<Float> point) {
+		if (list.isEmpty()) {
+			list.add(point);
+		}
+		else {
+			final Point<Float> last = list.get(list.size() - 1);
+			if (!last.equals(point)) {
+				list.add(point);
+			}
+		}
 	}
 	
 	private Point<Float> getPointForLift(final Tile tile,

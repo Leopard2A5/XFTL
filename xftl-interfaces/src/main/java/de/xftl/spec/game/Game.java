@@ -21,4 +21,5 @@ public interface Game {
 	public void deselectCrewMembers();
 	
 	public MovementPreview previewMovement(Tile tile);
+	public void move(MovementPreview preview);
 }

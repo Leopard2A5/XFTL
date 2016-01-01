@@ -3,7 +3,9 @@ package de.xftl.model.ships;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 import de.xftl.model.util.TileUnitMatrix;
 import de.xftl.model.util.TileUnitMatrixIterator;
@@ -19,6 +21,7 @@ import de.xftl.spec.model.systems.ShipSystem;
 
 public class BasicRoom implements Room {
 
+	private final String _name;
     private Deck _deck;
 	private Point<Integer> _leftUpperCornerPos;
 	private int _width;
@@ -31,12 +34,22 @@ public class BasicRoom implements Room {
 	private final OpennessToSpaceChecker _opennessToSpaceCheck = new OpennessToSpaceChecker();
 	
 	public BasicRoom(final int width, final int height, final int x, final int y) {
+	    this("", width, height, x, y);
+	}
+	
+	public BasicRoom(final String name, final int width, final int height, final int x, final int y) {
 	    super();
 
+	    _name = name;
 	    _leftUpperCornerPos = new Point<Integer>(x, y);
 	    _width = width;
 	    _height = height;
 	    _tiles = buildTiles(width, height, x, y);
+	}
+	
+	@Override
+	public String toString() {
+		return "Room '" + _name + "'";
 	}
 	
 	@Override
@@ -153,14 +166,25 @@ public class BasicRoom implements Room {
 
 	@Override
 	public List<Room> getAdjacentRooms() {
-		// TODO Auto-generated method stub
-		return null;
+		final Set<Room> ret = new HashSet<>();
+		
+		for (final RoomConnector rc : _roomConnectors) {
+			ret.addAll(rc.getConnectedRooms(this));
+		}
+		
+		return new ArrayList<>(ret);
 	}
 
 	@Override
 	public List<Room> getAdjacentRooms(final Room origin) {
-		// TODO Auto-generated method stub
-		return null;
+		final Set<Room> ret = new HashSet<>();
+		
+		for (final RoomConnector rc : _roomConnectors) {
+			ret.addAll(rc.getConnectedRooms());
+		}
+		ret.remove(this);
+		
+		return new ArrayList<>(ret);
 	}
 
 	@Override

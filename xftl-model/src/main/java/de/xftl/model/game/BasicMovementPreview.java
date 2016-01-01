@@ -2,9 +2,11 @@ package de.xftl.model.game;
 
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.HashSet;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 import de.xftl.spec.game.MovementPreview;
 import de.xftl.spec.model.crew.CrewMember;
@@ -14,6 +16,7 @@ import de.xftl.spec.model.ships.Tile;
 public class BasicMovementPreview implements MovementPreview {
 
 	private final Room _targetRoom;
+	private final Set<CrewMember> _selectedCrewMembers = new HashSet<>();
 	private final List<CrewMember> _assignedCrewMembers = new ArrayList<>();
 	private final List<CrewMember> _unAssignedCrewMembers = new ArrayList<>();
 	private final Map<CrewMember, Tile> _movementPreviews = new LinkedHashMap<>();
@@ -23,6 +26,7 @@ public class BasicMovementPreview implements MovementPreview {
 		super();
 		_targetRoom = targetRoom;
 		_unAssignedCrewMembers.addAll(allCrewMembers);
+		_selectedCrewMembers.addAll(allCrewMembers);
 	}
 	
 	public void addPreview(final CrewMember crew,
@@ -59,4 +63,8 @@ public class BasicMovementPreview implements MovementPreview {
 		return Collections.unmodifiableMap(_movementPreviews);
 	}
 
+	@Override
+	public Set<CrewMember> getSelectedCrewMembers() {
+		return Collections.unmodifiableSet(_selectedCrewMembers);
+	}
 }

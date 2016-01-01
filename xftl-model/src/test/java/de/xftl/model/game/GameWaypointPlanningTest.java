@@ -28,11 +28,12 @@ import de.xftl.spec.model.ships.Ship;
 public class GameWaypointPlanningTest {
 
 	/*
-	 * Room layout:        r5
+	 * Room layout:      r6 r5
+	 *                  
 	 *               r1 r2
 	 *                     r3 r4
-	 *       _ _
-	 *      |_| |
+	 *     _ _ _
+	 *    |_|_| |
 	 *  __ _  | |
 	 * |__| |_|_|
 	 *    |_|___|
@@ -46,6 +47,7 @@ public class GameWaypointPlanningTest {
 	private final Room _room3 = new BasicRoom("3", 2, 1, 3, 3);
 	private final Room _room4 = new BasicRoom("4", 1, 3, 4, 0);
 	private final Room _room5 = new BasicRoom("5", 1, 1, 3, 0);
+	private final Room _room6 = new BasicRoom("6", 1, 1, 2, 0);
 	private final BasicTile _tile_r1_1 = (BasicTile) _room1.getTiles().get(0);
 	private final BasicTile _tile_r1_2 = (BasicTile) _room1.getTiles().get(1);
 	private final BasicTile _tile_r2_1 = (BasicTile) _room2.getTiles().get(0);
@@ -55,6 +57,7 @@ public class GameWaypointPlanningTest {
 	private final BasicTile _tile_r4_1 = (BasicTile) _room4.getTiles().get(0);
 	private final BasicTile _tile_r4_3 = (BasicTile) _room4.getTiles().get(2);
 	private final BasicTile _tile_r5 = (BasicTile) _room5.getTiles().get(0);
+	private final BasicTile _tile_r6 = (BasicTile) _room6.getTiles().get(0);
 	private final CrewMember _crew = new Human(_tile_r1_1);
 	
 	@Before
@@ -64,6 +67,7 @@ public class GameWaypointPlanningTest {
 		_deck.addRoom(_room3);
 		_deck.addRoom(_room4);
 		_deck.addRoom(_room5);
+		_deck.addRoom(_room6);
 		
 		final Door door_r1_r2 = new BasicDoor();
 		door_r1_r2.addRoom(_room1);
@@ -88,6 +92,12 @@ public class GameWaypointPlanningTest {
 		door_r4_r5.addRoom(_room5);
 		_tile_r4_1.addNeighbor(WEST, door_r4_r5);
 		_tile_r5.addNeighbor(EAST, door_r4_r5);
+		
+		final Door door_r5_r6 = new BasicDoor();
+		door_r5_r6.addRoom(_room5);
+		door_r5_r6.addRoom(_room6);
+		_tile_r5.addNeighbor(WEST, door_r5_r6);
+		_tile_r6.addNeighbor(EAST, door_r5_r6);
 		
 		_game.selectCrewMembers(Arrays.asList(_crew));
 	}
@@ -159,6 +169,6 @@ public class GameWaypointPlanningTest {
 		assertThat(point.getY()).isEqualTo(y, Offset.offset(0.05f));
 	}
 
-	// elevators
+	// TODO elevators
 	
 }
